@@ -1,0 +1,1 @@
+<view class="index"><navtop vue-id="5986a410-1" title="相关条款" bind:__l="__l"></navtop><block wx:for="{{TestList}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view class="TipsList"><view class="Test">{{''+item+''}}</view><view class="icon"><image src="/static/user/youjiantou.png" mode></image></view></view></block></view>

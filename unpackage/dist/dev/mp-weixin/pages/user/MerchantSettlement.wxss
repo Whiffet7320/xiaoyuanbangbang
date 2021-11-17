@@ -1,0 +1,127 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.index {
+  width: 100%;
+}
+.index .BackPic {
+  width: 100%;
+  height: 450rpx;
+}
+.index .BackPic image {
+  width: 100%;
+  height: 450rpx;
+}
+.index .RuzhuPlate {
+  position: relative;
+  z-index: 1;
+  width: 686rpx;
+  height: 656rpx;
+  margin: -146rpx auto 0;
+  background: #ffffff;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+.index .RuzhuPlate .Title {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 146rpx;
+}
+.index .RuzhuPlate .Title .SeleList {
+  height: 54rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #848484;
+  border-bottom: 2rpx solid transparent;
+}
+.index .RuzhuPlate .Title .SeleState {
+  height: 54rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FE694F;
+  border-bottom: 2rpx solid #FE694F;
+}
+.index .RuzhuPlate .userInfo {
+  display: flex;
+  flex-direction: column;
+}
+.index .RuzhuPlate .userInfo .userName,
+.index .RuzhuPlate .userInfo .userPhone {
+  margin-left: 70rpx;
+  width: 616rpx;
+  height: 118rpx;
+  border-bottom: 2rpx solid #f7f8fa;
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #848484;
+}
+.index .RuzhuPlate .userInfo .PhoneCode {
+  margin-left: 70rpx;
+  width: 616rpx;
+  height: 118rpx;
+  border-bottom: 2rpx solid #f7f8fa;
+  display: flex;
+  align-items: center;
+}
+.index .RuzhuPlate .userInfo .PhoneCode .Codes {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #848484;
+}
+.index .RuzhuPlate .userInfo .PhoneCode .SendOut {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #fe694f;
+}
+.index .RuzhuPlate .userInfo .PhoneCode .Sender {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #fe694f;
+}
+.index .RuzhuPlate .userInfo .applyRuzhu {
+  width: 552rpx;
+  height: 80rpx;
+  margin: 41rpx auto 0;
+  background: #fe694f;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #ffffff;
+}
+.index .TestTips {
+  width: 686rpx;
+  height: 230rpx;
+  margin: 20rpx auto;
+  background: #ffffff;
+  border-radius: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.index .TestTips .Title {
+  margin-left: 28rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #000000;
+}
+.index .TestTips .Content {
+  width: 630rpx;
+  height: 110rpx;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #848484;
+}
+

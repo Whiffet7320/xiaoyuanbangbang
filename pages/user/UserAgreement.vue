@@ -1,0 +1,68 @@
+<template>
+	<view class="index">
+		<Navtop title="用户协议"></Navtop>
+		
+		<view class="About">
+			<view class="Title">
+				用户协议
+			</view>
+			<view class="Conentn">
+				重要提示： 请您仔细阅读以下条款，并确认您已完全理解本协议之规定，尤其是免除及限制责任的条款、知识产权条款、法律适用及争议解决条款。 如您对本声明或本协议任何条款有异议，请停止注册或使用简书（包括JIANSHU.COM、名称为“简书”的手机端、电脑等设备客户端应用程序，下同）软件及所提供的全部服务。 一、序言 1、您使用简书软件和/或服务，即视为您签署了本协议，表明您自愿接受本协议全部条款的约束，本协议将构成您与上海佰集科技有限公司（以下称我公司）就“简书”软件及服务（以下统称“简书”）之间具有约束力的法律文件。无论您是进入简书浏览网页，还是在简书上发布任何内容，或者是直接或通过各类方式（如站外API引用等）间接使用简书的行为，都将被视作已无条件接受本声明所涉全部内容。 2、我公司有权利对本协议进行修改，我公司将在简书相关页面公告或发送通知等方式公布修改的内容，修改后的协议一经公布即有效的代替原协议。如果您不同意本协议的修改，请立即停止访问或使用简书或取消已经获得的服务；如果您选择继续访问或使用简书，则视为您已接受本协议的修改。 3、本协议所列明的条款，并不能完全涵盖您与我公司之间所有的权利和义务。因此，我公司不定期公布的其他声明、规则、子协议等均视为本协议之补充协议，为本协议不可分割的组成部分，与本协议具有同等法律效力。
+			</view>
+		</view>
+		
+		
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+	page{
+		width: 100%;;
+		height: 100%;
+		background: #f7f8fa;
+	}
+	.index{
+		width: 100%;
+		.About{
+			width: 686rpx;
+			height: 1426rpx;
+			margin: 20rpx auto;
+			background: #ffffff;
+			border-radius: 10rpx 10rpx 0rpx 0rpx;
+			display: flex;
+			flex-direction: column;
+			.Title{
+				width: 626rpx;
+				height: 109rpx;
+				margin: 0 auto;
+				border-bottom: 2rpx dashed #e5e5e5;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 32rpx;
+				font-weight: 700;
+				color: #000000;
+			}
+			.Conentn{
+				margin: 28rpx 32rpx;
+				font-size: 28rpx;
+				font-weight: 400;
+				color: #000000;
+			}
+		}
+	}
+
+</style>

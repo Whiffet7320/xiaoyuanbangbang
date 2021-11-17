@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "我的风景",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "page-nav": "/pages/campus/components/page-nav",
+    "page-commentxy": "/pages/campus/components/page-commentxy",
+    "page-ftcomment": "/components/page-foot/page-ftcomment"
+  }
+}

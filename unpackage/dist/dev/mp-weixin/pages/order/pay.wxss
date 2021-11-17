@@ -1,0 +1,144 @@
+
+page{
+	background: #f2f2f2;
+}
+
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.oinfo.data-v-34e3f284 {
+  padding: 32rpx 24rpx;
+  background: #ffffff;
+  display: flex;
+}
+.oinfo .img.data-v-34e3f284 {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #eee;
+  border-radius: 10rpx;
+  flex-shrink: 0;
+}
+.oinfo .info.data-v-34e3f284 {
+  flex: 1;
+  padding-left: 20rpx;
+}
+.oinfo .info .name.data-v-34e3f284 {
+  width: 100%;
+  height: 68rpx;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 52rpx;
+}
+.oinfo .info .ft.data-v-34e3f284 {
+  display: flex;
+  align-items: center;
+}
+.oinfo .info .ft .price.data-v-34e3f284 {
+  flex: 1;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #ff0000;
+}
+.oinfo .info .ft .time.data-v-34e3f284 {
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.oinfo .info .ft .red.data-v-34e3f284 {
+  color: #FF0000;
+}
+.payinfo.data-v-34e3f284 {
+  padding: 32rpx 24rpx;
+}
+.payinfo .tit.data-v-34e3f284 {
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #b3b3b3;
+  margin-bottom: 12rpx;
+}
+.payinfo .wpay.data-v-34e3f284 {
+  width: 100%;
+  padding: 0 48rpx 0 44rpx;
+  height: 206rpx;
+  background: #ffffff;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+}
+.payinfo .wpay .icon.data-v-34e3f284 {
+  width: 42rpx;
+  height: 38rpx;
+  margin-right: 33rpx;
+}
+.payinfo .wpay .mid.data-v-34e3f284 {
+  width: 510rpx;
+}
+.payinfo .wpay .mid .hd.data-v-34e3f284 {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #000000;
+}
+.payinfo .wpay .mid .hd .text.data-v-34e3f284 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56rpx;
+  height: 32rpx;
+  border: 2rpx solid #ff0000;
+  border-radius: 4rpx;
+  text-align: center;
+  margin-left: 60rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #ff0000;
+}
+.payinfo .wpay .mid .desc.data-v-34e3f284 {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.payinfo .wpay .check.data-v-34e3f284 {
+  width: 26rpx;
+  height: 26rpx;
+}
+.ftbtn.data-v-34e3f284 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  width: 100%;
+  height: 100rpx;
+  padding: 0 24rpx;
+  background: #ffffff;
+  box-shadow: 0rpx 8rpx 28rpx 0rpx rgba(166, 179, 194, 0.3);
+}
+.ftbtn .btn.data-v-34e3f284 {
+  width: 100%;
+  height: 64rpx;
+  line-height: 64rpx;
+  background: #FE694F;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Regular;
+  font-weight: 400;
+  text-align: center;
+  color: #ffffff;
+}
+

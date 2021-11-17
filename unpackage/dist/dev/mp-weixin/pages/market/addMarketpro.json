@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发布收购",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "page-modal": "/components/page-modal/page-modal"
+  }
+}

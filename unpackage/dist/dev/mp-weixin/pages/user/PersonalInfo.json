@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "个人信息",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast"
+  }
+}

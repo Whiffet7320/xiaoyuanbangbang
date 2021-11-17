@@ -1,0 +1,114 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "校园树洞",
+          "pathName": "pages/index/shudong/xiaoyuanshudong",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我要表白",
+          "pathName": "pages/index/xiaoyuanbiaobai/xiaoyuanbiaobai",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "表白墙",
+          "pathName": "pages/index/xiaoyuanbiaobai/biaobaiqiang",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "表白详情",
+          "pathName": "pages/index/xiaoyuanbiaobai/xiangqin",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "求职招聘",
+          "pathName": "pages/index/zhaopin/qiuzhizhaopin",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "登录",
+          "pathName": "pages/login/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/xiaoyuanbiaobai/xiangqin",
+          "pathName": "pages/index/xiaoyuanbiaobai/xiangqin",
+          "query": "id=5",
+          "scene": null
+        },
+        {
+          "name": "收货地址",
+          "pathName": "pages/user/ReceivingAddress",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/xiaoyuanbiaobai/xiangqin",
+          "pathName": "pages/index/xiaoyuanbiaobai/xiangqin",
+          "query": "id=8",
+          "scene": null
+        },
+        {
+          "name": "pages/search/list",
+          "pathName": "pages/search/list",
+          "query": "from=spell",
+          "scene": null
+        },
+        {
+          "name": "pages/order/addorder",
+          "pathName": "pages/order/addorder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/shudong/xiangqin",
+          "pathName": "pages/index/shudong/xiangqin",
+          "query": "obj=%7B%22id%22%3A4%2C%22user_id%22%3A3%2C%22sender_name%22%3A%22%E4%BD%A0%E7%9A%84%E6%96%B0%E5%A8%98%22%2C%22img_paths%22%3A%22storage%2Fshudong%2F20211111%2F066b3e9ca0aeedd8b28b8121cfaf2fb1.png%22%2C%22read_num%22%3A0%2C%22content%22%3A%22%E4%B8%80%E8%88%9F%E4%BD%A0%E5%93%88%E5%9F%BA%E7%9A%84%E6%88%91%E5%90%97%EF%BC%9F%22%2C%22comment_unread_num%22%3A0%2C%22comment_time%22%3Anull%2C%22device%22%3Anull%2C%22add_time%22%3A%222021-11-11%2014%3A18%3A05%22%2C%22comment_count%22%3A0%2C%22zan_count%22%3A1%2C%22read_count%22%3A1133%2C%22avatar_url%22%3A%22https%3A%2F%2Fthirdwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTJkovJut0n0eQsuOTeCBp57ggLFbMibv1M3HL6nzHPoJZIF8IibwsC2kDE9ribOyClmImMlw79faXiauw%2F132%22%2C%22is_zan%22%3A1%2C%22showTime%22%3A%22%201%E5%B0%8F%E6%97%B6%E5%89%8D%22%2C%22myImg_paths%22%3A%5B%22http%3A%2F%2F192.168.50.142%3A9004%2Fstorage%2Fshudong%2F20211111%2F066b3e9ca0aeedd8b28b8121cfaf2fb1.png%22%5D%7D",
+          "scene": null
+        },
+        {
+          "name": "pages/user/NotifyMessage",
+          "pathName": "pages/user/NotifyMessage",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/user/PersonalInfo",
+          "pathName": "pages/user/PersonalInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/index/kfing/kfing",
+          "pathName": "pages/index/kfing/kfing",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/market/index",
+          "pathName": "pages/market/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

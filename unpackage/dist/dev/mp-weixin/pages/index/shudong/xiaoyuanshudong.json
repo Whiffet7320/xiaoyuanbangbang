@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "校园树洞",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
+  }
+}

@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.midwrap .mask.data-v-af847712 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.midwrap .midwrap_con.data-v-af847712 {
+  width: 236rpx;
+  background: #ffffff;
+  border-radius: 10rpx;
+  padding: 0 11rpx;
+  position: absolute;
+  left: 50%;
+  bottom: 230rpx;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 60;
+}
+.midwrap .midwrap_con .before.data-v-af847712 {
+  position: absolute;
+  bottom: -20rpx;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 26rpx solid transparent;
+  border-right: 26rpx solid transparent;
+  border-top: 26rpx solid #ffffff;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.midwrap .midwrap_con .hd.data-v-af847712 {
+  line-height: 66rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #000000;
+  border-bottom: 2rpx dashed #cccccc;
+}
+.midwrap .midwrap_con .ft.data-v-af847712 {
+  margin-top: 20rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #b3b3b3;
+  padding: 20rpx 0;
+  border-top: 2rpx dashed #cccccc;
+}
+.midwrap .midwrap_con .miditem.data-v-af847712 {
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #030303;
+  padding-top: 20rpx;
+}
+.midwrap .midwrap_con .miditem.on.data-v-af847712 {
+  color: #FFA900;
+}
+

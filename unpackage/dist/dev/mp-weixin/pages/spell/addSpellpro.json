@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "发布拼单",
+  "usingComponents": {
+    "page-modal": "/components/page-modal/page-modal"
+  }
+}

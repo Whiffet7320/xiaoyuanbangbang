@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "树洞详情",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-action-sheet": "/uview-ui/components/u-action-sheet/u-action-sheet"
+  }
+}

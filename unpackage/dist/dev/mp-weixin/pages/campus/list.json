@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "帮帮报修",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "page-search": "/components/page-search/page-search",
+    "page-comment": "/components/page-comment/page-comment",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top"
+  }
+}

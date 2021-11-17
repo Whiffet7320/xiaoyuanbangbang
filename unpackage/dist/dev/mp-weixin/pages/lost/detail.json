@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "宝贝详情",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "u-gap": "/uview-ui/components/u-gap/u-gap",
+    "page-service": "/components/page-service/page-service"
+  }
+}

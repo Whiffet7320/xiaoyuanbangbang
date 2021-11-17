@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.searchwrp.data-v-f420c1e2 {
+  padding: 20rpx 24rpx 32rpx;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+.searchwrp .searchbox.data-v-f420c1e2 {
+  display: flex;
+  align-items: center;
+  width: 600rpx;
+  height: 64rpx;
+  background: #f1f1f1;
+  border-radius: 32rpx;
+  padding: 0 32rpx;
+  font-size: 22rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.searchwrp .searchbox input.data-v-f420c1e2 {
+  flex: 1;
+}
+.searchwrp .searchbox .icon.data-v-f420c1e2 {
+  width: 25rpx;
+  height: 25rpx;
+  margin-right: 13rpx;
+}
+.searchwrp .seabtn.data-v-f420c1e2 {
+  padding-left: 30rpx;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.sealist.data-v-f420c1e2 {
+  padding: 0 25rpx;
+}
+.sealist .text.data-v-f420c1e2 {
+  padding: 40rpx 0 30rpx;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+  border-bottom: 2rpx solid #f2f2f2;
+}
+.sealist .text.data-v-f420c1e2:first-child {
+  padding: 0 0 30rpx;
+}
+

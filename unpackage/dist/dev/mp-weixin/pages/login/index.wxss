@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.wechat_login.data-v-4586967a {
+  padding: 72rpx 116rpx;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.wechat_login .img.data-v-4586967a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wechat_login .img image.data-v-4586967a {
+  width: 452rpx;
+  height: 450rpx;
+}
+.wechat_login .btn-wrapper.data-v-4586967a {
+  margin-top: 86rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.wechat_login .btn-wrapper .btn.data-v-4586967a {
+  width: 100%;
+  height: 64rpx;
+  line-height: 64rpx;
+  margin-bottom: 40rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background: #07c160;
+}
+.wechat_login .btn-wrapper .cancel.data-v-4586967a {
+  width: 100%;
+  color: #C4C4C4;
+  text-align: center;
+}
+

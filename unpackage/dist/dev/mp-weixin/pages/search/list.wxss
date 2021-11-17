@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.seatabbox.data-v-35a5eb88 {
+  width: 100%;
+  height: 102rpx;
+  background: #f7f8fa;
+  display: flex;
+  align-items: center;
+}
+.seatabbox .tab_item.data-v-35a5eb88 {
+  flex: 1;
+  font-size: 32rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #000000;
+  position: relative;
+}
+.seatabbox .tab_item.on.data-v-35a5eb88::after {
+  content: "";
+  position: absolute;
+  bottom: -12rpx;
+  left: 50%;
+  z-index: 50;
+  width: 40rpx;
+  height: 2rpx;
+  background-color: #FE694F;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.prolist.data-v-35a5eb88 {
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 32rpx 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.prolist .item.data-v-35a5eb88 {
+  flex: 0 0 50%;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+.prolist .item .img.data-v-35a5eb88 {
+  width: 100%;
+  height: 256rpx;
+}
+.prolist .item .title.data-v-35a5eb88 {
+  width: 100%;
+  margin: 16rpx 0 12rpx 0;
+  height: 68rpx;
+  overflow: hidden;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #131313;
+}
+.prolist .item .taglist.data-v-35a5eb88 {
+  margin-bottom: 24rpx;
+  display: flex;
+  align-items: center;
+}
+.prolist .item .taglist .itag.data-v-35a5eb88 {
+  padding: 4rpx 10rpx;
+  border: 2rpx solid #b3b3b3;
+  border-radius: 4rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #4d4d4d;
+  margin-right: 16rpx;
+}
+.prolist .item .taglist .itag.red.data-v-35a5eb88 {
+  border-color: #FF0000;
+  color: #FF0000;
+}
+.prolist .item .ft.data-v-35a5eb88 {
+  display: flex;
+  align-items: center;
+}
+.prolist .item .ft .price.data-v-35a5eb88 {
+  flex: 1;
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #ff0000;
+}
+.prolist .item .ft .price .text.data-v-35a5eb88 {
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+}
+.prolist .item .ftbtn.data-v-35a5eb88 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16rpx;
+}
+.prolist .item .ftbtn .cbtn.data-v-35a5eb88 {
+  width: 116rpx;
+  height: 44rpx;
+  border: 2rpx solid #707070;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prolist .item .ftbtn .cbtns.data-v-35a5eb88 {
+  width: 116rpx;
+  height: 44rpx;
+  background: #fe694f;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

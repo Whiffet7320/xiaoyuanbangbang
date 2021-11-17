@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "通知信息",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "新建地址",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-picker": "/uview-ui/components/u-picker/u-picker",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

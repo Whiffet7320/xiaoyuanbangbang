@@ -1,0 +1,282 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.index.data-v-11b7c9eb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.musicImg.data-v-11b7c9eb {
+  position: fixed;
+  right: 40rpx;
+  bottom: 200rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+}
+.data-v-11b7c9eb .u-load-more-wrap {
+  height: 100rpx !important;
+}
+.data-v-11b7c9eb .u-more-text {
+  color: #FFFFFF !important;
+}
+.bgImg.data-v-11b7c9eb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  height: 100vh;
+  width: 100vw;
+}
+.bgImg2.data-v-11b7c9eb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+.bgtxt.data-v-11b7c9eb {
+  position: absolute;
+  font-size: 20rpx;
+  font-weight: 500;
+  color: #ffffff;
+  top: -50rpx;
+  right: 112rpx;
+}
+.nav1.data-v-11b7c9eb {
+  width: 702rpx;
+  padding: 62rpx 0 40rpx 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8rpx;
+  position: relative;
+  margin-top: 380rpx;
+  left: 24rpx;
+}
+.nav1 .nav1-1.data-v-11b7c9eb {
+  width: 702rpx;
+  background: #ffffff;
+  padding: 0 20rpx;
+  display: flex;
+}
+.nav1 .nav1-1 .pic1-1.data-v-11b7c9eb {
+  margin-top: 22rpx;
+  width: 32rpx;
+  height: 46rpx;
+}
+.nav1 .nav1-1 .inp1-1.data-v-11b7c9eb {
+  width: 100%;
+  margin-top: 16rpx;
+  margin-left: 20rpx;
+}
+.nav1 .nav1-1 .inp1-1.data-v-11b7c9eb .u-input__textarea {
+  height: 100rpx;
+}
+.nav1 .tit3.data-v-11b7c9eb {
+  margin-top: 44rpx;
+  padding: 0 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.nav1 .tit3 .imgItem.data-v-11b7c9eb {
+  position: relative;
+  margin: 0rpx 15rpx 14rpx 0rpx;
+  width: 210rpx;
+  height: 210rpx;
+  background: #FFFFFF;
+  border: 2rpx dashed #E6E6E6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav1 .tit3 .imgItem.data-v-11b7c9eb:nth-child(3) {
+  margin: 0rpx 0rpx 14rpx 0rpx;
+}
+.nav1 .tit3 .imgItem .pic1.data-v-11b7c9eb {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.nav1 .btns.data-v-11b7c9eb {
+  margin-top: 30rpx;
+  padding: 0 20rpx;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.nav1 .btns .btn1.data-v-11b7c9eb {
+  width: 120rpx;
+  height: 44rpx;
+  background: #ffffff;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav1 .btns .btn1.data-v-11b7c9eb .u-input {
+  width: 60rpx;
+}
+.nav1 .btns .btn1.data-v-11b7c9eb .u-input .u-input__input {
+  font-size: 20rpx;
+}
+.nav1 .btns .btn1 .pic.data-v-11b7c9eb {
+  margin-left: 8rpx;
+  width: 24rpx;
+  height: 24rpx;
+}
+.nav1 .btns .btn2.data-v-11b7c9eb {
+  margin-left: 24rpx;
+  width: 98rpx;
+  height: 44rpx;
+  background: #fe694f;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  text-align: center;
+  color: #ffffff;
+  line-height: 44rpx;
+}
+.nav2.data-v-11b7c9eb {
+  position: relative;
+  margin-top: 16rpx;
+  margin-left: 24rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  color: #ffffff;
+}
+.nav2 .red.data-v-11b7c9eb {
+  color: #fe694f;
+}
+.nav3.data-v-11b7c9eb {
+  height: 80rpx;
+  position: relative;
+  margin-left: 24rpx;
+  margin-top: 40rpx;
+}
+.nav3 .nav3-1.data-v-11b7c9eb {
+  position: absolute;
+  width: 702rpx;
+  height: 80rpx;
+  opacity: 0.76;
+  background: #ffffff;
+  border-radius: 8rpx;
+}
+.nav3 .items.data-v-11b7c9eb {
+  width: 702rpx;
+  height: 80rpx;
+  position: absolute;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav3 .items .item.data-v-11b7c9eb {
+  width: 92rpx;
+  height: 72rpx;
+  text-align: center;
+  line-height: 72rpx;
+}
+.nav3 .items .active.data-v-11b7c9eb {
+  background: #ffffff;
+}
+.nav4-items.data-v-11b7c9eb {
+  position: relative;
+  margin: 30rpx 20rpx;
+}
+.nav4-items .item.data-v-11b7c9eb {
+  display: flex;
+  padding-bottom: 30rpx;
+}
+.nav4-items .item .left.data-v-11b7c9eb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-transform: translateX(-6rpx);
+          transform: translateX(-6rpx);
+}
+.nav4-items .item .left .dian.data-v-11b7c9eb {
+  width: 8rpx;
+  height: 8rpx;
+  background: #ffffff;
+  border-radius: 50%;
+}
+.nav4-items .item .right.data-v-11b7c9eb {
+  position: relative;
+}
+.nav4-items .item .right .zsRight.data-v-11b7c9eb:after {
+  content: "";
+  position: absolute;
+  -webkit-transform: rotateZ(-270deg);
+          transform: rotateZ(-270deg);
+  left: -24rpx;
+  top: 0px;
+  width: 0;
+  height: 0;
+  border-top: 12rpx solid #fff;
+  border-left: 12rpx solid #fff;
+  border-right: 12rpx solid transparent;
+  border-bottom: 12rpx solid transparent;
+  opacity: 0.5;
+}
+.nav4-items .item .right .zsRight.data-v-11b7c9eb {
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  top: 8rpx;
+  left: 22rpx;
+  width: 676rpx;
+  padding: 24rpx 34rpx 24rpx 14rpx;
+}
+.nav4-items .item .right .zsRight .txt1.data-v-11b7c9eb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav4-items .item .right .zsRight .txt1 .txt1-1.data-v-11b7c9eb {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #000000;
+}
+.nav4-items .item .right .zsRight .txt1 .txt1-2.data-v-11b7c9eb {
+  font-size: 20rpx;
+  font-weight: 500;
+  color: #000034;
+}
+.nav4-items .item .right .zsRight .txt2.data-v-11b7c9eb {
+  margin-top: 28rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #ffffff;
+}
+.nav4-items .item .right .zsRight .nav4-imgs.data-v-11b7c9eb {
+  margin-top: 10rpx;
+}
+.nav4-items .item .right .zsRight .nav4-imgs .nav4-img.data-v-11b7c9eb {
+  width: 140rpx;
+  height: 140rpx;
+  margin-right: 12rpx;
+  border-radius: 8rpx;
+}
+.nav4-items .item .right .zsRight .txt3.data-v-11b7c9eb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24rpx;
+}
+.nav4-items .item .right .zsRight .txt3 .icon1.data-v-11b7c9eb {
+  display: flex;
+  align-items: center;
+}
+.nav4-items .item .right .zsRight .txt3 .icon1 .i-txt.data-v-11b7c9eb {
+  margin-left: 8rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #ffffff;
+}
+.nav4-items .item .right .zsRight .txt3 .icon1 .i-txt.isDianzan.data-v-11b7c9eb {
+  color: #165ff9;
+}
+

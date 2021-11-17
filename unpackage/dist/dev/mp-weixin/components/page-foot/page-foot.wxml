@@ -1,0 +1,1 @@
+<view><page-tabbar vue-id="772caca8-1" list="{{tabbarlist}}" mid-button="{{true}}" value="{{current}}" data-event-opts="{{[['^change',[['onChange']]],['^input',[['__set_model',['','current','$event',[]]]]]]}}" bind:change="__e" bind:input="__e" bind:__l="__l"></page-tabbar><page-midmenu vue-id="772caca8-2" show="{{midshow}}" bind:__l="__l"></page-midmenu></view>

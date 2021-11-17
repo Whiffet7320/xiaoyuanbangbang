@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "page-tabbar": "/components/page-tabbar/page-tabbar",
+    "page-midmenu": "/components/page-tabbar/page-midmenu"
+  }
+}

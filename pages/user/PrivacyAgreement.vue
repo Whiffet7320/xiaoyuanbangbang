@@ -1,0 +1,68 @@
+<template>
+	<view class="index">
+		<Navtop title="隐私协议"></Navtop>
+		
+		<view class="About">
+			<view class="Title">
+				隐私协议
+			</view>
+			<view class="Conentn">
+				我们致力于保护您在使用我们网站时所提供的私隐、私人资料以及个人的资料(统称“个人资料”)，使我们在收集、使用、储存和传送个人资料方面符合 (与个人资料私隐有关的法律法规)及消费者保护方面的最高标准。 为确保您对我们在处理个人资料上有充分信心，您切要详细阅读及理解隐私政策的条文。 特别是您一旦使用我们的网站，将被视为接受、同意、承诺和确认； 您在自愿下连同所需的同意向我们披露个人资料；您会遵守本隐私政策的全部条款和限制； 您在我们的网站上作登记、资料会被收集； 您同意日后我们对隐私政策的任何修改； 您同意我们的分公司、附属公司、雇员、就您可能会感兴趣的产品和服务与您联络(除非您已经表示不想收到该等讯息)。 被收集的个人资料的种类经您的同意，我们会收集、管理和监控个人资料。 为了向您提供我们的各项服务，您需要提供个人资料信息，其中包括个人资料和不具名的资料，包括但不限于：个人资料（您的姓名、性别、年龄、出生日期、电话号码、传真号码、住址或通讯地址、电子邮箱地址）。 收集个人资料及不具名的资料的目的及用途如下: 通过我们的网站向您提供我们的各项服务；当您使用我
+			</view>
+		</view>
+		
+		
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				
+			}
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+	page{
+		width: 100%;;
+		height: 100%;
+		background: #f7f8fa;
+	}
+	.index{
+		width: 100%;
+		.About{
+			width: 686rpx;
+			height: 1426rpx;
+			margin: 20rpx auto;
+			background: #ffffff;
+			border-radius: 10rpx 10rpx 0rpx 0rpx;
+			display: flex;
+			flex-direction: column;
+			.Title{
+				width: 626rpx;
+				height: 109rpx;
+				margin: 0 auto;
+				border-bottom: 2rpx dashed #e5e5e5;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 32rpx;
+				font-weight: 700;
+				color: #000000;
+			}
+			.Conentn{
+				margin: 28rpx 32rpx;
+				font-size: 28rpx;
+				font-weight: 400;
+				color: #000000;
+			}
+		}
+	}
+
+</style>

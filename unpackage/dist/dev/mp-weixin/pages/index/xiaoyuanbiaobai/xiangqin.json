@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "详情",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

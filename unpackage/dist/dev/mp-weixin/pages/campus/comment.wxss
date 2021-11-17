@@ -1,0 +1,143 @@
+
+page{
+	background-color: #F2F2F2;
+}
+
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.list.data-v-65839a68 {
+  padding: 40rpx 24rpx;
+  background-color: #FFFFFF;
+}
+.commentlist .total.data-v-65839a68 {
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.commentlist .comment_list .litem.data-v-65839a68 {
+  padding: 22rpx 0;
+  border-bottom: 2rpx solid #f2f2f2;
+  display: flex;
+}
+.commentlist .comment_list .litem.data-v-65839a68:last-child {
+  border-bottom: 0;
+}
+.commentlist .comment_list .litem .img.data-v-65839a68 {
+  width: 62rpx;
+  height: 62rpx;
+  background-color: #eee;
+  border-radius: 50%;
+}
+.commentlist .comment_list .litem .info.data-v-65839a68 {
+  flex: 1;
+  padding-left: 10rpx;
+}
+.commentlist .comment_list .litem .info .hd.data-v-65839a68 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #b3b3b3;
+}
+.commentlist .comment_list .litem .info .hd .name.data-v-65839a68 {
+  margin-right: 48rpx;
+}
+.commentlist .comment_list .litem .info .hd .left.data-v-65839a68 {
+  flex: 1;
+}
+.commentlist .comment_list .litem .info .ft.data-v-65839a68 {
+  display: flex;
+  justify-content: space-between;
+}
+.commentlist .comment_list .litem .info .desc.data-v-65839a68 {
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.commentlist .comment_list .litem .info .feedback.data-v-65839a68 {
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #999;
+}
+.commentlist .comment_list .litem .info .toolicon.data-v-65839a68 {
+  margin-top: 10rpx;
+  display: flex;
+  align-items: flex-start;
+}
+.commentlist .comment_list .litem .info .toolicon .zan.data-v-65839a68 {
+  display: flex;
+  align-items: center;
+  color: #848484;
+  margin-left: 10rpx;
+}
+.commentlist .comment_list .litem .info .toolicon .zan .text.data-v-65839a68 {
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Regular;
+  font-weight: 400;
+  margin-left: 7rpx;
+}
+.commentlist .comment_list .litem .info .toolicon .zan.on.data-v-65839a68 {
+  color: #FE694F;
+}
+.commentlist .comment_list .litem .info .replaylist.data-v-65839a68 {
+  margin-top: 20rpx;
+}
+.commentlist .comment_list .litem .info .replaylist .replay_item.data-v-65839a68 {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+.commentlist .comment_list .litem .info .replaylist .replay_item .info .hd.data-v-65839a68 {
+  justify-content: flex-start;
+}
+.commentModal.data-v-65839a68 {
+  width: 100%;
+  padding: 20rpx;
+}
+.commentModal .utext.data-v-65839a68 {
+  width: 100%;
+  padding: 20rpx;
+  height: 200rpx;
+  background: #f1f1f1;
+  border-radius: 10rpx;
+}
+.commentModal .utext .replytext.data-v-65839a68 {
+  width: 100%;
+  height: 100%;
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Regular;
+  font-weight: 400;
+  color: #000000;
+  text-align: justify;
+}
+.commentModal .utext.on .replytext.data-v-65839a68::after {
+  content: "禁止发布内容和分类不符、营销推广类等内容，平台已引入AI智能机器人对您发布的信息进行自动检测，同时平台将加强巡查力度，整治不合规信息。";
+  font-size: 24rpx;
+  color: #8f8f8f;
+}
+.commentModal .comtbtn.data-v-65839a68 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20rpx;
+}
+.commentModal .comtbtn .btns.data-v-65839a68 {
+  font-size: 24rpx;
+  color: #FFFFFF;
+  width: 160rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  background-color: #FE694F;
+  border-radius: 12rpx;
+  text-align: center;
+}
+

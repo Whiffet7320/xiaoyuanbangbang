@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "确认下单",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-gap": "/uview-ui/components/u-gap/u-gap"
+  }
+}

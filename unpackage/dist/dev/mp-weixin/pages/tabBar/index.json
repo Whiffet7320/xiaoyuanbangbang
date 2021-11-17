@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "校园帮帮平台",
+  "navigationBarBackgroundColor": "#fe694f",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

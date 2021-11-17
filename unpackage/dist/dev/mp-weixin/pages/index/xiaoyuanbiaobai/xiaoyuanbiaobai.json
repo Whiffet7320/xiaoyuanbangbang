@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "校园表白",
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/uview-ui/components/u-radio/u-radio",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

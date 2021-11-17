@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发布转卖",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "page-modal": "/components/page-modal/page-modal"
+  }
+}

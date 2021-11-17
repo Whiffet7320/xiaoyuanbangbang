@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.comment_list.data-v-695e9b24 {
+  background-color: #FFFFFF;
+}
+.comment_list .comment_item.data-v-695e9b24 {
+  padding-bottom: 40rpx;
+}
+.comment_list .comment_item .woobox.data-v-695e9b24 {
+  display: flex;
+  align-items: center;
+}
+.comment_list .comment_item .woobox .img.data-v-695e9b24 {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: #eee;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.comment_list .comment_item .woobox .woobox_flex.data-v-695e9b24 {
+  padding-left: 16rpx;
+}
+.comment_list .comment_item .woobox .woobox_flex .name.data-v-695e9b24 {
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #010101;
+}
+.comment_list .comment_item .woobox .woobox_flex .desc.data-v-695e9b24 {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: #c4c4c4;
+}
+.comment_list .comment_item .woobox .woobox_flex .desc .text.data-v-695e9b24 {
+  padding-left: 10rpx;
+}
+.comment_list .comment_item .feed_content.data-v-695e9b24 {
+  padding-top: 12rpx;
+  display: flex;
+  flex-direction: column;
+}
+.comment_list .comment_item .feed_content .feed_item.data-v-695e9b24 {
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+  padding-top: 8rpx;
+  display: flex;
+}
+.comment_list .comment_item .feed_content .feed_item .text.data-v-695e9b24 {
+  display: flex;
+}
+.comment_list .comment_item .feed_content .feed_item .text .bold.data-v-695e9b24 {
+  display: flex;
+  font-weight: 600;
+}
+.comment_list .comment_item .feed_content .feed_item .text .sub.data-v-695e9b24 {
+  flex: 1;
+}
+.comment_list .comment_item .feed_content .tip.data-v-695e9b24 {
+  padding-top: 12rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+.comment_list .comment_item .feed_content .call.data-v-695e9b24 {
+  display: flex;
+  align-items: center;
+}
+.comment_list .comment_item .feed_content .call .text.data-v-695e9b24 {
+  margin-right: 12rpx;
+}
+.comment_list .comment_item .feed_content .call .triangle-up.data-v-695e9b24 {
+  margin-right: 5rpx;
+  width: 0;
+  height: 0;
+  border-left: 7rpx solid transparent;
+  border-right: 7rpx solid transparent;
+  border-bottom: 14rpx solid #FE694F;
+}
+.comment_list .comment_item .feed_content .imglist.data-v-695e9b24 {
+  padding-top: 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment_list .comment_item .feed_content .imglist .item.data-v-695e9b24 {
+  width: 210rpx;
+  height: 210rpx;
+  margin-right: 14rpx;
+  margin-bottom: 14rpx;
+  background-color: #eee;
+}
+.comment_list .comment_item .feed_content .imglist .item .img.data-v-695e9b24 {
+  width: 100%;
+  height: 100%;
+}
+.comment_list .comment_item .feed_content .imglist .item.data-v-695e9b24:nth-child(3n) {
+  margin-right: 0;
+}
+.comment_list .comment_item .feed_ft.data-v-695e9b24 {
+  padding: 14rpx 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #b3b3b3;
+}
+.comment_list .comment_item .feed_ft .right.data-v-695e9b24 {
+  display: flex;
+  align-items: center;
+}
+.comment_list .comment_item .feed_ft .right .icon_l.data-v-695e9b24 {
+  display: flex;
+  align-items: center;
+  margin-left: 12rpx;
+}
+

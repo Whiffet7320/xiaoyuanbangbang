@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "立即支付",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-gap": "/uview-ui/components/u-gap/u-gap"
+  }
+}

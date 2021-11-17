@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.comment_list.data-v-72929878 {
+  background-color: #FFFFFF;
+}
+.comment_list .comment_item.data-v-72929878 {
+  padding-bottom: 16rpx;
+}
+.comment_list .comment_item.data-v-72929878:last-child {
+  padding-bottom: 0;
+}
+.comment_list .comment_item .woobox.data-v-72929878 {
+  display: flex;
+  align-items: center;
+}
+.comment_list .comment_item .woobox .img.data-v-72929878 {
+  width: 60rpx;
+  height: 60rpx;
+  background-color: #eee;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.comment_list .comment_item .woobox .woobox_flex.data-v-72929878 {
+  padding-left: 16rpx;
+}
+.comment_list .comment_item .woobox .woobox_flex .name.data-v-72929878 {
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #010101;
+}
+.comment_list .comment_item .woobox .woobox_flex .desc.data-v-72929878 {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000034;
+}
+.comment_list .comment_item .feed_content.data-v-72929878 {
+  padding-top: 20rpx;
+}
+.comment_list .comment_item .feed_content .feed_item.data-v-72929878 {
+  font-size: 24rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+  text-align: justify;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-break: break-word;
+  margin-bottom: 16rpx;
+}
+.comment_list .comment_item .feed_content .imglist.data-v-72929878 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.comment_list .comment_item .feed_content .imglist .item.data-v-72929878 {
+  width: 214rpx;
+  height: 214rpx;
+  margin-right: 14rpx;
+  margin-bottom: 24rpx;
+  background-color: #eee;
+}
+.comment_list .comment_item .feed_content .imglist .item .img.data-v-72929878 {
+  width: 100%;
+  height: 100%;
+}
+.comment_list .comment_item .feed_content .imglist .item.data-v-72929878:nth-child(3n) {
+  margin-right: 0;
+}
+.comment_list .comment_item .feed_ft.data-v-72929878 {
+  padding: 0 0 24rpx 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #b3b3b3;
+}
+.comment_list .comment_item .feed_ft .right.data-v-72929878 {
+  display: flex;
+  align-items: center;
+}
+.comment_list .comment_item .feed_ft .right .icon_l.data-v-72929878 {
+  display: flex;
+  align-items: center;
+  margin-left: 12rpx;
+}
+.comment_list .comment_item .feed_ft .right .icon_l.del.data-v-72929878 {
+  margin-left: 30rpx;
+}
+

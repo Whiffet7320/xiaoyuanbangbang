@@ -1,0 +1,1 @@
+{"version":3,"sources":["uni-app:///main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA;AACA;AACA,kO;AACAA,UAAU,CAACC,qBAAD,CAAV,C","file":"pages/index/shudong/biaobaiqiang.js","sourcesContent":["import 'uni-pages';\nimport Vue from 'vue'\nimport Page from './pages/index/shudong/biaobaiqiang.vue'\ncreatePage(Page)"],"sourceRoot":""}

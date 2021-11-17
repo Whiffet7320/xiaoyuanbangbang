@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "加载中...",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "uni-swipe-action": "/components/uni-swipe-action/uni-swipe-action",
+    "uni-swipe-action-item": "/components/uni-swipe-action-item/uni-swipe-action-item",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
+  }
+}

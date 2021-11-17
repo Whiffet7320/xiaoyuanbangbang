@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.navbar .navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+}
+.navbar .navbar-fixed .navbar-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 60rpx 0 38rpx;
+}
+.navbar .navbar-fixed .navbar-content .back {
+  margin-right: 30rpx;
+}
+.navbar .navbar-fixed .navbar-content .navbar-search {
+  display: flex;
+  align-items: center;
+  padding: 0 32rpx 0 0;
+  width: 100%;
+  height: 64rpx;
+  background: #ffffff;
+  border-radius: 32rpx;
+}
+.navbar .navbar-fixed .navbar-content .navbar-search .navbar-search_icon {
+  margin-right: 15rpx;
+}
+.navbar .navbar-fixed .navbar-content .navbar-search .navbar-search_icon .imgs {
+  margin-left: 38rpx;
+  width: 25rpx;
+  height: 25rpx;
+}
+.navbar .navbar-fixed .navbar-content .navbar-search .navbar-search_text {
+  display: flex;
+  align-items: center;
+  padding: 0 16rpx;
+  height: 40rpx;
+  background: #f1f1f1;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  color: #000000;
+}
+

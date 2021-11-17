@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "加载中...",
+  "navigationBarBackgroundColor": "#FE694F",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "page-search": "/components/page-search/page-search",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "lost-list": "/pages/lost/components/lost-list"
+  }
+}
