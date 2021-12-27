@@ -5,7 +5,7 @@
 				<view class="tit1">
 					<view class="left">
 						<image :src="obj.avatar" class="pic1" mode=""></image>
-						<view class="txt1">{{obj.sender_name==""?'匿名用户':obj.sender_name}}</view>
+						<view class="txt1">{{obj.sender_name==""?'':obj.sender_name}}</view>
 					</view>
 					<view class="bq">TO：{{obj.receiver_name}}</view>
 				</view>

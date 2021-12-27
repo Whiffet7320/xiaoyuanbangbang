@@ -2,7 +2,7 @@
 	<view>
 		<page-nav :scrollTop="scrollTop" :title="title"></page-nav>
 		<view class="list">
-			<page-commentxy :list="list" @previewImage="previewImage" :isDetail="true"></page-commentxy>
+			<page-commentxy :list="list" @previewImage="previewImage" :isShow="false" :isDetail="true" :isDel="isDel" @ondel="onDelete"></page-commentxy>
 			<view class="commentlist">
 				<view class="total">共{{total}}条评论</view>
 				<view class="comment_list">
@@ -12,7 +12,7 @@
 							<view class="hd">
 								<view class="left">
 									<text class="name">{{item.nickname}}</text>
-									<text>{{$tools.timeago(new Date(item.add_time).getTime())}}</text>
+									<text>{{$tools.timeago(Date.parse(new Date(item.add_time.replace(/-/g, '/'))))}}</text>
 								</view>
 							</view>
 							<view class="ft">
@@ -36,7 +36,7 @@
 									<view class="info">
 										<view class="hd">
 											<text class="name">{{pitem.nickname}}</text>
-											<text>{{$tools.timeago(new Date(pitem.add_time).getTime())}}</text>
+											<text>{{$tools.timeago(Date.parse(new Date(pitem.add_time.replace(/-/g, '/'))))}}</text>
 										</view>
 										<view class="desc">{{pitem.content}}</view>
 									</view>
@@ -48,7 +48,7 @@
 				<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" margin-top="100" />
 			</view>
 		</view>
-		<page-ftcomment :list="list[0]" @change="onChange" @reply="onReply"></page-ftcomment>
+		<page-ftcomment :list="list[0]" :total="total" @change="onChange" @reply="onReply"></page-ftcomment>
 		<u-popup v-model="popShow" mode="bottom" :closeable="false" :safe-area-inset-bottom="true" border-radius="0">
 			<view class="commentModal">
 				<view class="utext" :class="{'on':comments==''}">
@@ -59,6 +59,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
@@ -81,6 +82,8 @@
 		data(){
 			return{
 				isOnShow:true,
+				uid:0,
+				isDel:false,
 				id:0,
 				sid:0,
 				title:"",
@@ -106,6 +109,40 @@
 			}
 		},
 		methods:{
+			getUserInfo(){
+				this.$api.userInfo().then((res)=>{
+					if(res.code==200){
+						this.uid = res.data.uid;
+					}
+				})
+			},
+			onDelete(val){
+				let id = val.id;
+				let index = val.index;
+				uni.showModal({
+					content:"确定是否删除？",
+					confirmColor:"#fe694f",
+					success: (res) => {
+						if(res.confirm){
+							this.$api.delfengjing(id).then((res)=>{
+								if(res.code==200){
+									this.list.splice(index,1);
+									this.$store.commit("setAdd",true);
+									uni.showToast({
+										title:res.message,
+										icon:"none"
+									})
+								}else{
+									uni.showToast({
+										title:res.message,
+										icon:"none"
+									})
+								}
+							})
+						}
+					}
+				})
+			},
 			loadData(){
 				// if(this.article.length){
 				// 	this.list = this.article;
@@ -114,6 +151,9 @@
 				this.$api.getfengjingDetail(this.id).then((res)=>{
 					if(res.code==200){
 						let data = res.data;
+						if(this.uid == data.user_id){
+							this.isDel = true;
+						}
 						if(data.img_paths){
 							data.imgPath = data.img_paths.split(",");
 							data.imgPath.forEach((img, i) => {
@@ -141,7 +181,7 @@
 				})
 			},
 			getcomtlist(){
-				this.$api.comment_list({id:this.id,type:"fengjing"}).then((res)=>{
+				this.$api.comment_list({id:this.id,type:"fengjing",page:this.current_page,limit:10}).then((res)=>{
 					if(res.code==200){
 						uni.stopPullDownRefresh();
 						this.jlist = this.reload ? res.data.data : this.jlist.concat(res.data.data);
@@ -175,6 +215,7 @@
 								icon:"none"
 							})
 						}
+						this.$store.commit("setAdd",true);
 					}else{
 						uni.showToast({
 							title:res.message,
@@ -204,6 +245,7 @@
 						})
 					}
 				})
+				this.$store.commit("setAdd",true);
 			},
 			onSubreplay(val){
 				this.sid = val.id;
@@ -232,6 +274,7 @@
 								this.reload = true;
 								this.current_page = 1;
 								this.getcomtlist();
+								this.$store.commit("setAdd",true);
 							}else{
 								uni.showToast({
 									title:res.message,
@@ -251,6 +294,7 @@
 								this.reload = true;
 								this.current_page = 1;
 								this.getcomtlist();
+								this.$store.commit("setAdd",true);
 							}else{
 								uni.showToast({
 									title:res.message,
@@ -268,6 +312,7 @@
 		onLoad(options){
 			if(options.id){
 				this.id = options.id;
+				this.getUserInfo();
 				this.loadData();
 			}
 		},

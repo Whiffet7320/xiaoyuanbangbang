@@ -4,12 +4,42 @@
  * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
+.nearby.data-v-0edbc4a4 {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 99999;
+}
 .index.data-v-0edbc4a4 {
   position: relative;
   width: 100%;
   height: 100%;
 }
+@-webkit-keyframes rotating-data-v-0edbc4a4 {
+0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
+@keyframes rotating-data-v-0edbc4a4 {
+0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
 .musicImg.data-v-0edbc4a4 {
+  -webkit-animation: rotating-data-v-0edbc4a4 5.2s linear infinite;
+          animation: rotating-data-v-0edbc4a4 5.2s linear infinite;
   position: fixed;
   right: 40rpx;
   bottom: 200rpx;
@@ -17,8 +47,31 @@
   height: 60rpx;
   z-index: 99;
 }
+.musicImgzt.data-v-0edbc4a4 {
+  position: fixed;
+  right: 40rpx;
+  bottom: 200rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+}
+.shuaxin.data-v-0edbc4a4 {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+}
 .data-v-0edbc4a4 .u-load-more-wrap {
   height: 100rpx !important;
+}
+.actionlist.data-v-0edbc4a4 .u-action-sheet-item__subtext {
+  width: 100%;
+  padding: 0 24rpx;
+  text-align: center;
 }
 .bgImg.data-v-0edbc4a4 {
   position: fixed;
@@ -81,7 +134,7 @@
   color: #ffffff;
 }
 .nav1 .txt3 .icon1 .i-txt.isDianzan.data-v-0edbc4a4 {
-  color: #165ff9;
+  color: #fe694f;
 }
 .nav2.data-v-0edbc4a4 {
   width: 702rpx;
@@ -213,6 +266,11 @@
   font-weight: 500;
   color: #014001;
 }
+.nav3 .item .tit1 .floor.data-v-0edbc4a4 {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #014001;
+}
 .nav3 .item .tit1 .txt2.data-v-0edbc4a4 {
   -webkit-transform: translateX(10rpx);
           transform: translateX(10rpx);
@@ -233,7 +291,7 @@
 .nav3 .item.data-v-0edbc4a4::after {
   position: absolute;
   top: 0;
-  right: -24rpx;
+  right: -21rpx;
   content: '';
   width: 0;
   height: 0;
@@ -246,10 +304,13 @@
 .nav3 .item.yary.data-v-0edbc4a4 {
   background: rgba(217, 217, 217, 0.8);
 }
+.nav3 .item.del.data-v-0edbc4a4 {
+  opacity: 0.6;
+}
 .nav3 .item.yary.data-v-0edbc4a4::after {
   position: absolute;
   top: 0;
-  right: -24rpx;
+  right: -21rpx;
   content: '';
   width: 0;
   height: 0;

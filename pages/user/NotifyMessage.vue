@@ -59,6 +59,10 @@
 			
 		},
 		onShow() {
+			this.$store.commit("isShudong", false);
+			this.$store.commit('firstMusicTime',true);
+			this.$innerAudioContext.stop()
+			
 			this.list = [];
 			this.$store.commit("xiaoxiPage", 1);
 			this.getData();
@@ -80,7 +84,7 @@
 						this.status = 'loadmore';
 						this.list = this.list.concat(res.data.data)
 						this.list.forEach(ele => {
-							ele.title = ele.type.indexOf('shudong') > -1 ? '你有一条来自树洞的消息' : ele.type == 'gaobaiComment' ? '你有一条来自表白墙的消息' : ele.type.indexOf('jishi') > -1 ? '你有一条来自集市的消息' : ele.type.indexOf('baoxiu') > -1 ? '你有一条来自报修的消息' : ele.type.indexOf('fengjing') > -1 ? '你有一条来自风景的消息' : ele.type.indexOf('pinche') > -1 ? '你有一条来自拼车的消息' :  ele.type.indexOf('pindan') > -1 ? '你有一条来自拼单的消息' : ''
+							ele.title = ele.type.indexOf('shudong') > -1 ? '你有一条来自树洞的消息' : ele.type == 'gaobaiComment' ? '你有一条来自表白墙的消息' : ele.type.indexOf('jishi') > -1 ? '你有一条来自集市的消息' : ele.type.indexOf('baoxiu') > -1 ? '你有一条来自报修的消息' : ele.type.indexOf('fengjing') > -1 ? '你有一条来自风景的消息' : ele.type.indexOf('pinche') > -1 ? '你有一条来自拼车的消息' :  ele.type.indexOf('pindan') > -1 ? '你有一条来自拼单的消息' : ele.type.indexOf('shougou') > -1 ? '你有一条来自失物招领的消息' : ''
 						})
 					}
 				}, 200)
@@ -88,40 +92,54 @@
 			},
 			async toXiangqin(item){
 				console.log(item)
-				const res = await this.$api.zero_unread_comment({
-					id:item.id
+				this.$api.zero_unread_comment({id:item.id}).then((res)=>{
+					console.log(res)
+					if(item.type.indexOf('shudong') > -1 ){
+						uni.navigateTo({
+							url: `/pages/index/shudong/xiangqin?id=${item.pid}`
+						})
+						this.list = [];
+					}else if(item.type == 'gaobaiComment' ){
+						uni.navigateTo({
+							url: `/pages/index/xiaoyuanbiaobai/xiangqin?id=${item.pid}`
+						})
+						this.list = [];
+					}else if(item.type == 'jishiComment' || item.type == 'jishiCommentReply'){
+						this.$api.getjshiDetail(item.pid).then((res)=>{
+							uni.navigateTo({
+								url: `/pages/index/detail/detail?id=${item.pid}&type=jishi&stype=${res.data.type}`
+							})
+							this.list = [];
+						})
+					}else if(item.type == 'fengjingComment' || item.type == 'fengjingCommentReply'){
+						uni.navigateTo({
+							url: `/pages/campus/comment?id=${item.pid}`
+						})
+						this.list = [];
+					}else if(item.type == 'baoxiuComment' || item.type == 'baoxiuCommentReply'){
+						uni.navigateTo({
+							url: `/pages/index/detail/detail?id=${item.pid}&type=baoxiu`
+						})
+						this.list = [];
+					}else if(item.type == 'pindanComment' || item.type == 'pindanCommentReply'){
+						uni.navigateTo({
+							url: `/pages/index/detail/detail?id=${item.pid}&type=pindan`
+						})
+						this.list = [];
+					}else if(item.type == 'pincheComment' || item.type == 'pincheCommentReply'){
+						uni.navigateTo({
+							url: `/pages/index/detail/detail?id=${item.pid}&type=pinche`
+						})
+						this.list = [];
+					}else if(item.type == 'shougouComment' || item.type == 'shougouCommentReply'){
+						this.$api.getsgDetail(item.pid).then((res)=>{
+							uni.navigateTo({
+								url: `/pages/index/detail/detail?id=${item.pid}&type=shougou&stype=${res.data.type}`
+							})
+							this.list = [];
+						})
+					}
 				})
-				console.log(res)
-				if(item.type.indexOf('shudong') > -1 ){
-					uni.navigateTo({
-						url: `/pages/index/shudong/xiangqin?id=${item.pid}`
-					})
-				}else if(item.type == 'gaobaiComment' ){
-					uni.navigateTo({
-						url: `/pages/index/xiaoyuanbiaobai/xiangqin?id=${item.pid}`
-					})
-				}else if(item.type == 'jishiComment' || item.type == 'jishiCommentReply'){
-					const res = await this.$api.getjshiDetail(item.pid);
-					uni.navigateTo({
-						url: `/pages/index/detail/detail?id=${item.pid}&type=jishi&stype=${res.data.type}`
-					})
-				}else if(item.type == 'fengjingComment' || item.type == 'fengjingCommentReply'){
-					uni.navigateTo({
-						url: `/pages/campus/comment?id=${item.pid}`
-					})
-				}else if(item.type == 'baoxiuComment' || item.type == 'baoxiuCommentReply'){
-					uni.navigateTo({
-						url: `/pages/index/detail/detail?id=${item.pid}&type=baoxiu`
-					})
-				}else if(item.type == 'pindanComment' || item.type == 'pindanCommentReply'){
-					uni.navigateTo({
-						url: `/pages/index/detail/detail?id=${item.pid}&type=pindan`
-					})
-				}else if(item.type == 'pincheComment' || item.type == 'pincheCommentReply'){
-					uni.navigateTo({
-						url: `/pages/index/detail/detail?id=${item.pid}&type=pinche`
-					})
-				}
 			},
 		}
 	}

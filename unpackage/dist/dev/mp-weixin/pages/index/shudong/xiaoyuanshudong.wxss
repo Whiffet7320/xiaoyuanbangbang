@@ -4,15 +4,71 @@
  * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
+.nearby.data-v-11b7c9eb {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 99999;
+}
 .index.data-v-11b7c9eb {
   position: relative;
   width: 100%;
   height: 100%;
 }
+@-webkit-keyframes rotating-data-v-11b7c9eb {
+0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
+@keyframes rotating-data-v-11b7c9eb {
+0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+}
+to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+}
+}
 .musicImg.data-v-11b7c9eb {
+  -webkit-animation: rotating-data-v-11b7c9eb 5.2s linear infinite;
+          animation: rotating-data-v-11b7c9eb 5.2s linear infinite;
   position: fixed;
   right: 40rpx;
   bottom: 200rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+}
+.musicImgzt.data-v-11b7c9eb {
+  position: fixed;
+  right: 40rpx;
+  bottom: 200rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+}
+.jymusicImg.data-v-11b7c9eb {
+  position: fixed;
+  right: 40rpx;
+  bottom: 200rpx;
+  width: 60rpx;
+  height: 60rpx;
+  z-index: 99;
+}
+.shuaxin.data-v-11b7c9eb {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
   width: 60rpx;
   height: 60rpx;
   z-index: 99;
@@ -52,7 +108,7 @@
   background: rgba(255, 255, 255, 0.5);
   border-radius: 8rpx;
   position: relative;
-  margin-top: 380rpx;
+  margin-top: 288rpx;
   left: 24rpx;
 }
 .nav1 .nav1-1.data-v-11b7c9eb {
@@ -106,7 +162,7 @@
   flex-direction: row-reverse;
 }
 .nav1 .btns .btn1.data-v-11b7c9eb {
-  width: 120rpx;
+  width: 150rpx;
   height: 44rpx;
   background: #ffffff;
   border-radius: 8rpx;
@@ -118,7 +174,7 @@
   justify-content: center;
 }
 .nav1 .btns .btn1.data-v-11b7c9eb .u-input {
-  width: 60rpx;
+  width: 90rpx;
 }
 .nav1 .btns .btn1.data-v-11b7c9eb .u-input .u-input__input {
   font-size: 20rpx;
@@ -127,6 +183,9 @@
   margin-left: 8rpx;
   width: 24rpx;
   height: 24rpx;
+}
+.nav1 .btns .isnm.data-v-11b7c9eb .u-checkbox__label {
+  color: #FFFFFF;
 }
 .nav1 .btns .btn2.data-v-11b7c9eb {
   margin-left: 24rpx;
@@ -207,13 +266,13 @@
 .nav4-items .item .right.data-v-11b7c9eb {
   position: relative;
 }
-.nav4-items .item .right .zsRight.data-v-11b7c9eb:after {
+.nav4-items .item .right .zsRight.data-v-11b7c9eb::after {
   content: "";
   position: absolute;
   -webkit-transform: rotateZ(-270deg);
           transform: rotateZ(-270deg);
-  left: -24rpx;
-  top: 0px;
+  left: -22rpx;
+  top: 0rpx;
   width: 0;
   height: 0;
   border-top: 12rpx solid #fff;
@@ -238,6 +297,10 @@
 .nav4-items .item .right .zsRight .txt1 .txt1-1.data-v-11b7c9eb {
   font-size: 28rpx;
   font-weight: 500;
+  color: #000000;
+}
+.nav4-items .item .right .zsRight .txt1 .floor.data-v-11b7c9eb {
+  font-size: 24rpx;
   color: #000000;
 }
 .nav4-items .item .right .zsRight .txt1 .txt1-2.data-v-11b7c9eb {

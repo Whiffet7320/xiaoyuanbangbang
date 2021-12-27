@@ -4,13 +4,21 @@
  * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
+.midwrap.data-v-af847712 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 500;
+}
 .midwrap .mask.data-v-af847712 {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 50;
+  z-index: 500;
   background-color: rgba(0, 0, 0, 0.5);
 }
 .midwrap .midwrap_con.data-v-af847712 {
@@ -20,10 +28,10 @@
   padding: 0 11rpx;
   position: absolute;
   left: 50%;
-  bottom: 230rpx;
+  bottom: 180rpx;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  z-index: 60;
+  z-index: 600;
 }
 .midwrap .midwrap_con .before.data-v-af847712 {
   position: absolute;

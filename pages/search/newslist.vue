@@ -11,6 +11,7 @@
 		<view class="sealist" v-if="list.length">
 			<view class="text" v-for="(item,index) in list" :key="index" @click="onDetail(item)">{{item.title}}</view>
 		</view>
+		<view class="empty" v-if="total==0">暂无搜索结果</view>
 	</view>
 </template>
 
@@ -29,7 +30,8 @@
 					loadmore: '上拉加载更多',
 					loading: '正在加载...',
 					nomore: '没有更多了'
-				}
+				},
+				total:-1
 			}
 		},
 		methods:{
@@ -39,10 +41,16 @@
 				}
 			},
 			onDetail(val){
-				this.$store.commit("setNewsarticle",val);
-				uni.navigateTo({
-					url:"/pages/campus/newsDetail?id="+val.id+"&type="+val.tag
-				})
+				if(val.tag=="news"){
+					this.$store.commit("setNewsarticle",val);
+					uni.navigateTo({
+						url:"/pages/campus/newsDetail?id="+val.id
+					})
+				}else if(val.tag=="advice"){
+					uni.navigateTo({
+						url:"/pages/campus/adviceDetail?id="+val.id
+					})
+				}
 				this.value = "";
 				this.list = [];
 				this.current_page = 1;
@@ -52,6 +60,7 @@
 				this.$api.getarticle({keyword:this.value}).then((res)=>{
 					if(res.code==200){
 						uni.stopPullDownRefresh();
+						this.total = res.data.total;
 						this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
 						this.current_page = res.data.current_page; //当前页码
 						this.last_page = res.data.last_page; //总页码
@@ -141,5 +150,14 @@
 				padding:0 0 30rpx;
 			}
 		}
+	}
+	.empty{
+		width: 100%;
+		height: 300rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24rpx;
+		color: #707070;
 	}
 </style>

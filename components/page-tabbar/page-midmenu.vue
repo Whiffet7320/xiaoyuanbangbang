@@ -80,13 +80,19 @@
 
 <style lang="scss" scoped>
 	.midwrap{
+		position: fixed;
+		top:0;
+		left:0;
+		width: 100%;
+		height: 100vh;
+		z-index: 500;
 		.mask{
 			position: fixed;
 			top:0;
 			left:0;
 			width: 100%;
 			height: 100%;
-			z-index: 50;
+			z-index: 500;
 			background-color: rgba(0,0,0,0.5);
 		}
 		.midwrap_con{
@@ -96,9 +102,9 @@
 			padding:0 11rpx;
 			position: absolute;
 			left:50%;
-			bottom: 230rpx;
+			bottom: 180rpx;
 			transform: translateX(-50%);
-			z-index: 60;
+			z-index: 600;
 			.before{
 				position: absolute;
 				bottom:-20rpx;

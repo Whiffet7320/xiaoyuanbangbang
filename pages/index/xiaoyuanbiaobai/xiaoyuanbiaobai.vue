@@ -29,17 +29,17 @@
 				<u-icon name="photo" color="#ffffff" size="36"></u-icon>
 				<view class="txt1">添加图片({{img_pathsNum}}/3)</view>
 			</view>
-			<view class="tit1 n3">
+			<!-- <view class="tit1 n3">
 				<text class="red">*</text>你的昵称:
 			</view>
-			<u-radio-group size='32' wrap v-model="rad1" @change="radioGroupChange">
-				<u-radio label-size='24' :name="1">留下你的名字/昵称</u-radio>
-				<u-radio label-size='24' :name="2">匿名</u-radio>
-			</u-radio-group>
-			<view v-if="!isNiming" class="tit1 n4">你的名字/昵称</view>
+			<u-radio-group size='32' active-color="#fe694f" wrap v-model="rad1" @change="radioGroupChange">
+				<u-radio label-size='24' :name="1">否</u-radio>
+				<u-radio label-size='24' :name="2">是</u-radio>
+			</u-radio-group> -->
+			<view v-if="!isNiming" class="tit1 n4">你的名称</view>
 			<u-input v-if="!isNiming" v-model="form.sender_name" type="text" border />
-			<view class="tit1 n5">微信号</view>
-			<view class="tit2 n5">这个联系方式不会再墙上放出，只做后台备份，如果那个TA想要找到你，我们会给TA你的联系方式</view>
+			<view class="tit1 n5">联系方式</view>
+			<view class="tit2 n5">这个联系方式不会再墙上放出，如果那个TA想要找到你，我们会给TA你的联系方式</view>
 			<u-input v-model="form.sender_wx" type="text" border />
 			<view class="footBtn" @click="onSubmit">提交</view>
 		</view>
@@ -111,7 +111,7 @@
 							if (res.tempFiles.length == 1) {
 								const res1 = await this.$api.upload_pic(ele, 'gaobai');
 								console.log(res1.data)
-								var newImg = `${this.$url}/${res1.data}`
+								var newImg = `${res1.data}`
 								this.$set(this.imgArr, i, newImg)
 								this.$set(this.form.img_paths, i, res1.data)
 								if (!this.imgArr[i + 1] && this.imgArr.length != 3) {
@@ -124,7 +124,7 @@
 							} else {
 								const res1 = await this.$api.upload_pic(ele, 'gaobai');
 								console.log(res1.data)
-								var newImg = `${this.$url}/${res1.data}`
+								var newImg = `${res1.data}`
 								this.$set(this.imgArr, index, newImg)
 								this.$set(this.form.img_paths, index, res1.data)
 								if (!this.imgArr[index + 1] && this.imgArr.length != 3) {
@@ -152,7 +152,7 @@
 						res.tempFiles.forEach(async ele => {
 							const res1 = await this.$api.upload_pic(ele, 'gaobai');
 							console.log(res1.data)
-							var newImg = `${this.$url}/${res1.data}`
+							var newImg = `${res1.data}`
 							this.$set(this.imgArr, i, newImg)
 							this.$set(this.form.img_paths, i, res1.data)
 							if (!this.imgArr[i + 1] && this.imgArr.length != 3) {
@@ -370,7 +370,7 @@
 			margin-top: 40rpx;
 			width: 240rpx;
 			height: 80rpx;
-			background: #165ff9;
+			background: #fe694f;
 			border-radius: 40rpx;
 			font-size: 28rpx;
 			font-weight: 500;

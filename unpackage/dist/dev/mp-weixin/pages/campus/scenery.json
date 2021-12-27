@@ -2,8 +2,10 @@
   "navigationBarTitleText": "校园风景",
   "navigationBarTextStyle": "white",
   "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
     "page-nav": "/pages/campus/components/page-nav",
     "page-commentxy": "/pages/campus/components/page-commentxy"
   }

@@ -2,11 +2,16 @@
 	<view class="detail">
 		<view class="title">{{info.title}}</view>
 		<view class="author">
-			<view class="name">【校园帮帮平台发布】</view>
+			<view class="name">【洛科帮帮平台发布】</view>
 			<view class="time">{{info.add_time}}</view>
 		</view>
 		<view class="u-content">
 			<u-parse :html="info.content"></u-parse>
+		</view>
+		<view class="imglist" v-if="info.imgPath">
+			<view class="item" v-for="(pitem,indexa) in info.imgPath" :key="indexa" @click="previewImage(info.imgPath,indexa)">
+				<image :src="pitem" mode="widthFix" class="img"></image>
+			</view>
 		</view>
 	</view>
 </template>
@@ -30,23 +35,22 @@
 			})
 		},
 		methods:{
-			setTitle(type){
-				if(type=="advice"){
-					uni.setNavigationBarTitle({title:"社团咨询"});
-				}else if(type=="news"){
-					uni.setNavigationBarTitle({title:"校园新闻"});
-				}
-				this.getDetail();
-			},
 			getDetail(){
-				this.info = this.newsArticle;
+				let data = this.newsArticle;
+				if(data.img_paths){
+					data.imgPath = data.img_paths.split(",");
+					data.imgPath.forEach((img, i) => {
+						this.$set(data.imgPath, i, this.$tools.imgUrl(img))
+					})
+				}
+				this.info = data;
+				
 			}
 		},
 		onLoad(option){
-			if(option.type){
+			if(option.id){
 				this.id = option.id;
-				this.type = option.type;
-				this.setTitle(option.type);
+				this.getDetail();
 			}
 		}
 	}
@@ -87,6 +91,17 @@
 			font-size: 28rpx;
 			font-family: PingFang SC, PingFang SC-Medium;
 			color: #060606;
+		}
+		.imglist{
+			padding-top: 12rpx;
+			display: flex;
+			flex-direction: column;
+			.item{
+				width: 100%;
+				min-height: 200rpx;
+				text-align: center;
+				padding-bottom: 40rpx;
+			}
 		}
 	}
 </style>

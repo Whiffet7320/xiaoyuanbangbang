@@ -5,6 +5,7 @@
 			<page-commentxy :list="list" @previewImage="previewImage"></page-commentxy>
 			<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
 		</view>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 

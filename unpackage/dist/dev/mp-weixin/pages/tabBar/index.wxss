@@ -76,12 +76,14 @@ page {
 }
 .nav4 .items.data-v-40e5343a {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .nav4 .items .item.data-v-40e5343a {
+  width: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20rpx;
 }
 .nav4 .items .item .item-pic.data-v-40e5343a {
   width: 100rpx;
@@ -129,5 +131,21 @@ page {
   width: 50%;
   text-align: center;
   color: #848484;
+}
+.indexcon .tit.data-v-40e5343a {
+  padding-left: 28rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28rpx;
+  font-family: PingFang SC, PingFang SC-Bold;
+  font-weight: 700;
+  color: #000000;
+  background-color: #F7F8FA;
+}
+.indexcon .about.data-v-40e5343a {
+  width: 100%;
+}
+.indexcon .about image.data-v-40e5343a {
+  width: 100%;
 }
 

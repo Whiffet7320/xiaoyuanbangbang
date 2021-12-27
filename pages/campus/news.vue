@@ -5,39 +5,43 @@
 			<image src="/static/images/icon_search.png" class="icon"></image>
 			<view class="text">请输入你想要搜索的内容</view>
 		</view>
-		<view class="swiperbox" v-if="tag=='advice'">
+		<view class="swiperbox">
 			<u-swiper :list="banlist" height="320" :title="true" mode="none" :title-style="{'font-size':'28rpx','background':'none'}"></u-swiper>
 		</view>
-		<view class="swiperbox" v-if="tag=='news'">
-			<u-swiper :list="banlist2" height="320" :title="true" mode="none" :title-style="{'font-size':'28rpx','background':'none'}"></u-swiper>
-		</view>
-		<view class="midnew" v-if="tag=='advice'">
+		<view class="midnew">
 			<view class="input">
 				<image src="/static/images/icon_edit.png" mode="aspectFit" class="icon"></image>
-				<input type="text" v-model="question" placeholder="请输入你要发布的内容" class="ipt" placeholder-style="color:#D9D9D9;" />
+				<input type="text" v-model="from.question" maxlength="20" placeholder="请输入文章标题(限20字以内)" class="ipt" placeholder-style="color:#D9D9D9;" />
 			</view>
 			<view class="input textarea">
 				<image src="/static/images/icon_edit.png" mode="aspectFit" class="icon"></image>
-				<textarea v-model="content" class="iptext" placeholder="请输入文章内容" placeholder-style="color:#D9D9D9;" @confirm="onConfirm"></textarea>
+				<textarea v-model="from.content" class="iptext" maxlength="1000" :auto-height="true" placeholder="请输入文章内容，请自觉遵守网络安全法，依法依规进行发布。" placeholder-style="color:#D9D9D9;"></textarea>
+			</view>
+			<view class="upload">
+				<view class="grid">
+					<view class="bg_img" v-for="(vo, key) in imglist" :key="key" @tap="viewImage(key)">
+						<image :src="vo" mode="aspectFill"></image>
+						<view class="cu_tag" @tap.stop="delImg(key)">x</view>
+					</view>
+					<view class="solids" v-if="imglist.length < 6" @tap="chooseImage">
+						<image src="/static/images/icon_photo.png" mode="aspectFit" class="img"></image>
+					</view>
+				</view>
 			</view>
 			<view class="light">注意：请简单描述你想要发布的问题，字数受限在1000字以内，需经过平台审核才可发布成功。</view>
-		</view>
-		<view class="midnew" v-if="tag=='news'">
-			<view class="input">
-				<image src="/static/images/icon_edit.png" mode="aspectFit" class="icon"></image>
-				<input type="text" v-model="question" placeholder="请输入文章标题" class="ipt" placeholder-style="color:#D9D9D9;" />
-			</view>
-			<view class="input textarea">
-				<image src="/static/images/icon_edit.png" mode="aspectFit" class="icon"></image>
-				<textarea v-model="content" class="iptext" placeholder="请输入文章内容" placeholder-style="color:#D9D9D9;" @confirm="onConfirm"></textarea>
-			</view>
-			<view class="light">注意：请简单描述你想要发布的问题，字数受限在1000字以内，需经过平台审核才可发布成功。</view>
+			<view class="btn" @click="onSubmit">发布新闻</view>
 		</view>
 		<view class="newrap">
-			<view class="tit">{{ntitle}}</view>
+			<view class="tit">新闻公告</view>
 			<view class="list" v-if="list.length>0">
 				<view class="litem" v-for="(item,index) in list" :key="index" @click="goDetail(item)">
 					<view class="title">{{item.title}}</view>
+					<view class="desc u-line-3" v-if="item.content!=null && item.content!=''">{{item.content.replace(/\r\n|\n|\r/g,"\n")}}</view>
+					<view class="imglist" v-if="item.img_paths!==''">
+						<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click.stop="previewImages(item.imgPath,indexz)">
+							<image :src="pitem" mode="aspectFill" class="img"></image>
+						</view>
+					</view>
 					<view class="time">
 						<image src="/static/images/icon_time.png" mode="aspectFit" class="icon"></image>
 						<text>{{item.add_time}}</text>
@@ -46,30 +50,35 @@
 			</view>
 		</view>
 		<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
+		<view class="mefix" @click="goService">
+			<image src="/static/images/icon_kf.png" mode="aspectFit" class="icon"></image>
+			<text>我的新闻</text>
+		</view>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
+	import config from "../../api/url.js";
 	export default{
 		data(){
 			return{
+				scrollTop:0,
 				id:0,
+				isOnShow:true,
 				banlist:[
-					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20170725%2F88c819bb071345cda4074b081411fc55.jpeg',
-						title: '2021学校开展秋季招生活动中...'
-					},
-				],
-				banlist2:[
 					{
 						image: 'https://inews.gtimg.com/newsapp_bt/0/13383356882/1000',
 						title: '学校积极开展各种“健康教育”和“心理活动”...'
 					}
 				],
-				question:"",
-				content:"",
-				ntitle:"",
-				tag:"advice",
+				from:{
+					question:"",
+					content:"",
+					imgs:[]
+				},
+				imglist:[],
 				list:[],
 				// 加载
 				reload: false, //判断是否上拉
@@ -83,77 +92,140 @@
 				}
 			}
 		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
+		},
 		methods:{
 			onSearch(){
 				uni.navigateTo({
 					url:"/pages/search/newslist"
 				})
 			},
-			setTitle(id){
-				if(id==1){
-					this.tag = "advice";
-					this.ntitle = "问答列表";
-					uni.setNavigationBarTitle({title:"社团咨询"});
-				}else if(id==2){
-					this.tag = "news";
-					this.ntitle = "新闻公告";
-					uni.setNavigationBarTitle({title:"校园新闻"});
+			onSubmit(){
+				if(this.from.question=='' || this.from.content==""){
+					uni.showToast({
+						title:"请填写需要发布的内容",
+						icon:"none"
+					})
+					return false;
 				}
+				let data = {
+					tag:"news",
+					title:this.from.question,
+					content:this.from.content,
+					img_paths:this.from.imgs.length?this.from.imgs.join(","):"",
+					device:uni.getSystemInfoSync().platform
+				}
+				this.$api.article(data).then((res)=>{
+					if(res.code==200){
+						this.from.question = "";
+						this.from.content = "";
+						this.from.imgs = [];
+						this.imglist = [];
+						uni.showToast({
+							title:"发布成功，请等待客服审核",
+							icon:"none"
+						})
+						this.list = [];
+						this.current_page = 1;
+						this.reload = true;
+						this.loadData();
+					}else{
+						uni.showToast({
+							title:res.message,
+							icon:"none"
+						})
+					}
+				})
 			},
-			onConfirm(){
-				if(this.tag == "advice"){
-					if(this.question!=='' && this.content!==""){
-						this.$api.article({title:this.question,content:this.content}).then((res)=>{
-							if(res.code==200){
-								this.question = "";
-								this.content = "";
-								uni.showToast({
-									title:"发布成功，请等待客服审核",
-									icon:"none"
-								})
-							}else{
-								uni.showToast({
-									title:res.message,
-									icon:"none"
-								})
-							}
-						})
-					}else{
-						uni.showToast({
-							title:"请填写需要发布的内容",
-							icon:"none"
-						})
+			viewImage(index,key) {
+				this.isOnShow = false;
+				uni.previewImage({
+					urls: this.imglist,
+					current: this.imglist[key]
+				});
+			},
+			previewImages(urls,index){
+				this.isOnShow = false;
+				uni.previewImage({
+					urls: urls,
+					current: index
+				});
+			},
+			delImg(index) {
+				this.imglist.splice(index, 1);
+				this.from.imgs.splice(index, 1);
+			},
+			chooseImage(){
+				uni.chooseImage({
+					count: 6, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: res => {
+						for (let i = 0; i < res.tempFilePaths.length; i++) {
+							// 读取图片宽高
+							uni.getImageInfo({
+								src: res.tempFilePaths[i],
+								success: image => {
+									if(this.imglist.length>=6){
+										this.$u.toast("图片最多可以上传6张");
+										return false;
+									}
+									uni.showLoading({
+										mask:true,
+										title:"上传中..."
+									})
+									uni.uploadFile({
+										url:config.baseUrl+config.upload_pic,
+										method:"POST",
+										header:{
+											'token':uni.getStorageSync('token')
+										},
+										filePath: image.path,
+										name: 'image',
+										formData:{
+											'token':uni.getStorageSync('token'),
+											'type':"article"
+										},
+										success: (res) =>{
+											let data = JSON.parse(res.data);
+											if(data.code == 200){
+												uni.hideLoading();
+												this.imglist = this.imglist.concat(image.path);
+												this.from.imgs = this.from.imgs.concat(data.data);
+											}else{
+												uni.hideLoading();
+												uni.showToast({
+													title:"上传失败",
+													icon:"none"
+												})
+											}
+										},
+										fail:(error)=>{
+											uni.hideLoading();
+										}
+									})
+								}
+							});
+						}
 					}
-				}else if(this.tag == "news"){
-					if(this.question=="" && this.content==""){
-						uni.showToast({
-							title:"请填写需要发布的内容",
-							icon:"none"
-						})
-					}else{
-						this.$api.article({title:this.question,content:this.content}).then((res)=>{
-							if(res.code==200){
-								this.question = "";
-								this.content = "";
-								uni.showToast({
-									title:"发布成功，请等待客服审核",
-									icon:"none"
-								})
-							}else{
-								uni.showToast({
-									title:res.message,
-									icon:"none"
-								})
-							}
-						})
-					}
-				}
+				});
 			},
 			async loadData(){
-				this.$api.getarticle({tag:this.tag,page:this.current_page,limit:10}).then((res)=>{
+				this.$api.getarticle({tag:"news",page:this.current_page,limit:10}).then((res)=>{
 					if(res.code==200){
 						uni.stopPullDownRefresh();
 						this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+						this.list.forEach(ele => {
+							if(ele.img_paths){
+								ele.imgPath = ele.img_paths.split(",");
+								ele.imgPath.forEach((img, i) => {
+									this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+								})
+							}
+						})
 						this.current_page = res.data.current_page; //当前页码
 						this.last_page = res.data.last_page; //总页码
 						this.status = res.data.total == 0 ? 'nomore' : 'more';
@@ -163,21 +235,34 @@
 			goDetail(item){
 				this.$store.commit("setNewsarticle",item);
 				uni.navigateTo({
-					url:"/pages/campus/newsDetail?id="+item.id+"&type="+item.tag
+					url:"/pages/campus/newsDetail?id="+item.id
+				})
+			},
+			goService(){
+				uni.navigateTo({
+					url:"/pages/campus/meAdvice?type=news"
 				})
 			}
 		},
-		onLoad(option){
-			if(option.id){
-				this.id = option.id;
-				this.setTitle(option.id);
-			}
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
-		onShow(){
+		onLoad(){
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;
 			this.loadData();
+		},
+		onShow(){
+			if(!this.isOnShow){
+				return
+			}
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;
@@ -199,137 +284,13 @@
 </script>
 
 <style lang="scss" scoped>
-	.container{
-		padding: 0 24rpx;
-	}
-	.ibg{
-		position: absolute;
-		top:-88rpx;
-		left: 0;
-		z-index: -1;
-		width: 100%;
-		.icon{
-			width: 100%;
-			height: 436rpx;
+@import "@/common/css/spell/news.scss";
+.newrap{
+	.list{
+		padding-bottom: 20rpx;
+		.litem{
+			margin-bottom: 20rpx;
 		}
 	}
-	.searchbox{
-		width: 100%;
-		height: 60rpx;
-		background: #FFFFFF;
-		border-radius: 30rpx;
-		margin: 32rpx 0;
-		display: flex;
-		align-items: center;
-		.icon{
-			width: 25rpx;
-			height: 25rpx;
-			margin-left: 25rpx;
-			margin-right: 16rpx;
-		}
-		.text{
-			flex:1;
-			font-size: 20rpx;
-			font-family: PingFang SC, PingFang SC-Regular;
-			font-weight: 400;
-			color: #848484;
-		}
-	}
-	.swiperbox{
-		width: 100%;
-		height: 320rpx;
-		margin-bottom: 48rpx;
-	}
-	.midnew{
-		width: 100%;
-		margin-bottom: 40rpx;
-		.input{
-			width: 100%;
-			padding:12rpx 0;
-			border: 2rpx solid #f2f2f2;
-			border-radius: 8rpx;
-			display: flex;
-			align-items: center;
-			.icon{
-				width: 17rpx;
-				height: 18rpx;
-				margin-left: 24rpx;
-				margin-right: 17rpx;
-			}
-			.ipt{
-				flex:1;
-				width: 100%;
-				height: 100%;
-				font-size: 20rpx;
-				color: #000000;
-			}
-			&.textarea{
-				align-items:start;
-				height: 104rpx;
-				margin-top: 24rpx;
-				.iptext{
-					width: 100%;
-					height: 100%;
-					font-size: 20rpx;
-					color: #000000;
-				}
-			}
-		}
-		.light{
-			margin-top: 24rpx;
-			font-size: 20rpx;
-			font-family: PingFang SC, PingFang SC-Medium;
-			font-weight: 500;
-			color: #fe694f;
-		}
-	}
-	.newrap{
-		padding-bottom: 40rpx;
-		.tit{
-			height: 40rpx;
-			line-height: 40rpx;
-			font-size: 28rpx;
-			font-family: PingFang SC, PingFang SC-Bold;
-			font-weight: 700;
-			color: #000000;
-			padding-left: 12rpx;
-			position: relative;
-			border-left: 8rpx #FE694F solid;
-		}
-		.list{
-			margin-top: 16rpx;
-			.litem{
-				.title{
-					font-size: 24rpx;
-					font-family: PingFang SC, PingFang SC-Bold;
-					font-weight: 700;
-					color: #000000;
-				}
-				.time{
-					padding:26rpx 0;
-					display: flex;
-					align-items: center;
-					font-size: 20rpx;
-					font-family: PingFang SC, PingFang SC-Medium;
-					font-weight: 500;
-					color: #848484;
-					.icon{
-						width: 20rpx;
-						height: 20rpx;
-						margin-right: 17rpx;
-					}
-				}
-			}
-		}
-		.empty{
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-			height: 300rpx;
-			font-size: 20rpx;
-			font-family: PingFang SC, PingFang SC-Medium;
-			color: #000;
-		}
-	}
+}
 </style>

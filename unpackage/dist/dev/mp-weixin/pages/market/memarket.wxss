@@ -141,15 +141,36 @@ page{
   padding-top: 15rpx;
   font-size: 24rpx;
   font-family: PingFang SC, PingFang SC-Medium;
-  font-weight: 500;
-  color: #000000;
+  font-weight: 300;
+  color: #666666;
   display: flex;
 }
 .spell .ulist .uitem .content .conitem .text.data-v-443ee544 {
   flex: 1;
+  display: flex;
 }
 .spell .ulist .uitem .content .conitem .text .bold.data-v-443ee544 {
   font-weight: 600;
+  color: #000000;
+}
+.spell .ulist .uitem .content .imglist.data-v-443ee544 {
+  padding-top: 12rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.spell .ulist .uitem .content .imglist .item.data-v-443ee544 {
+  width: 210rpx;
+  height: 210rpx;
+  margin-right: 14rpx;
+  margin-bottom: 14rpx;
+  background-color: #eee;
+}
+.spell .ulist .uitem .content .imglist .item .img.data-v-443ee544 {
+  width: 100%;
+  height: 100%;
+}
+.spell .ulist .uitem .content .imglist .item.data-v-443ee544:nth-child(3n) {
+  margin-right: 0;
 }
 .slotbtn.data-v-443ee544 {
   width: 120rpx;

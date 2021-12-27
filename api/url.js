@@ -1,5 +1,5 @@
 export default {
-	baseUrl: 'https://schoolhelp.5laoye.com', //https://schoolhelp.5laoye.com  http://192.168.50.142:9004
+	baseUrl: 'https://luoke.bjxinzeyuan.cn', //https://schoolhelp.5laoye.com  http://192.168.50.142:9004
 	loginWechat: '/api/mini_login',
 	userInfo: '/api/user_info',
 	gaobai: '/api/gaobai', //告白
@@ -33,6 +33,7 @@ export default {
 	upload_avatar:'/api/upload_avatar',//上传图片相关
 	add_shudong_comment:'/api/add_shudong_comment',//
 	shudong_comment_list:'/api/shudong_comment_list',//
+	del_shudong_comment:'/api/del_shudong_comment',//
 	my_send:'/api/my_send',
 	my_reply:'/api/my_reply',
 	my_zan:'/api/my_zan',
@@ -41,4 +42,6 @@ export default {
 	hot_shudong:'/api/hot_shudong',
 	best_shudong:'/api/best_shudong',
 	zero_unread_comment:'/api/zero_unread_comment',//未读评论改为已读
+	wait_read_num:"/api/wait_read_num",
+	new_comment_list:"/api/new_comment_list"
 }

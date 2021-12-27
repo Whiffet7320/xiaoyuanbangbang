@@ -4,7 +4,7 @@
 		<view class="ftwrap safe-area-inset-bottom">
 			<view class="ipt" @click="onRepay">说一说你的想法...</view>
 			<view class="btnwrap">
-				<view class="icon_l">
+				<view class="icon_l" v-if="isShow">
 					<image src="/static/images/icon_time.png" mode="aspectFit" style="width: 23rpx;height: 23rpx;margin-right: 8rpx;"></image>
 					<text>{{list.read_num||0}}</text>
 				</view>
@@ -14,7 +14,7 @@
 				</view>
 				<view class="icon_l">
 					<image src="/static/images/icon_pl.png" mode="aspectFit" style="width: 30rpx;height: 23rpx;margin-right: 8rpx;"></image>
-					<text>{{list.comment_count||0}}</text>
+					<text>{{total}}</text>
 				</view>
 			</view>
 		</view>
@@ -27,6 +27,14 @@
 			list:{
 				type:Object,
 				default:()=>{return {}}
+			},
+			isShow:{
+				type:Boolean,
+				default:true
+			},
+			total:{
+				type:Number,
+				default:0
 			}
 		},
 		data(){

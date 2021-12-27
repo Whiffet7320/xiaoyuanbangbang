@@ -769,6 +769,11 @@ export default {
 			}
 		})
 	},
+	delShudong(id) {
+		return myDelete({
+			url: `${urls.shudong}/${id}`,
+		})
+	},
 	my_type_list(obj) {
 		return myPost({
 			url: `${urls.my_type_list}`,
@@ -969,6 +974,11 @@ export default {
 			url: `${urls.article}/${id}`
 		})
 	},
+	delarticle(id) {
+		return myDelete({
+			url: `${urls.article}/${id}`
+		})
+	},
 	pindan(obj) {
 		return myPost({
 			url: urls.pindan,
@@ -1114,6 +1124,14 @@ export default {
 			}
 		})
 	},
+	del_shudong_comment(id) {
+		return myPost({
+			url: urls.del_shudong_comment,
+			data: {
+				id:id
+			}
+		})
+	},
 	my_send(obj) {
 		return myGet({
 			url: urls.my_send,
@@ -1178,4 +1196,17 @@ export default {
 		   }
 	  })
 	},
+	wait_read_num() {
+		return myGet({
+			url: `${urls.wait_read_num}`
+		})
+	},
+	new_comment_list(obj){
+		return myGet({
+			url: `${urls.new_comment_list}`,
+			params: {
+				...obj
+			}
+		})
+	}
 }

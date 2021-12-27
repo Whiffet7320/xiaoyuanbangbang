@@ -169,7 +169,7 @@
 						const res1 = await this.$api.upload_avatar(res.tempFiles[0]);
 						if (res1.code == 200) {
 							console.log(res1.data.path)
-							var newImg = `${this.$url}/${res1.data.path}`
+							var newImg = `${res1.data.path}`
 							const res2 = await this.$api.update_user_info({
 								avatar: newImg
 							})

@@ -1,6 +1,6 @@
 <template>
 	<view class="container spell">
-		<view class="tip">温馨提示：点击商品展示框进行<text class="red">修改或重新上传</text>，向左滑动进行<text class="red">下架</text>（如果您不想拼单可以进行下架，下架后其他用户将不会看到您的个人信息）；</view>
+		<view class="tip">温馨提示：点击展示框进行<text class="red">查看详情</text>，向左滑动进行<text class="red">下架</text>（如果您不想让用户看到可以进行下架，下架后其他用户将不会看到您的个人信息）；</view>
 		<view class="ulist">
 			<uni-swipe-action>
 				<uni-swipe-action-item v-for="(item,index) in list" :key="index">
@@ -32,31 +32,36 @@
 							<view class="conitem">
 								<image src="/static/images/icon_times.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【时间】：{{item.pinche_time}}</text>
+									<text class="bold">【时间】：</text>
+									<view class="sub u-line-2">{{item.pinche_time}}</view>
 								</view>
 							</view>
 							<view class="conitem">
 								<image src="/static/images/icon_start.png" mode="aspectFit" style="width: 32rpx;height: 36rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【起点】：{{item.start_location}}</text>
+									<text class="bold">【起点】：</text>
+									<view class="sub u-line-2">{{item.start_location}}</view>
 								</view>
 							</view>
 							<view class="conitem">
 								<image src="/static/images/icon_end.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【终点】：{{item.end_location}}</text>
+									<text class="bold">【终点】：</text>
+									<view class="sub u-line-2">{{item.end_location}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.description">
 								<image src="/static/images/icon_ends.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【描述】：{{item.description}}</text>
+									<text class="bold">【描述】：</text>
+									<view class="sub u-line-2">{{item.description}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.remark">
 								<image src="/static/images/icon_bz.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【备注】：{{item.remark}}</text>
+									<text class="bold">【备注】：</text>
+									<view class="sub u-line-2">{{item.remark}}</view>
 								</view>
 							</view>
 						</view>
@@ -64,31 +69,41 @@
 							<view class="conitem">
 								<image src="/static/images/icon_hgift.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【拼物】：{{item.product_name}}</text>
+									<text class="bold">【拼物】：</text>
+									<view class="sub u-line-2">{{item.product_name}}</view>
 								</view>
 							</view>
 							<view class="conitem">
 								<image src="/static/images/icon_huser.png" mode="aspectFit" style="width: 33rpx;height: 33rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【人数】：{{item.people}}</text>
+									<text class="bold">【人数】：</text>
+									<view class="sub u-line-2">{{item.people}}</view>
 								</view>
 							</view>
 							<view class="conitem">
 								<image src="/static/images/icon_price.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【价格】：{{item.price}}</text>
+									<text class="bold">【价格】：</text>
+									<view class="sub u-line-2">{{item.price}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.description">
 								<image src="/static/images/icon_end.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【描述】：{{item.description}}</text>
+									<text class="bold">【描述】：</text>
+									<view class="sub u-line-2">{{item.description}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.remark">
 								<image src="/static/images/icon_bz.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【备注】：{{item.remark}}</text>
+									<text class="bold">【备注】：</text>
+									<view class="sub u-line-2">{{item.remark}}</view>
+								</view>
+							</view>
+							<view class="imglist" v-if="item.img_paths!==''">
+								<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click="previewImage(item.imgPath,indexz)">
+									<image :src="pitem" mode="aspectFill" class="img"></image>
 								</view>
 							</view>
 						</view>
@@ -102,6 +117,7 @@
 			</uni-swipe-action>
 		</view>
 		<u-loadmore :status="status" bg-color="#f7f8fa" color="#010101" font-size="20" margin-top="80" />
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
@@ -109,6 +125,7 @@
 	export default{
 		data(){
 			return{
+				scrollTop:0,
 				ptype:"pinche",
 				type:0,
 				list:[],
@@ -129,11 +146,12 @@
 				if(this.type==1){
 					this.$api.delpinche(id).then((res)=>{
 						if(res.code==200){
+							this.list.splice(index,1);
+							this.$store.commit("setAdd",true);
 							uni.showToast({
 								title:"下架成功",
 								icon:"none"
 							})
-							this.list.splice(index,1);
 						}else{
 							uni.showToast({
 								title:res.message,
@@ -144,11 +162,12 @@
 				}else if(this.type==2){
 					this.$api.delpindan(id).then((res)=>{
 						if(res.code==200){
+							this.list.splice(index,1);
+							this.$store.commit("setAdd",true);
 							uni.showToast({
 								title:"下架成功",
 								icon:"none"
 							})
-							this.list.splice(index,1);
 						}else{
 							uni.showToast({
 								title:res.message,
@@ -157,6 +176,17 @@
 						}
 					})
 				}
+			},
+			previewImage(urls,index) {
+				uni.previewImage({
+					urls: urls,
+					current: index,
+					indicator: 'default',
+					loop: true,
+					fail(err) {
+						console.log('previewImage出错', urls, err)
+					},
+				})
 			},
 			setTitle(type){
 				if(type==1){
@@ -223,17 +253,18 @@
 				})
 			}
 		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
 		onLoad(options){
 			if(options.type){
 				this.type = options.type;
 				this.setTitle(options.type);
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
 			}
-		},
-		onShow(){
-			this.list = [];
-			this.current_page = 1;
-			this.last_page = 1;
-			this.loadData();
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;

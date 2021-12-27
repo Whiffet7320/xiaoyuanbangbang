@@ -5,6 +5,7 @@
 			<page-commentxy :list="list" @previewImage="previewImage" :isMe="true" :isDel="true" @ondel="onDelete"></page-commentxy>
 			<u-loadmore :status="status" bg-color="#fff" color="#010101" font-size="20" margin-top="80" />
 		</view>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
@@ -51,11 +52,13 @@
 				let index = val.index;
 				uni.showModal({
 					content:"确定是否删除？",
+					confirmColor:"#fe694f",
 					success: (res) => {
 						if(res.confirm){
 							this.$api.delfengjing(id).then((res)=>{
 								if(res.code==200){
 									this.list.splice(index,1);
+									this.$store.commit("setAdd",true);
 									uni.showToast({
 										title:res.message,
 										icon:"none"
@@ -99,14 +102,16 @@
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
-		onShow(){
-			if(!this.isOnShow){
-				return;
-			}
+		onLoad(){
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;
 			this.loadData();
+		},
+		onShow(){
+			if(!this.isOnShow){
+				return;
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;

@@ -21,10 +21,21 @@ const store = new Vuex.Store({
 		shudongPinlunPageSize: 10,
 		xiaoxiPage: 1, //未读消息列表
 		xiaoxiPageSize: 10,
+		firstMusicTime:false,
+		musicPaused:false,
+		isShudong:false,
+		isAdd:false,
+		badge:0
 	},
 	mutations: {
 		setNewsarticle(state, data) {
 			state.newsArticle = data;
+		},
+		setAdd(state, data) {
+			state.isAdd = data;
+		},
+		setBadge(state, data) {
+			state.badge = data;
 		},
 		setArticle(state, data) {
 			state.article = data;
@@ -41,6 +52,9 @@ const store = new Vuex.Store({
 			}
 			if (data.time) {
 				state.userInfo.expressTime = data.time;
+			}
+			if (data.uid) {
+				state.userInfo.uid = data.uid;
 			}
 			uni.setStorageSync("user", state.userInfo);
 		},
@@ -72,6 +86,15 @@ const store = new Vuex.Store({
 		},
 		xiaoxiPage(state, str) {
 			state.xiaoxiPage = str;
+		},
+		firstMusicTime(state, str) {
+			state.firstMusicTime = str;
+		},
+		musicPaused(state, str) {
+			state.musicPaused = str;
+		},
+		isShudong(state, str) {
+			state.isShudong = str;
 		}
 	}
 })

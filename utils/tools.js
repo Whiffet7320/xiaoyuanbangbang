@@ -231,7 +231,8 @@ export default {
 	 * 获取图片完整地址
 	 */
 	imgUrl(url){
-		return config.baseUrl+"/" + url;
+		return url;
+		// return config.baseUrl+"/" + url;
 	},
 	/*时间转换*/
 	timeago(dateTimeStamp) { //dateTimeStamp是一个时间毫秒，注意时间戳是秒的形式，在这个毫秒的基础上除以1000，就是十位数的时间戳。13位数的都是时间毫秒。

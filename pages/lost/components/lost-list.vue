@@ -9,7 +9,7 @@
 					<view class="desc">
 						<text v-if="item.type==1">#帮帮寻物</text>
 						<text v-if="item.type==2">#帮帮寻主</text>
-						<text class="text">{{item.device==null?"":'来自'+item.device.charAt(0).toUpperCase() + item.device.slice(1)}}</text>
+						<text class="text">{{item.device|getDevice}}</text>
 					</view>
 				</view>
 			</view>
@@ -18,7 +18,7 @@
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_shiwu.png" mode="aspectFit" style="width: 35rpx;height: 35rpx;"></image>失物】：</view>
-							<view>{{item.product_name}}</view>
+							<view class="sub u-line-2">{{item.product_name}}</view>
 						</view>
 					</view>
 					<view class="feed_item">
@@ -30,10 +30,10 @@
 					<view class="feed_item" v-if="item.remark">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_shiwu.png" mode="aspectFit" style="width: 35rpx;height: 35rpx;"></image>备注】：</view>
-							<view class="sub u-line-2">{{item.remark}}</view>
+							<view class="sub u-line-3">{{item.remark}}</view>
 						</view>
 					</view>
-					<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+					<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 					<view class="tip call">
 						<text class="text">拾到的同学请点我</text>
 						<view class="triangle-up"></view>
@@ -53,7 +53,7 @@
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_shiw.png" mode="aspectFit" style="width: 31rpx;height: 31rpx;"></image>拾物】：</view>
-							<view>{{item.product_name}}</view>
+							<view class="sub u-line-2">{{item.product_name}}</view>
 						</view>
 					</view>
 					<view class="feed_item" v-if="item.description">
@@ -65,10 +65,10 @@
 					<view class="feed_item" v-if="item.remark">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_shiw.png" mode="aspectFit" style="width: 31rpx;height: 31rpx;"></image>备注】：</view>
-							<view class="sub u-line-2">{{item.remark}}</view>
+							<view class="sub u-line-3">{{item.remark}}</view>
 						</view>
 					</view>
-					<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+					<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 					<view class="tip call">
 						<text class="text">失主请点我</text>
 						<view class="triangle-up"></view>
@@ -83,7 +83,7 @@
 					</view>
 				</view>
 			</template>
-			<view class="feed_ft" v-if="isTime">
+			<view class="feed_ft">
 				<view class="left">发布于{{item.add_time}}</view>
 				<view class="right">
 					<view class="icon_l">
@@ -118,6 +118,19 @@
 		},
 		data(){
 			return{}
+		},
+		filters:{
+			getDevice(val){
+				if(val==null){
+					return "";
+				}else{
+					if(val=="ios"){
+						return "来自Iphone"
+					}else{
+						return '来自'+val.charAt(0).toUpperCase() + val.slice(1)
+					}
+				}
+			}
 		},
 		methods:{
 			goDetail(item){

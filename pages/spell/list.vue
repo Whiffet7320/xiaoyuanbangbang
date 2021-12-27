@@ -7,14 +7,15 @@
 			<page-search></page-search>
 		</view>
 		<view class="list">
-			<page-comment :list="list" @previewImage="previewImage" :type="ptype" :isTime="true"></page-comment>
+			<page-comment :list="list" @previewImage="previewImage" :type="ptype"></page-comment>
 			<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
 		</view>
-		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png"></u-back-top>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import pageSearch from "@/components/page-search/page-search";
 	import pageComment from "@/components/page-comment/page-comment";
 	export default {
@@ -30,8 +31,12 @@
 						title: "最新"
 					},
 					{
-						type: "read_num",
+						type: "zan_num",
 						title: "热门"
+					},
+					{
+						type: "comment_time",
+						title: "新评"
 					}
 				],
 				field: "id",
@@ -52,6 +57,11 @@
 					nomore: '没有更多了'
 				}
 			}
+		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
 		},
 		methods: {
 			previewImage(arr) {
@@ -101,51 +111,91 @@
 			},
 			loadData() {
 				if (this.type == 1) {
-					this.$api.getpinche({field: this.field,page:this.current_page,limit: 10}).then((res) => {
-						if (res.code == 200) {
-							uni.stopPullDownRefresh();
-							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
-							this.list.forEach(ele => {
-								if(ele.img_paths){
-									ele.imgPath = ele.img_paths.split(",");
-									ele.imgPath.forEach((img, i) => {
-										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
-									})
-								}
-							})
-							this.current_page = res.data.current_page; //当前页码
-							this.last_page = res.data.last_page; //总页码
-							this.status = res.data.total == 0 ? 'nomore' : 'more';
-						} else {
-							uni.showToast({
-								title: res.message,
-								icon: "none"
-							})
-						}
-					})
+					if(this.cur==2){
+						this.$api.new_comment_list({type:"pinche",page: this.current_page,limit: 10}).then((res)=>{
+							if(res.code==200){
+								uni.stopPullDownRefresh();
+								this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+								this.list.forEach(ele => {
+									if(ele.img_paths){
+										ele.imgPath = ele.img_paths.split(",");
+										ele.imgPath.forEach((img, i) => {
+											this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+										})
+									}
+								})
+								this.current_page = res.data.current_page; //当前页码
+								this.last_page = res.data.last_page; //总页码
+								this.status = res.data.total == 0 ? 'nomore' : 'more';
+							}
+						})
+					}else{
+						this.$api.getpinche({field: this.field,page:this.current_page,limit: 10}).then((res) => {
+							if (res.code == 200) {
+								uni.stopPullDownRefresh();
+								this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+								this.list.forEach(ele => {
+									if(ele.img_paths){
+										ele.imgPath = ele.img_paths.split(",");
+										ele.imgPath.forEach((img, i) => {
+											this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+										})
+									}
+								})
+								this.current_page = res.data.current_page; //当前页码
+								this.last_page = res.data.last_page; //总页码
+								this.status = res.data.total == 0 ? 'nomore' : 'more';
+							} else {
+								uni.showToast({
+									title: res.message,
+									icon: "none"
+								})
+							}
+						})
+					}
 				} else {
-					this.$api.getpindan({field: this.field,page:this.current_page,limit: 10}).then((res) => {
-						if (res.code == 200) {
-							uni.stopPullDownRefresh();
-							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
-							this.list.forEach(ele => {
-								if(ele.img_paths){
-									ele.imgPath = ele.img_paths.split(",");
-									ele.imgPath.forEach((img, i) => {
-										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
-									})
-								}
-							})
-							this.current_page = res.data.current_page; //当前页码
-							this.last_page = res.data.last_page; //总页码
-							this.status = res.data.total == 0 ? 'nomore' : 'more';
-						} else {
-							uni.showToast({
-								title: res.message,
-								icon: "none"
-							})
-						}
-					})
+					if(this.cur==2){
+						this.$api.new_comment_list({type:"pindan",page: this.current_page,limit: 10}).then((res)=>{
+							if(res.code==200){
+								uni.stopPullDownRefresh();
+								this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+								this.list.forEach(ele => {
+									if(ele.img_paths){
+										ele.imgPath = ele.img_paths.split(",");
+										ele.imgPath.forEach((img, i) => {
+											this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+										})
+									}
+								})
+								this.current_page = res.data.current_page; //当前页码
+								this.last_page = res.data.last_page; //总页码
+								this.status = res.data.total == 0 ? 'nomore' : 'more';
+							}
+						})
+					}else{
+						this.$api.getpindan({field: this.field,page:this.current_page,limit: 10}).then((res) => {
+							if (res.code == 200) {
+								uni.stopPullDownRefresh();
+								this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+								this.list.forEach(ele => {
+									if(ele.img_paths){
+										ele.imgPath = ele.img_paths.split(",");
+										ele.imgPath.forEach((img, i) => {
+											this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+										})
+									}
+								})
+								this.current_page = res.data.current_page; //当前页码
+								this.last_page = res.data.last_page; //总页码
+								this.status = res.data.total == 0 ? 'nomore' : 'more';
+							} else {
+								uni.showToast({
+									title: res.message,
+									icon: "none"
+								})
+							}
+						})
+					}
 				}
 			}
 		},
@@ -153,16 +203,23 @@
 			if (options.type) {
 				this.type = options.type;
 				this.setTitle(options.type);
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
 			}
 		},
 		onShow(){
 			if(!this.isOnShow){
 				return
 			}
-			this.list = [];
-			this.current_page = 1;
-			this.last_page = 1;
-			this.loadData();
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;

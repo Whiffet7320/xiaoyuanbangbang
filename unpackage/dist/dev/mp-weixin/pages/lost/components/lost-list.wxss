@@ -49,28 +49,30 @@
 }
 .comment_list .comment_item .feed_content .feed_item.data-v-1aca0150 {
   font-size: 24rpx;
-  font-family: PingFang SC, PingFang SC-Medium;
-  font-weight: 500;
-  color: #000000;
   padding-top: 8rpx;
   display: flex;
+  color: #666666;
+  font-family: PingFang SC, PingFang SC-Medium;
 }
 .comment_list .comment_item .feed_content .feed_item .text.data-v-1aca0150 {
   display: flex;
 }
 .comment_list .comment_item .feed_content .feed_item .text .bold.data-v-1aca0150 {
   display: flex;
-  font-weight: 600;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 700;
+  color: #000000;
 }
 .comment_list .comment_item .feed_content .feed_item .text .sub.data-v-1aca0150 {
   flex: 1;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 400;
 }
 .comment_list .comment_item .feed_content .tip.data-v-1aca0150 {
   padding-top: 12rpx;
   font-size: 20rpx;
   font-family: PingFang SC, PingFang SC-Medium;
-  font-weight: 500;
-  color: #000000;
+  color: #666666;
 }
 .comment_list .comment_item .feed_content .call.data-v-1aca0150 {
   display: flex;

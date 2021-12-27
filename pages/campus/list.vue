@@ -5,14 +5,15 @@
 		</view>
 		<page-search @onSearch="onSearch"></page-search>
 		<view class="list">
-			<page-comment :list="list" @previewImage="previewImage" type="baoxiu" :isTime="true"></page-comment>
+			<page-comment :list="list" @previewImage="previewImage" type="baoxiu"></page-comment>
 			<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
 		</view>
-		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png"></u-back-top>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import pageSearch from "@/components/page-search/page-search";
 	import pageComment from "@/components/page-comment/page-comment";
 	export default{
@@ -30,7 +31,7 @@
 						title:"最新"
 					},
 					{
-						type:"read_num",
+						type:"zan_num",
 						title:"热门"
 					}
 				],
@@ -49,6 +50,11 @@
 				}
 			}
 		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
+		},
 		methods:{
 			previewImage(arr) {
 				this.isOnShow = false;
@@ -62,7 +68,6 @@
 					},
 				})
 			},
-			onSearch(){},
 			goDetail(type,item){
 				this.$store.commit("setDetail",item);
 				uni.navigateTo({
@@ -101,14 +106,23 @@
 				})
 			}
 		},
-		onShow(){
-			if(!this.isOnShow){
-				return;
-			}
+		onLoad(){
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;
 			this.loadData();
+		},
+		onShow(){
+			if(!this.isOnShow){
+				return;
+			}
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;

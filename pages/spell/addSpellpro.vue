@@ -34,7 +34,7 @@
 						<text class="text">{{selval}}</text>
 					</view>
 					<view class="content">
-						<input type="number" v-model="from.phone" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==0" />
+						<input type="number" v-model="from.phone" maxlength="11" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==0" />
 						<input type="number" v-model="from.qq" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==1" />
 						<input type="text" v-model="from.wx" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==2" />
 						<view class="icon" @click="onMod(2)">
@@ -90,14 +90,14 @@
 						<text class="text">描述</text>
 					</view>
 					<view class="content">
-						<textarea v-model="from.desc" class="utextarea" placeholder="请输入描述(100字以内)" placeholder-style="color: #848484;"></textarea>
+						<textarea v-model="from.desc" class="utextarea" :auto-height="true" placeholder="请输入描述(100字以内)" placeholder-style="color: #848484;"></textarea>
 						<view class="icon" @click="onMod(5)">
 							<image src="/static/images/icon_yw.png" style="width:19rpx;height:19rpx;"></image>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+			<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 			<view class="rtip">注意：下面添加图片（最多可以上传6张，每张大小为2M,建议不要选原图防止图片过大无法上传，拍照时尽量让宝贝在图片中央，图片宽度不要差别太大，如果直接点击拍照不能上传，请先用自带相机拍照，然后点击从手机相册选择照片上传.)</view>
 			<view class="upload">
 				<view class="grid">
@@ -146,7 +146,7 @@
 					remark:"",
 					imgs:[]
 				},
-				lxlist:["手机号","QQ","微信"],
+				lxlist:["手机号","QQ","其他"],
 				selval:"手机号",
 				cur:0,
 				show:false,
@@ -166,7 +166,7 @@
 					this.modcon = "简明扼要说明宝贝名，型号等信息；注意宝贝名必须填写指明您的宝贝名称，否则其他用户将不能通过搜索挂到您的宝贝；";
 				}else if(index===2){
 					this.modtitle = "联系方式";
-					this.modcon = "温馨提示：请在输入栏输入您正确的联系方式，如需切换请点击输入正确的微信，QQ;";
+					this.modcon = "温馨提示：请在输入栏输入您正确的联系方式，如需切换请点击输入正确的联系方式";
 				}else if(index===3){
 					this.modtitle = "拼单人数";
 					this.modcon = "温馨提示：请在输入栏输入您本单需拼单的人数，方便与你联系；";
@@ -193,15 +193,15 @@
 				this.selval = item;
 				this.show = !this.show;
 			},
-			viewImage(index,key) {
+			viewImage(index) {
 				uni.previewImage({
 					urls: this.imglist,
-					current: this.imglist[key]
+					current: index
 				});
 			},
-			delImg(index,key) {
-				this.imglist.splice(key, 1);
-				this.from.imgs.splice(key, 1);
+			delImg(index) {
+				this.imglist.splice(index, 1);
+				this.from.imgs.splice(index, 1);
 			},
 			chooseImage(){
 				uni.chooseImage({
@@ -214,6 +214,10 @@
 							uni.getImageInfo({
 								src: res.tempFilePaths[i],
 								success: image => {
+									if(this.imglist.length>=6){
+										this.$u.toast("图片最多可以上传6张");
+										return false;
+									}
 									uni.showLoading({
 										mask:true,
 										title:"上传中..."
@@ -234,8 +238,8 @@
 											let data = JSON.parse(res.data);
 											if(data.code == 200){
 												uni.hideLoading();
-												this.imglist.push(image.path);
-												this.from.imgs.push(data.data);
+												this.imglist = this.imglist.concat(image.path);
+												this.from.imgs = this.from.imgs.concat(data.data);
 											}else{
 												uni.hideLoading();
 												uni.showToast({
@@ -255,9 +259,16 @@
 				});
 			},
 			onSubmit(){
-				if(this.from.name=="" && (this.from.phone==""||this.from.qq==""||this.from.wx=="") && this.from.number=="" && this.from.price==""){
+				if(this.from.name=="" || (this.from.phone==""&&this.from.qq==""&&this.from.wx=="") || this.from.number=="" || this.from.price==""){
 					uni.showToast({
 						title:"请填写完整信息",
+						icon:"none"
+					})
+					return false;
+				}
+				if(this.from.phone!="" && !this.$u.test.mobile(this.from.phone)){
+					uni.showToast({
+						title:"请输入正确的手机号",
 						icon:"none"
 					})
 					return false;
@@ -287,6 +298,9 @@
 						})
 						setTimeout(()=>{
 							uni.navigateBack();
+							this.from.imgs = [];
+							this.imglist = [];
+							this.$store.commit("setAdd",true);
 						},1500)
 					}else{
 						uni.showToast({

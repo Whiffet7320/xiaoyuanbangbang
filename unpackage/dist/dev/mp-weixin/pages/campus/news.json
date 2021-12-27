@@ -1,9 +1,11 @@
 {
-  "navigationBarTitleText": "加载中...",
+  "navigationBarTitleText": "校园新闻",
   "navigationBarBackgroundColor": "#FE694F",
   "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
-    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top"
   }
 }

@@ -25,10 +25,12 @@
 			</view>
 		</view>
 		<page-foot :cur="4"></page-foot>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import pageCommentxy from "./components/page-commentxy";
 	import pageFoot from "@/components/page-foot/page-foot";
 	export default{
@@ -54,12 +56,12 @@
 					},
 					{
 						icon:"/static/images/school/menu_2.png",
-						path:"/pages/campus/news?id=1",
+						path:"/pages/campus/advice",
 						title:"社团咨询"
 					},
 					{
 						icon:"/static/images/school/menu_3.png",
-						path:"/pages/campus/news?id=2",
+						path:"/pages/campus/news",
 						title:"校园新闻"
 					},
 					{
@@ -94,7 +96,7 @@
 						title:"最新"
 					},
 					{
-						type:"read_num",
+						type:"zan_num",
 						title:"热门"
 					},
 					{
@@ -119,6 +121,11 @@
 					nomore: '没有更多了'
 				}
 			}
+		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
 		},
 		methods:{
 			previewImage(arr) {
@@ -162,23 +169,43 @@
 				this.loadData();
 			},
 			async loadData(){
-				this.$api.getfengjing({field:this.field,page:this.current_page,limit: 10}).then((res)=>{
-					if(res.code==200){
-						uni.stopPullDownRefresh();
-						this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
-						this.list.forEach(ele => {
-							if(ele.img_paths){
-								ele.imgPath = ele.img_paths.split(",");
-								ele.imgPath.forEach((img, i) => {
-									this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
-								})
-							}
-						})
-						this.current_page = res.data.current_page; //当前页码
-						this.last_page = res.data.last_page; //总页码
-						this.status = res.data.total == 0 ? 'nomore' : 'more';
-					}
-				})
+				if(this.cur==2){
+					this.$api.new_comment_list({type:"fengjing",page: this.current_page,limit: 10}).then((res)=>{
+						if(res.code==200){
+							uni.stopPullDownRefresh();
+							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+							this.list.forEach(ele => {
+								if(ele.img_paths){
+									ele.imgPath = ele.img_paths.split(",");
+									ele.imgPath.forEach((img, i) => {
+										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+									})
+								}
+							})
+							this.current_page = res.data.current_page; //当前页码
+							this.last_page = res.data.last_page; //总页码
+							this.status = res.data.total == 0 ? 'nomore' : 'more';
+						}
+					})
+				}else{
+					this.$api.getfengjing({field:this.field,page:this.current_page,limit: 10}).then((res)=>{
+						if(res.code==200){
+							uni.stopPullDownRefresh();
+							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+							this.list.forEach(ele => {
+								if(ele.img_paths){
+									ele.imgPath = ele.img_paths.split(",");
+									ele.imgPath.forEach((img, i) => {
+										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+									})
+								}
+							})
+							this.current_page = res.data.current_page; //当前页码
+							this.last_page = res.data.last_page; //总页码
+							this.status = res.data.total == 0 ? 'nomore' : 'more';
+						}
+					})
+				}
 			},
 			onBack(){
 				if(this.page==4){
@@ -200,15 +227,30 @@
 				this.backIcon = "home-fill";
 				this.page = options.page;
 			}
-		},
-		onShow(){
-			if(!this.isOnShow){
-				return
-			}
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;
 			this.loadData();
+		},
+		onShow(option){
+			if (option) {
+				if (option.isShudongBack) {
+					this.list = [];
+					this.current_page = 1;
+					this.last_page = 1;
+					this.loadData();
+				}
+			}
+			if(!this.isOnShow){
+				return
+			}
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;

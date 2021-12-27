@@ -41,4 +41,15 @@ page{
   font-family: PingFang SC, PingFang SC-Medium;
   color: #060606;
 }
+.detail .imglist.data-v-3abcc30b {
+  padding-top: 12rpx;
+  display: flex;
+  flex-direction: column;
+}
+.detail .imglist .item.data-v-3abcc30b {
+  width: 100%;
+  min-height: 200rpx;
+  text-align: center;
+  padding-bottom: 40rpx;
+}
 

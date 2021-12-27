@@ -9,46 +9,46 @@
 			</view>
 		</view>
 		
-		<view style="height: 100%">
-			<view class="AddRess" @click="toEditAddress(item)" v-for="(item,index) in Addresslist" :key="index" @touchstart="touchS($event,index)"
-				@touchmove="touchM" @touchend="touchE" 
-				:style="{marginLeft:dier === index?leftStyle+'rpx':''}">
-				<view class="Bito">
-					<view class="Hiurs">
-						<view class="NaPh">
-							<view class="Name">
-								{{item.real_name}}
+		<view class="AddRess">
+			<uni-swipe-action>
+				<uni-swipe-action-item class="uitem" v-for="(item,index) in Addresslist" :key="index">
+					<view class="Bito" @click="toEditAddress(item)">
+						<view class="Hiurs">
+							<view class="NaPh">
+								<view class="Name">
+									{{item.real_name}}
+								</view>
+								<view class="Phone">
+									{{item.phone}}
+								</view>
 							</view>
-							<view class="Phone">
-								{{item.phone}}
+							
+							<view class="Defas" >
+								<view class="DeTes" v-if="item.is_default == 1">
+									默认
+								</view>
 							</view>
 						</view>
-						
-						<view class="Defas" >
-							<view class="DeTes" v-if="item.is_default == 1">
-								默认
+						<view class="DDress">
+							{{item.detail}}
+						</view>
+						<view class="Defes" @click.stop="Default(item)">
+							<view class="Pic">
+								<image :src="item.is_default?'/static/user/morendizhi-h.png':'/static/user/morendizhi.png'"></image>
+							</view>
+							<view class="Tes">
+								设置为默认地址
 							</view>
 						</view>
 					</view>
-					<view class="DDress">
-						{{item.detail}}
-					</view>
-					<view class="Defes" @click.stop="Default(item)">
-						<view class="Pic">
-							<image :src="item.is_default?'/static/user/morendizhi-h.png':'/static/user/morendizhi.png'"></image>
+					<template v-slot:right>
+						<view class="Delete" @click.stop="Delete(item)">
+							<image src="/static/images/icon_deletes.png" mode="aspectFit" style="width: 30rpx;height:30rpx;margin-bottom: 12rpx;"></image>
+							<text>删除</text>
 						</view>
-						<view class="Tes">
-							设置为默认地址
-						</view>
-					</view>
-					
-				</view>
-				<view class="Delete" @click.stop="Delete(item)">
-					删除
-				</view>
-			</view>
-			
-			
+					</template>
+				</uni-swipe-action-item>
+			</uni-swipe-action>
 		</view>
 		
 		<view class="GoAdds" @click="Addes">
@@ -69,7 +69,7 @@
 				leftStyle:0,//滑动效果
 				startX:0,//滑动效果
 				hiddenFlag:true,//滑动效果
-				delBtnWidth:190,//滑动效果
+				delBtnWidth:162,//滑动效果
 				dier:'',//防止滑动效果重复
 			}
 		},
@@ -201,13 +201,14 @@
 		}
 	}
 </script>
-
 <style lang="scss">
 	page{
 		width: 100%;
 		height: 100%;
 		background-color: #F7F8FA;
 	}
+</style>
+<style lang="scss" scoped>
 	.index{
 		width: 100%;
 		.DizhiIcon{
@@ -231,21 +232,22 @@
 			}
 		}
 		.AddRess{
-			// width: 670rpx;
-			height: 252rpx;
-			background: #ffffff;
-			border: 2rpx solid #f4f4f4;
+			width: 100%;
+			position: relative;
 			overflow: hidden;
-			border-radius: 20rpx;
-			margin: 20rpx 24rpx;
-			display: flex;
-			align-items: center;
+			padding: 20rpx 24rpx 20rpx 44rpx;
 			.Bito{
-				height: 100%;
+				width: 99%;
+				height: 252rpx;
+				margin-bottom: 20rpx;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
-				margin: 33rpx 28rpx 31rpx;
+				padding: 33rpx 28rpx 31rpx;
+				border-radius: 20rpx;
+				background: #ffffff;
+				border: 2rpx solid #f4f4f4;
+				position: relative;
 				.Hiurs{
 					display: flex;
 					align-items: center;
@@ -272,7 +274,6 @@
 						align-items: center;
 						justify-content: center;
 						.DeTes{
-							
 							width: 58rpx;
 							height: 28rpx;
 							display: flex;
@@ -316,19 +317,6 @@
 					}
 				}
 			}
-			.Delete {
-				margin-left: 130rpx;
-				width: 215rpx;
-				height: 252rpx;
-				border-radius: 0 20rpx 20rpx 0;
-				background-color: #FE694F;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 22rpx;
-				font-weight: 400;
-				color: #ffffff;
-			}
 		}
 		.GoAdds{
 			width: 612rpx;
@@ -343,7 +331,18 @@
 			font-weight: 700;
 			color: #ffffff;
 		}
-	
+		.Delete {
+			width: 142rpx;
+			height: 252rpx;
+			border-radius:20rpx;
+			background-color: #FE694F;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			font-size: 22rpx;
+			font-weight: 400;
+			color: #ffffff;
+		}
 	}
-
 </style>

@@ -46,7 +46,7 @@
 				if(this.obj.img_paths!=''){
 					this.obj.myImg_paths = this.obj.img_paths.split(',');
 					this.obj.myImg_paths.forEach((img, i) => {
-						this.$set(this.obj.myImg_paths, i, `${this.$url}/${img}`)
+						this.$set(this.obj.myImg_paths, i, `${img}`)
 					})
 				}
 			}

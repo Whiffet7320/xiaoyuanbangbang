@@ -28,10 +28,12 @@
 			</view>
 		</view>
 		<page-foot :cur="3"></page-foot>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import marketList from "./components/market-list";
 	import pageFoot from "@/components/page-foot/page-foot";
 	import pageSearch from "@/components/page-search/page-search";
@@ -82,7 +84,7 @@
 						title:"最新"
 					},
 					{
-						type:"read_num",
+						type:"zan_num",
 						title:"热门"
 					},
 					{
@@ -94,7 +96,7 @@
 				cur:0,
 				iszh:true,
 				issj:true,
-				ispl:false,
+				scrollTop:0,
 				list:[],
 				isOnShow:true,
 				// 加载
@@ -107,6 +109,11 @@
 					nomore: '没有更多了'
 				}
 			}
+		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
 		},
 		methods:{
 			previewImage(arr) {
@@ -149,11 +156,20 @@
 			async loadData(){
 				this.status = 'loading';
 				setTimeout(async () => {
-					const res = await this.$api.getjishi({
-						field:this.field,
-						page: this.current_page,
-						limit: 10
-					})
+					let res = null;
+					if(this.cur==2){
+						res = await this.$api.new_comment_list({
+							type:"jishi",
+							page: this.current_page,
+							limit: 10
+						})
+					}else{
+						res = await this.$api.getjishi({
+							field:this.field,
+							page: this.current_page,
+							limit: 10
+						})
+					}
 					if (res.data.data.length == 0) {
 						this.status = 'nomore';
 					} else {
@@ -180,12 +196,26 @@
 				this.loadData();
 			}
 		},
-		onShow(){
-			if(!this.isOnShow){
-				return;
-			}
+		onLoad(){
 			this.list = [];
 			this.loadData();
+		},
+		onShow(option){
+			if (option) {
+				if (option.isShudongBack) {
+					this.list = [];
+					this.current_page = 1;
+					this.last_page = 1;
+					this.loadData();
+				}
+			}
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onReachBottom(){
 			//判断是否最后一页
@@ -196,6 +226,9 @@
 				this.status = 'loading';
 				this.loadData();
 			}
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		}
 	}
 </script>

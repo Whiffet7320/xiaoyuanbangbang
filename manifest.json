@@ -1,8 +1,8 @@
 {
     "name" : "school",
     "appid" : "__UNI__BE9A990",
-    "description" : "多平台快速开发的UI框架",
-    "versionName" : "1.8.4",
+    "description" : "",
+    "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
@@ -93,7 +93,7 @@
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "wx4eedb0ab7dba9833",
+        "appid" : "wx9e43307f01f0994e", //wx057061da0a902e19 wx4eedb0ab7dba9833
         "setting" : {
             "urlCheck" : true,
             "es6" : false,

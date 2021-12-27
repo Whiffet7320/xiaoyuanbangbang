@@ -23,6 +23,7 @@
 						</view>
 						<view class="Notice" @click="GoNotice">
 							<image src="/static/user/tongzhi.png" mode=""></image>
+							<u-badge type="error" :count="count"></u-badge>
 						</view>
 					</view>
 				</view>
@@ -112,15 +113,11 @@
 				取消
 			</view>
 		</view>
-
 	</view>
 </template>
 
 <script>
 	export default {
-		onShow() {
-			this.getData();
-		},
 		data() {
 			return {
 				user: {},
@@ -173,14 +170,33 @@
 					},
 				],
 				Service: false, //联系客服
-				ServicePhone: '0577-89898989'
+				ServicePhone: '0577-89898989',
+				count:0
 			}
+		},
+		onShow() {
+			this.getData();
 		},
 		methods: {
 			async getData() {
 				const res = await this.$api.userInfo()
 				console.log(res)
 				this.user = res.data;
+				this.$store.commit("setUserinfo", {uid: res.data.uid});
+				this.$api.wait_read_num().then((res)=>{
+					if(res.code==200){
+						this.count = res.data.count;
+						if(this.count>0){
+							uni.setTabBarBadge({
+								index:2,
+								text:this.count>99?"99+":this.count.toString()
+							})
+							this.$store.commit("setBadge",this.count);
+						}else{
+							uni.removeTabBarBadge({index:2});
+						}
+					}
+				})
 			},
 			outLogin() {
 				uni.setStorageSync("token", null);
@@ -188,35 +204,36 @@
 			},
 			//我的资产
 			ZiChanNav(index) {
-				switch (index) {
-					case 0:
-						// 开发中
-						uni.navigateTo({
-							url: '/pages/index/kfing/kfing'
-						})
-						// uni.navigateTo({
-						// 	url: '/pages/user/BalancePage'
-						// })
-						break;
-					case 1:
-						// 开发中
-						uni.navigateTo({
-							url: '/pages/index/kfing/kfing'
-						})
-						// uni.navigateTo({
-						// 	url: '/pages/user/RedPacketPage'
-						// })
-						break;
-					case 2:
-						// 开发中
-						uni.navigateTo({
-							url: '/pages/index/kfing/kfing'
-						})
-						// uni.navigateTo({
-						// 	url: '/pages/user/couponPage'
-						// })
-						break;
-				}
+				this.$u.toast("即将开放，敬请期待");
+				// switch (index) {
+				// 	case 0:
+				// 		// 开发中
+				// 		uni.navigateTo({
+				// 			url: '/pages/index/kfing/kfing'
+				// 		})
+				// 		// uni.navigateTo({
+				// 		// 	url: '/pages/user/BalancePage'
+				// 		// })
+				// 		break;
+				// 	case 1:
+				// 		// 开发中
+				// 		uni.navigateTo({
+				// 			url: '/pages/index/kfing/kfing'
+				// 		})
+				// 		// uni.navigateTo({
+				// 		// 	url: '/pages/user/RedPacketPage'
+				// 		// })
+				// 		break;
+				// 	case 2:
+				// 		// 开发中
+				// 		uni.navigateTo({
+				// 			url: '/pages/index/kfing/kfing'
+				// 		})
+				// 		// uni.navigateTo({
+				// 		// 	url: '/pages/user/couponPage'
+				// 		// })
+				// 		break;
+				// }
 			},
 			//我的功能
 			MyFuncSelect(index) {
@@ -233,39 +250,41 @@
 			OtherSelect(index) {
 				switch (index) {
 					case 0:
+						this.$u.toast("即将开放，敬请期待");
 						// 开发中
-						uni.navigateTo({
-							url: '/pages/index/kfing/kfing'
-						})
+						// uni.navigateTo({
+						// 	url: '/pages/index/kfing/kfing'
+						// })
 						// uni.navigateTo({
 						// 	url:'/pages/user/MerchantSettlement'
 						// })
 						break;
+					// case 1:
+					// 	// uni.hideTabBar({})
+					// 	// this.Service = !this.Service
+					// 	this.CallPhone(this.ServicePhone)
+					// 	break;
 					case 1:
-						// uni.hideTabBar({})
-						// this.Service = !this.Service
-						this.CallPhone(this.ServicePhone)
-						break;
-					case 2:
 						uni.navigateTo({
 							url: '/pages/user/Aboutuser'
 						})
 						break;
-					case 3:
+					case 2:
 						uni.navigateTo({
 							url: '/pages/user/UserAgreement'
 						})
 						break;
-					case 4:
+					case 3:
 						uni.navigateTo({
 							url: '/pages/user/PrivacyAgreement'
 						})
 						break;
-					case 5:
+					case 4:
+						this.$u.toast("即将开放，敬请期待");
 						// 开发中
-						uni.navigateTo({
-							url: '/pages/index/kfing/kfing'
-						})
+						// uni.navigateTo({
+						// 	url: '/pages/index/kfing/kfing'
+						// })
 						// uni.navigateTo({
 						// 	url:'/pages/user/RelevantProvisions'
 						// })
@@ -274,7 +293,6 @@
 			},
 			//取消联系客服遮罩层
 			NoChak() {
-				uni.showTabBar({})
 				this.Service = !this.Service
 			},
 			//呼叫

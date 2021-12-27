@@ -13,7 +13,7 @@
 	"pages": [{
 			"path": "pages/tabBar/index",
 			"style": {
-				"navigationBarTitleText": "校园帮帮平台",
+				"navigationBarTitleText": "洛科帮帮",
 				"navigationBarBackgroundColor": "#fe694f",
 				"navigationBarTextStyle": "white"
 			}
@@ -219,7 +219,7 @@
 				"path": "kfing",
 				"style": {
 					// "navigationStyle": "custom",
-					"navigationBarTitleText": "开发中",
+					"navigationBarTitleText": "待开发",
 					"enablePullDownRefresh": false,
 					"navigationBarBackgroundColor": "#fe694f",
 					"navigationBarTextStyle": "white"
@@ -285,7 +285,8 @@
 					"style": {
 						"navigationBarTitleText": "帮帮拼单",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -293,7 +294,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -309,7 +311,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -333,7 +336,8 @@
 					"style": {
 						"navigationBarTitleText": "校园一角",
 						"navigationBarTextStyle": "white",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -341,7 +345,8 @@
 					"style": {
 						"navigationBarTitleText": "校园风景",
 						"navigationBarTextStyle": "white",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -357,7 +362,8 @@
 					"style": {
 						"navigationBarTitleText": "我的风景",
 						"navigationBarTextStyle": "black",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -365,21 +371,47 @@
 					"style": {
 						"navigationBarTitleText": "我的风景",
 						"navigationBarTextStyle": "black",
-						"navigationStyle": "custom"
+						"navigationStyle": "custom",
+						"enablePullDownRefresh":true
+					}
+				},
+				{
+					"path": "advice",
+					"style": {
+						"navigationBarTitleText": "社团咨询",
+						"navigationBarBackgroundColor": "#FE694F",
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
+					}
+				},
+				{
+					"path": "adviceDetail",
+					"style": {
+						"navigationBarTitleText": "咨询详情",
+						"navigationBarTextStyle": "black"
+					}
+				},
+				{
+					"path": "meAdvice",
+					"style": {
+						"navigationBarTitleText": "加载中...",
+						"navigationBarTextStyle": "black",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
 					"path": "news",
 					"style": {
-						"navigationBarTitleText": "加载中...",
+						"navigationBarTitleText": "校园新闻",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
 					"path": "newsDetail",
 					"style": {
-						"navigationBarTitleText": "加载中...",
+						"navigationBarTitleText": "校园新闻",
 						"navigationBarBackgroundColor": "#FE694F",
 						"navigationBarTextStyle": "white"
 					}
@@ -389,7 +421,8 @@
 					"style": {
 						"navigationBarTitleText": "帮帮报修",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -397,7 +430,8 @@
 					"style": {
 						"navigationBarTitleText": "我的报修",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -416,7 +450,8 @@
 					"style": {
 						"navigationBarTitleText": "失物招领",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -424,7 +459,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -432,7 +468,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -466,7 +503,8 @@
 					"style": {
 						"navigationBarTitleText": "校园集市",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -488,7 +526,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				},
 				{
@@ -496,7 +535,8 @@
 					"style": {
 						"navigationBarTitleText": "加载中...",
 						"navigationBarBackgroundColor": "#FE694F",
-						"navigationBarTextStyle": "white"
+						"navigationBarTextStyle": "white",
+						"enablePullDownRefresh":true
 					}
 				}
 			]
@@ -504,7 +544,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "校园帮帮平台",
+		"navigationBarTitleText": "洛科帮帮平台",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#FFFFFF"
 	},

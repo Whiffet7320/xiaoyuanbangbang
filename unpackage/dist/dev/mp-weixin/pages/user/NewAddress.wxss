@@ -114,7 +114,7 @@ page {
   text-align: right;
 }
 .index .Ress .Location .AddStat .Puin.data-v-61b157af {
-  width: 340rpx;
+  width: 100%;
   font-size: 28rpx;
   font-weight: 400;
   color: #999999;

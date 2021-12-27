@@ -5,7 +5,7 @@
 				<view class="tit1">
 					<view class="left">
 						<image :src="item.avatar_url" class="pic1" mode=""></image>
-						<view class="txt1">{{item.sender_name==''?'匿名用户':item.sender_name}}</view>
+						<view class="txt1">{{item.sender_name==''?'':item.sender_name}}</view>
 					</view>
 					<view class="bq">TO：{{item.receiver_name}}</view>
 				</view>
@@ -51,7 +51,7 @@
 	export default {
 		data() {
 			return {
-				isOnShow:true,
+				isOnShow: true,
 				list: [],
 				isDianzan: false,
 				imgArr: [],
@@ -77,19 +77,32 @@
 				}
 			},
 		},
-		onShow() {
-			if(!this.isOnShow){
+		onShow(option) {
+			console.log(option)
+			if (option) {
+				if (option.isShudongBack) {
+					this.list = [];
+					this.$store.commit("shudongPage", 1);
+					this.getData();
+				}
+			}
+		},
+		onLoad() {
+			if (!this.isOnShow) {
 				return;
 			}
 			this.list = [];
 			this.$store.commit("biaobaiqiangPage", 1);
 			this.getData();
 		},
-		// onLoad() {
-		// 	this.list = [];
-		// 	this.$store.commit("biaobaiqiangPage", 1);
-		// 	this.getData();
-		// },
+		onPullDownRefresh() {
+			this.list = [];
+			this.$store.commit("biaobaiqiangPage", 1);
+			this.getData();
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
 		onReachBottom() {
 			this.$store.commit("biaobaiqiangPage", this.biaobaiqiangPage + 1);
 		},
@@ -110,7 +123,7 @@
 							if (ele.img_paths) {
 								ele.myImg_paths = ele.img_paths.split(',')
 								ele.myImg_paths.forEach((img, i) => {
-									this.$set(ele.myImg_paths, i, `${this.$url}/${img}`)
+									this.$set(ele.myImg_paths, i, `${img}`)
 								})
 							}
 						})
@@ -123,7 +136,7 @@
 				if (item.is_zan == 0) {
 					item.is_zan = true;
 					item.zan_count++
-				}else{
+				} else {
 					item.is_zan = false;
 					item.zan_count--
 				}

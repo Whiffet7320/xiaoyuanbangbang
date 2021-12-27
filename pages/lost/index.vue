@@ -28,10 +28,12 @@
 			</view>
 		</view>
 		<page-foot :cur="1"></page-foot>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import pageSearch from "@/components/page-search/page-search";
 	import lostList from "./components/lost-list";
 	import pageFoot from "@/components/page-foot/page-foot";
@@ -43,6 +45,7 @@
 		},
 		data(){
 			return{
+				scrollTop:0,
 				banlist:["/static/images/lost/banner.png"],
 				menulist:[
 					{
@@ -82,7 +85,7 @@
 						title:"最新"
 					},
 					{
-						type:"read_num",
+						type:"zan_num",
 						title:"热门"
 					},
 					{
@@ -108,6 +111,11 @@
 					nomore: '没有更多了'
 				}
 			}
+		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
 		},
 		methods:{
 			previewImage(arr) {
@@ -148,28 +156,48 @@
 				this.loadData();
 			},
 			loadData(){
-				this.$api.getshougou({field:this.field,page:this.current_page,limit: 10}).then((res)=>{
-					if(res.code==200){
-						uni.stopPullDownRefresh();
-						this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
-						this.list.forEach(ele => {
-							if(ele.img_paths){
-								ele.imgPath = ele.img_paths.split(",");
-								ele.imgPath.forEach((img, i) => {
-									this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
-								})
-							}
-						})
-						this.current_page = res.data.current_page; //当前页码
-						this.last_page = res.data.last_page; //总页码
-						this.status = res.data.total == 0 ? 'nomore' : 'more';
-					}else{
-						uni.showToast({
-							title:res.message,
-							icon:"none"
-						})
-					}
-				})
+				if(this.cur==2){
+					this.$api.new_comment_list({type:"shougou",page: this.current_page,limit: 10}).then((res)=>{
+						if(res.code==200){
+							uni.stopPullDownRefresh();
+							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+							this.list.forEach(ele => {
+								if(ele.img_paths){
+									ele.imgPath = ele.img_paths.split(",");
+									ele.imgPath.forEach((img, i) => {
+										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+									})
+								}
+							})
+							this.current_page = res.data.current_page; //当前页码
+							this.last_page = res.data.last_page; //总页码
+							this.status = res.data.total == 0 ? 'nomore' : 'more';
+						}
+					})
+				}else{
+					this.$api.getshougou({field:this.field,page:this.current_page,limit: 10}).then((res)=>{
+						if(res.code==200){
+							uni.stopPullDownRefresh();
+							this.list = this.reload ? res.data.data : this.list.concat(res.data.data);
+							this.list.forEach(ele => {
+								if(ele.img_paths){
+									ele.imgPath = ele.img_paths.split(",");
+									ele.imgPath.forEach((img, i) => {
+										this.$set(ele.imgPath, i, this.$tools.imgUrl(img))
+									})
+								}
+							})
+							this.current_page = res.data.current_page; //当前页码
+							this.last_page = res.data.last_page; //总页码
+							this.status = res.data.total == 0 ? 'nomore' : 'more';
+						}else{
+							uni.showToast({
+								title:res.message,
+								icon:"none"
+							})
+						}
+					})
+				}
 			},
 			onTab(item,index){
 				this.cur = index;
@@ -180,14 +208,31 @@
 				this.loadData();
 			}
 		},
-		onShow(){
-			if(!this.isOnShow){
-				return
-			}
+		onLoad(){
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;
 			this.loadData();
+		},
+		onShow(option){
+			if (option) {
+				if (option.isShudongBack) {
+					this.list = [];
+					this.current_page = 1;
+					this.last_page = 1;
+					this.loadData();
+				}
+			}
+			if(!this.isOnShow){
+				return
+			}
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onPullDownRefresh() {
 			this.current_page = 1;
@@ -204,6 +249,9 @@
 				this.status = 'loading';
 				this.loadData();
 			}
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		}
 	}
 </script>

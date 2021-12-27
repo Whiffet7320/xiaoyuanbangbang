@@ -2,7 +2,7 @@
 	<view class="index">
 		<Navtop title="商家入驻"></Navtop>
 		<view class="BackPic">
-			<image src="/static/user/backPic.png" mode=""></image>
+			<image src="https://schoolhelp.5laoye.com/static/img/user/backPic.png" mode=""></image>
 		</view>
 		<view class="RuzhuPlate">
 			<view class="Title">

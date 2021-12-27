@@ -12,7 +12,7 @@
 							<image src="/static/images/icon_eye.png" v-else mode="aspectFit" style="width: 18rpx;height: 15rpx;"></image>
 						</view>
 					</view>
-					<view class="time">{{user.expressTime}}（发布时间）</view>
+					<view class="time">{{user.expressTime||""}}（发布时间）</view>
 				</view>
 			</view>
 			<view class="spell_list">
@@ -31,11 +31,11 @@
 				<view class="spell_item">
 					<view class="label">
 						<image src="/static/images/icon_prices.png" style="width:32rpx;height: 32rpx;"></image>
-						<text class="text">售价</text>
+						<text class="text">收价</text>
 					</view>
 					<view class="content">
 						<view class="inputs">
-							<input type="text" v-model="from.price" placeholder="请输入售价(元)" placeholder-style="color: #848484;" />
+							<input type="text" v-model="from.price" placeholder="请输入收价(元)" placeholder-style="color: #848484;" />
 						</view>
 						<view class="icon" @click="onMod(2)">
 							<image src="/static/images/icon_yw.png" style="width:19rpx;height:19rpx;"></image>
@@ -49,9 +49,9 @@
 						<text class="text">{{selval}}</text>
 					</view>
 					<view class="content">
-						<input type="number" v-model="from.phone" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==0" />
+						<input type="number" v-model="from.phone" maxlength="11" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==0" />
 						<input type="number" v-model="from.qq" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==1" />
-						<input type="number" v-model="from.wx" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==2" />
+						<input type="text" v-model="from.wx" class="inputs" placeholder="请输入联系方式" placeholder-style="color: #848484;" v-if="cur==2" />
 						<view class="icon" @click="onMod(3)">
 							<image src="/static/images/icon_yw.png" style="width:19rpx;height:19rpx;"></image>
 						</view>
@@ -81,14 +81,14 @@
 						<text class="text">物品描述</text>
 					</view>
 					<view class="content">
-						<textarea v-model="from.desc" class="utextarea" placeholder="请输入物品描述(100字以内)" placeholder-style="color: #848484;"></textarea>
+						<textarea v-model="from.desc" class="utextarea" :auto-height="true" placeholder="请输入物品描述(100字以内)" placeholder-style="color: #848484;"></textarea>
 						<view class="icon" @click="onMod(4)">
 							<image src="/static/images/icon_yw.png" style="width:19rpx;height:19rpx;"></image>
 						</view>
 					</view>
 				</view>
 			</view>
-			<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+			<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 			<view class="rtip">注意：下面添加图片（最多可以上传6张，每张大小为2M,建议不要选原图防止图片过大无法上传，拍照时尽量让宝贝在图片中央，图片宽度不要差别太大，如果直接点击拍照不能上传，请先用自带相机拍照，然后点击从手机相册选择照片上传.)</view>
 			<view class="upload">
 				<view class="grid">
@@ -112,6 +112,7 @@
 
 <script>
 	import { mapState } from 'vuex';
+	import config from "../../api/url.js";
 	import pageModal from "@/components/page-modal/page-modal";
 	export default{
 		components:{
@@ -135,7 +136,7 @@
 					remark:"",
 					imgs:[]
 				},
-				lxlist:["手机号","QQ","微信"],
+				lxlist:["手机号","QQ","其他"],
 				selval:"手机号",
 				cur:0,
 				show:false,
@@ -155,10 +156,10 @@
 					this.modcon = "简明扼要说明宝贝名，型号等信息；注意宝贝名必须填写指明您的宝贝名称，否则其他用户将不能通过搜索挂到您的宝贝；";
 				}else if(index===2){
 					this.modtitle = "价格说明";
-					this.modcon = "温馨提示：请在输入栏输入您想卖的价格，如果您想议价，请联系我详谈哦。";
+					this.modcon = "温馨提示：请在输入栏输入您想收的价格，如果您想议价，请联系我详谈哦。";
 				}else if(index===3){
 					this.modtitle = "联系方式";
-					this.modcon = "温馨提示：请在输入栏输入您正确的联系方式，如需切换请点击输入正确的微信，QQ;";
+					this.modcon = "温馨提示：请在输入栏输入您正确的联系方式，如需切换请点击输入正确的联系方式";
 				}else if(index===4){
 					this.modtitle = "商品描述";
 					this.modcon = "宝贝详情可填写如品牌、型号、规格、几成新、购买渠道、转手原因等，介绍越详细、图片越好看，越容易获得客户的依赖哦。";
@@ -179,15 +180,15 @@
 				this.selval = item;
 				this.show = !this.show;
 			},
-			viewImage(index,key) {
+			viewImage(index) {
 				uni.previewImage({
 					urls: this.imglist,
-					current: this.imglist[key]
+					current: index
 				});
 			},
-			delImg(index,key) {
-				this.imglist.splice(key, 1);
-				this.from.imgs.splice(key, 1);
+			delImg(index) {
+				this.imglist.splice(index, 1);
+				this.from.imgs.splice(index, 1);
 			},
 			chooseImage(){
 				uni.chooseImage({
@@ -200,6 +201,10 @@
 							uni.getImageInfo({
 								src: res.tempFilePaths[i],
 								success: image => {
+									if(this.imglist.length>=6){
+										this.$u.toast("图片最多可以上传6张");
+										return false;
+									}
 									uni.showLoading({
 										mask:true,
 										title:"上传中..."
@@ -220,8 +225,8 @@
 											let data = JSON.parse(res.data);
 											if(data.code == 200){
 												uni.hideLoading();
-												this.imglist.push(image.path);
-												this.from.imgs.push(data.data);
+												this.imglist = this.imglist.concat(image.path);
+												this.from.imgs = this.from.imgs.concat(data.data);
 											}else{
 												uni.hideLoading();
 												uni.showToast({
@@ -241,9 +246,16 @@
 				});
 			},
 			onSubmit(){
-				if(this.from.name=="" && this.from.price=="" && (this.from.phone==""||this.from.qq==""||this.from.wx=="")){
+				if(this.from.name=="" || this.from.price=="" || (this.from.phone==""&&this.from.qq==""&&this.from.wx=="")){
 					uni.showToast({
 						title:"请填写完整信息",
+						icon:"none"
+					})
+					return false;
+				}
+				if(this.from.phone!="" && !this.$u.test.mobile(this.from.phone)){
+					uni.showToast({
+						title:"请输入正确的手机号",
 						icon:"none"
 					})
 					return false;
@@ -272,6 +284,9 @@
 						})
 						setTimeout(()=>{
 							uni.navigateBack();
+							this.from.imgs = [];
+							this.imglist = [];
+							this.$store.commit("setAdd",true);
 						},1500)
 					}else{
 						uni.showToast({

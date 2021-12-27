@@ -81,6 +81,9 @@
         "addScenery",
         "meScenery",
         "comment",
+        "advice",
+        "adviceDetail",
+        "meAdvice",
         "news",
         "newsDetail",
         "list",
@@ -112,7 +115,7 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "校园帮帮平台",
+    "navigationBarTitleText": "洛科帮帮平台",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#FFFFFF"
   },
@@ -142,5 +145,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

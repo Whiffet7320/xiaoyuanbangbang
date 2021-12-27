@@ -7,7 +7,7 @@
 					收货人
 				</view>
 				<view class="Puin">
-					<u-input :clearable='false' type="text" v-model="infoName" placeholder="请输入收货人姓名" />
+					<u-input type="text" :clearable='false' v-model="infoName" input-align="right" placeholder="请输入收货人姓名" />
 				</view>
 			</view>
 			<view class="UserPhoes">
@@ -15,7 +15,7 @@
 					手机号码
 				</view>
 				<view class="Puin">
-					<u-input :clearable='false' type="text" v-model="Phone" placeholder="请输入收货人手机号" maxlength="11" />
+					<u-input type="text" :clearable='false' v-model="Phone" input-align="right" placeholder="请输入收货人手机号" maxlength="11" />
 				</view>
 			</view>
 		</view>
@@ -28,7 +28,7 @@
 				<view class="AddStat">
 					<view class="Puin">
 						<view style="margin-right: 20rpx;color: #000000;">{{myAddress}}</view>
-						<u-picker @confirm='changeAddress' mode="region" v-model="addressShow"></u-picker>
+						<u-picker @confirm='changeAddress' mode="region" v-model="addressShow" confirm-color="#FE694F"></u-picker>
 					</view>
 					<view class="icon">
 						<image src="/static/user/youjiantou.png" mode=""></image>
@@ -40,7 +40,7 @@
 					详细地址
 				</view>
 				<view class="AddStat">
-					<u-input :clearable='false' type="text" v-model="DateAddrs" placeholder="请输入详细地址信息" />
+					<u-input type="text" :clearable='false' v-model="DateAddrs" input-align="right" placeholder="请输入详细地址信息" />
 				</view>
 			</view>
 		</view>
@@ -182,15 +182,11 @@
 						}
 					}
 				}
-
-
-
 			},
 			//提示
 			okExit() {
 				this.keep = !this.keep
 			},
-
 		}
 	}
 </script>
@@ -318,7 +314,7 @@
 					text-align: right;
 
 					.Puin {
-						width: 340rpx;
+						width: 100%;
 						font-size: 28rpx;
 						font-weight: 400;
 						color: #999999;

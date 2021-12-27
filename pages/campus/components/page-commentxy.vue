@@ -9,25 +9,26 @@
 				</view>
 			</view>
 			<view class="feed_content">
-				<view class="feed_item u-line-4">{{item.description}}</view>
+				<view class="feed_item" v-if="isDetail">{{item.description==null?"":item.description.replace(/\r\n|\n|\r/g,"\n")}}</view>
+				<view class="feed_item u-line-4" v-else>{{item.description==null?"":item.description.replace(/\r\n|\n|\r/g,"\n")}}</view>
 				<view class="imglist" v-if="item.img_paths!==''">
 					<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click.stop="previewImage([item.imgPath,indexz])">
 						<image :src="pitem" mode="aspectFill" class="img"></image>
 					</view>
 				</view>
 			</view>
-			<view class="feed_ft" v-if="!isDetail">
-				<view class="left"><view v-if="!isMe">【来自校园帮帮平台发布】</view></view>
+			<view class="feed_ft">
+				<view class="left"><view v-if="!isMe">【来自洛科帮帮平台发布】</view></view>
 				<view class="right">
-					<view class="icon_l">
+					<view class="icon_l" v-if="isShow">
 						<image src="/static/images/icon_time.png" mode="aspectFit" style="width: 23rpx;height: 23rpx;margin-right: 8rpx;"></image>
 						<text>{{item.read_count||0}}</text>
 					</view>
-					<view class="icon_l">
+					<view class="icon_l" v-if="isShow">
 						<image src="/static/images/icon_xin.png" mode="aspectFit" style="width: 32rpx;height: 26rpx;margin-right: 8rpx;"></image>
 						<text>{{item.zan_count||0}}</text>
 					</view>
-					<view class="icon_l" @click.stop="goComment(item)">
+					<view class="icon_l" v-if="isShow" @click.stop="goComment(item)">
 						<image src="/static/images/icon_pl.png" mode="aspectFit" style="width: 30rpx;height: 23rpx;margin-right: 8rpx;"></image>
 						<text>{{item.comment_count||0}}</text>
 					</view>
@@ -59,6 +60,10 @@
 			isDetail:{
 				type:Boolean,
 				default:false
+			},
+			isShow:{
+				type:Boolean,
+				default:true
 			}
 		},
 		data(){
@@ -133,6 +138,7 @@
 					word-wrap: break-word;
 					word-break: break-all;
 					word-break: break-word;
+					white-space: pre-wrap;
 					margin-bottom: 16rpx;
 				}
 				.imglist{

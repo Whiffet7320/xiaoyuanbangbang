@@ -169,7 +169,7 @@
   margin-top: 40rpx;
   width: 240rpx;
   height: 80rpx;
-  background: #165ff9;
+  background: #fe694f;
   border-radius: 40rpx;
   font-size: 28rpx;
   font-weight: 500;

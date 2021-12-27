@@ -1,10 +1,19 @@
 <template>
 	<view class="index">
 		<u-toast ref="uToast" />
-		<image class="bgImg" src="https://schoolhelp.5laoye.com/static/img/images/zu2410.png" mode=""></image>
-		<image class="bgImg2" src="https://schoolhelp.5laoye.com/static/img/images/mcz245.png" mode=""></image>
-		<image src="/static/images/zu2405.png" class="musicImg" :style='{"transform": "rotate("+rotateDeg+"deg);"}'
-			@click="changeMusic" mode=""></image>
+		<view class="nearby" v-if="imgShow">
+			<u-modal v-model="show" @confirm="longPressConfirm" :content="content" show-cancel-button></u-modal>
+			<MyPreviewImage @closeIImg1='closeImg' ref="myPreviewImage" @longPress="() => {show = true}"
+				@uploadIndex="uploadIndex" :list="myImgList" :vertical="false"></MyPreviewImage>
+		</view>
+		<!-- <image class="bgImg" src="/static/images/zbj2405.jpg" mode=""></image> -->
+		<image class="bgImg" src="/static/images/zu12345.jpg" mode=""></image>
+		<!-- <image class="bgImg2" src="https://schoolhelp.5laoye.com/static/img/images/mcz245.png" mode=""></image> -->
+		<image src="/static/images/zu2770.png" v-if="musicPaused" class="musicImgzt" @click="changeMusic" mode="">
+		</image>
+		<image src="/static/images/zu2405.png" v-else class="musicImg" @click="changeMusic" mode=""></image>
+		<!-- <image src="/static/images/zu2405.png" v-else class="musicImg" :style='{"transform": "rotate("+$rotateDeg+"deg);"}'	@click="changeMusic" mode=""></image> -->
+		<image src="/static/images/zu2771.png" class="shuaxin" @click="shuaxin" mode=""></image>
 		<view class="bgtxt">校园帮帮提供技术支持~</view>
 		<view class="nav1">
 			<view class="nav1-1">
@@ -20,17 +29,19 @@
 					<image v-if="item != ''" @click.stop="delImg(i)"
 						style="position: absolute;top: 8rpx;right: 8rpx;height: 40rpx;width: 40rpx;"
 						src="https://schoolhelp.5laoye.com/static/img/images/zu2414.png" mode=""></image>
-
 				</view>
 			</view>
 			<view class="btns">
 				<view @click="fabu" class="btn2">发布</view>
 				<view class="btn1">
-					<u-input v-model="nicheng" :clearable='false' type="text" height='30' placeholder="昵称"
-						:border="false" />
-					<image src="https://schoolhelp.5laoye.com/static/img/images/lujin1892.png" class="pic" mode="">
-					</image>
+					<u-input v-model="nicheng" :clearable='false' type="text" height='30' placeholder="你的名称" :border="false" />
+					<image src="https://schoolhelp.5laoye.com/static/img/images/lujin1892.png" class="pic" mode=""></image>
 				</view>
+				<!-- <view class="isnm">
+					<u-checkbox-group active-color="#fe694f">
+						<u-checkbox v-model="isNm" label-size='24' @change="nmChange">昵称是否填写</u-checkbox>
+					</u-checkbox-group>
+				</view> -->
 			</view>
 		</view>
 		<view class="nav2">
@@ -49,8 +60,8 @@
 			</view>
 		</view>
 		<view class="nav4-items">
-			<view class="item" @click="toXiangqin(item)" style="border-left: 2rpx solid #FFFFFF;" v-for="item in list"
-				:key='item.id'>
+			<view class="item" @click="toXiangqin(item)" style="border-left: 2rpx solid #FFFFFF;"
+				v-for="(item,index) in list" :key='item.id'>
 				<view class="left">
 					<view class="dian"></view>
 					<view class="shu"></view>
@@ -58,13 +69,22 @@
 				<view class="right">
 					<view class="zsRight">
 						<view class="txt1">
-							<view class="txt1-1">{{item.sender_name?item.sender_name:'匿名用户'}}</view>
-							<view class="txt1-2">{{item.showTime}}</view>
+							<view class="txt1-1">
+								<text class="floor">#{{listTotal-index}}·</text>{{item.sender_name?item.sender_name:'A'}}
+							</view>
+							<view class="aaa" style="display: flex; align-items: center;transform: translateX(24rpx);">
+								<view class="txt1-2">{{item.showTime}}</view>
+								<view style="transform: rotate(90deg);margin-left: 4rpx;"
+									@click.stop="changeSheet(item)">
+									<u-icon name="more-dot-fill" color="#000000" size="28"></u-icon>
+								</view>
+							</view>
+
 						</view>
 						<view class="txt2">{{item.content}}</view>
 						<view class="nav4-imgs">
-							<image @click.stop="toSeeImg(i,item.myImg_paths)" class="nav4-img"
-								v-for="(ele,i) in item.myImg_paths" :src="ele" mode=""></image>
+							<image @click.stop="mySeeImg(i,item.myImg_paths)" class="nav4-img"
+								v-for="(ele,i) in item.myImg_paths" :key="i" :src="ele" mode=""></image>
 						</view>
 						<view class="txt3">
 							<view class="icon1" @click.stop="dianzan(item)">
@@ -73,7 +93,7 @@
 									<view class="i-txt">{{item.zan_count}}</view>
 								</template>
 								<template v-else>
-									<u-icon name="thumb-up-fill" color="#165ff9" size="28"></u-icon>
+									<u-icon name="thumb-up-fill" color="#fe694f" size="28"></u-icon>
 									<view class="i-txt isDianzan">{{item.zan_count}}</view>
 								</template>
 							</view>
@@ -86,17 +106,30 @@
 				</view>
 			</view>
 			<u-loadmore :status="status" />
+			<u-action-sheet :list="sheetList" @click="sheetClick" v-model="sheetShow" class="actionlist"></u-action-sheet>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {
-		mapState
-	} from "vuex";
+	import {mapState} from "vuex";
+	import MyPreviewImage from '@/components/page-previewImage/page-previewImage.vue'
 	export default {
+		components: {
+			MyPreviewImage
+		},
 		data() {
 			return {
+				isNm:true,
+				imgShow: false,
+				myImgList: [],
+				show: false,
+				sheetItem: null,
+				sheetShow: false,
+				sheetId: null,
+				sheetList: [{
+					text: '删除'
+				}],
 				isOnShow: true,
 				index: 1,
 				innerAudioContext: null,
@@ -112,6 +145,7 @@
 				nicheng: '',
 				imgArrNum: 0,
 				list: [],
+				listTotal: 0,
 				// 加载
 				status: 'loadmore',
 				iconType: 'flower',
@@ -123,7 +157,7 @@
 			}
 		},
 		computed: {
-			...mapState(["shudongPage", "shudongPageSize"]),
+			...mapState(["shudongPage", "shudongPageSize", 'firstMusicTime', 'musicPaused']),
 		},
 		watch: {
 			shudongPage: function(page) {
@@ -134,40 +168,104 @@
 				}
 			},
 		},
-		async onShow() {
+		onHide() {
+			console.log('myOnhide')
+		},
+		async onLoad() {
+			console.log(uni.getStorageSync('token'))
+			if (!uni.getStorageSync('token')) {
+				uni.navigateTo({
+					url: '/pages/login/index?from=shudong'
+				})
+				return;
+			}
 			if (this.isOnShow) {
 				this.list = [];
 				this.$store.commit("shudongPage", 1);
 				this.getData();
-				const res = await this.$api.video_list()
-				console.log(res);
-				// 
-				this.innerAudioContext = uni.createInnerAudioContext();
-				this.innerAudioContext.autoplay = true;
-				this.innerAudioContext.loop = true;
-				this.innerAudioContext.src = res.data.path;
-				// this.innerAudioContext.src = 'https://music.taihe.com/song/T10046221359';
-				this.innerAudioContext.onPlay(() => {
-					console.log('开始播放');
-					this.timer = setInterval(() => {
-						this.rotateDeg++
-					}, 50)
-				});
-				this.innerAudioContext.onPause(() => {
-					console.log('暂停播放');
-					clearInterval(this.timer)
-					console.log('dsadas')
-				});
 			}
-
+		},
+		onBackPress(e) {
+			console.log(e, 'back')
+		},
+		otherFun(shudongBack) {
+			console.log(object)
+		},
+		async onShow(option) {
+			console.log(option)
+			if (option) {
+				if (option.isShudongBack) {
+					this.list = [];
+					this.$store.commit("shudongPage", 1);
+					this.getData();
+				}
+				if (option.shudongPinlunNum) {
+					this.shudongPinlunNum = option.shudongPinlunNum;
+					this.shudongPinlunId = option.shudongPinlunId;
+					this.list.forEach(ele=>{
+						if(ele.id == this.shudongPinlunId){
+							ele.comment_count = this.shudongPinlunNum
+						}
+					})
+				}
+			}
+			console.log(uni.getStorageSync('token'))
+			if (!uni.getStorageSync('token')) {
+				return
+			}
+			this.$store.commit("isShudong", true);
+			if (this.isOnShow) {
+				if (this.firstMusicTime) {
+					const res = await this.$api.video_list()
+					console.log(res);
+					this.$innerAudioContext.src = res.data.path;
+					this.$innerAudioContext.play()
+					this.$store.commit('musicPaused', false)
+					this.$store.commit('firstMusicTime', false)
+				}
+				// else {
+				// 	console.log(this.$innerAudioContext.paused, 1111)
+				// 	if (this.$innerAudioContext.paused) {
+				// 		this.musicPaused = true;
+				// 	} else {
+				// 		this.musicPaused = false;
+				// 	}
+				// }
+			}
+		},
+		onHide() {
+			if (!this.isOnShow) {
+				return;
+			}
 		},
 		onUnload() {
-			this.innerAudioContext.pause()
+			// this.innerAudioContext.pause()
 		},
 		onReachBottom() {
 			this.$store.commit("shudongPage", this.shudongPage + 1);
 		},
 		methods: {
+			nmChange(e){
+				console.log(e)
+				this.isNm = e.value;
+			},
+			closeImg(val) {
+				this.imgShow = val;
+			},
+			mySeeImg(i, arr) {
+				this.myImgList = arr;
+				this.imgShow = true;
+				setTimeout(() => {
+					this.$refs.myPreviewImage.open(i)
+				}, 200)
+
+			},
+			uploadIndex(index) {
+				console.log('当前图片', this.list[index]);
+			},
+			longPressConfirm() {
+				console.log('长按事件点击确定');
+			},
 			async getData() {
 				this.status = 'loading';
 				setTimeout(async () => {
@@ -179,206 +277,76 @@
 							this.itemIndex == 5 ? 'new_send' : this.itemIndex == 6 ?
 							'hot_shudong' : 'best_shudong'
 					})
+					this.listTotal = res.data.total;
 					if (res.data.data.length == 0) {
 						this.status = 'nomore'
 					} else {
 						this.status = 'loadmore';
 						this.list = this.list.concat(res.data.data)
 						this.list.forEach(ele => {
-							ele.showTime = this.timeago(new Date(ele.add_time))
+							ele.showTime = this.timeago(Date.parse(new Date(ele.add_time.replace(
+								/-/g, '/'))))
 							if (ele.img_paths) {
 								ele.myImg_paths = ele.img_paths.split(',')
 								ele.myImg_paths.forEach((img, i) => {
 									this.$set(ele.myImg_paths, i,
-										`${this.$url}/${img}`)
+										`${img}`)
 								})
 							}
 						})
 					}
 				}, 200)
-				// if (this.itemIndex == 1) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.my_send({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 2) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.my_reply({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 3) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.my_zan({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 4) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.new_comment({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 5) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.new_send({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 6) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.hot_shudong({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }else if (this.itemIndex == 7) {
-				// 	this.status = 'loading';
-				// 	setTimeout(async () => {
-				// 		const res = await this.$api.best_shudong({
-				// 			page: this.shudongPage,
-				// 			limit: this.shudongPageSize,
-				// 		})
-				// 		if (res.data.data.length == 0) {
-				// 			this.status = 'nomore'
-				// 		} else {
-				// 			this.status = 'loadmore';
-				// 			this.list = this.list.concat(res.data.data)
-				// 			this.list.forEach(ele => {
-				// 				ele.showTime = this.timeago(new Date(ele.add_time))
-				// 				if (ele.img_paths) {
-				// 					ele.myImg_paths = ele.img_paths.split(',')
-				// 					ele.myImg_paths.forEach((img, i) => {
-				// 						this.$set(ele.myImg_paths, i,
-				// 							`${this.$url}/${img}`)
-				// 					})
-				// 				}
-				// 			})
-				// 		}
-				// 	}, 200)
-				// }
 			},
-			changeMusic() {
-				if (this.innerAudioContext.paused) {
-					this.innerAudioContext.play()
-				} else {
-					this.innerAudioContext.pause()
+			async sheetClick(i) {
+				console.log(i)
+				if (i == 0) {
+					const res = await this.$api.delShudong(this.sheetItem.id)
+					console.log(res)
+					if (res.code == 200) {
+						this.$refs.uToast.show({
+							title: res.message,
+							type: 'success',
+							duration: 1000,
+							callback: () => {
+								this.form.content = '';
+								this.imgArr = [''];
+								this.list = [];
+								this.$store.commit("shudongPage", 1);
+								this.getData();
+							}
+						})
+					} else {
+						this.$refs.uToast.show({
+							title: res.message,
+							type: 'warning',
+							duration: 1000,
+						})
+					}
 				}
 			},
+			changeSheet(item) {
+				console.log(item)
+				this.sheetItem = item;
+				this.sheetList[0].subText = item.content;
+				this.sheetId = item.id;
+				this.sheetShow = true;
+			},
+			changeMusic() {
+				console.log(this.$innerAudioContext.paused)
+				if (this.musicPaused) {
+					this.$innerAudioContext.play()
+					this.$store.commit('musicPaused', false)
+				} else {
+					this.$innerAudioContext.pause()
+					this.$store.commit('musicPaused', true)
+				}
+			},
+			async shuaxin() {
+				this.list = [];
+				this.$store.commit("shudongPage", 1);
+				this.getData();
+			},
 			toXiangqin(item) {
-				this.innerAudioContext.pause()
-				// uni.navigateTo({
-				// 	url: `/pages/index/shudong/xiangqin?obj=${JSON.stringify(item)}`
-				// })
-				console.log(item, 1111)
 				uni.navigateTo({
 					url: `/pages/index/shudong/xiangqin?id=${item.id}`
 				})
@@ -417,7 +385,8 @@
 						duration: 1000,
 						callback: () => {
 							this.form.content = '';
-							this.imgArr = [];
+							this.imgArr = [''];
+							this.form.img_paths = [''];
 							this.list = [];
 							this.$store.commit("shudongPage", 1);
 							this.getData();
@@ -489,7 +458,7 @@
 							if (res.tempFiles.length == 1) {
 								const res1 = await this.$api.upload_pic(ele, 'shudong');
 								console.log(res1.data)
-								var newImg = `${this.$url}/${res1.data}`
+								var newImg = `${res1.data}`
 								this.$set(this.imgArr, i, newImg)
 								this.$set(this.form.img_paths, i, res1.data)
 								if (!this.imgArr[i + 1] && this.imgArr.length != 3) {
@@ -502,7 +471,7 @@
 							} else {
 								const res1 = await this.$api.upload_pic(ele, 'shudong');
 								console.log(res1.data)
-								var newImg = `${this.$url}/${res1.data}`
+								var newImg = `${res1.data}`
 								this.$set(this.imgArr, index, newImg)
 								this.$set(this.form.img_paths, index, res1.data)
 								if (!this.imgArr[index + 1] && this.imgArr.length != 3) {
@@ -523,7 +492,12 @@
 				if (this.imgArr.length == 2 && this.imgArr[1] != '') {
 					this.$set(this.imgArr, this.imgArr.length, '');
 				}
-				console.log(this.imgArr)
+				this.form.img_paths.splice(i, 1)
+				console.log(this.form.img_paths.length, this.form.img_paths[1])
+				if (this.form.img_paths.length == 2 && this.form.img_paths[1] != '') {
+					this.$set(this.form.img_paths, this.form.img_paths.length, '');
+				}
+				console.log(this.form.img_paths)
 				// if(this.imgArr.length == 0){
 				// 	this.$set(this.imgArr, 0 , '');
 				// 	this.imgArr.splice(1,2)
@@ -567,16 +541,74 @@
 
 </style>
 <style lang="scss" scoped>
+	.nearby {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100vh;
+		background-color: #000000;
+		z-index: 99999;
+	}
+
 	.index {
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
 
+	@-webkit-keyframes rotating {
+		0% {
+			transform: rotate(0deg)
+		}
+
+		to {
+			transform: rotate(1turn)
+		}
+	}
+
+	@keyframes rotating {
+		0% {
+			transform: rotate(0deg)
+		}
+
+		to {
+			transform: rotate(1turn)
+		}
+	}
+
 	.musicImg {
+		animation: rotating 5.2s linear infinite;
 		position: fixed;
 		right: 40rpx;
 		bottom: 200rpx;
+		width: 60rpx;
+		height: 60rpx;
+		z-index: 99;
+	}
+
+	.musicImgzt {
+		position: fixed;
+		right: 40rpx;
+		bottom: 200rpx;
+		width: 60rpx;
+		height: 60rpx;
+		z-index: 99;
+		animation-play-state: running;
+	}
+
+	.jymusicImg {
+		position: fixed;
+		right: 40rpx;
+		bottom: 200rpx;
+		width: 60rpx;
+		height: 60rpx;
+		z-index: 99;
+	}
+
+	.shuaxin {
+		position: fixed;
+		right: 40rpx;
+		bottom: 120rpx;
 		width: 60rpx;
 		height: 60rpx;
 		z-index: 99;
@@ -623,7 +655,7 @@
 		background: rgba(255, 255, 255, 0.5);
 		border-radius: 8rpx;
 		position: relative;
-		margin-top: 380rpx;
+		margin-top: 288rpx;
 		left: 24rpx;
 
 		.nav1-1 {
@@ -687,7 +719,7 @@
 			flex-direction: row-reverse;
 
 			.btn1 {
-				width: 120rpx;
+				width: 150rpx;
 				height: 44rpx;
 				background: #ffffff;
 				border-radius: 8rpx;
@@ -699,7 +731,7 @@
 				justify-content: center;
 
 				/deep/ .u-input {
-					width: 60rpx;
+					width: 90rpx;
 
 					.u-input__input {
 						font-size: 20rpx;
@@ -710,6 +742,11 @@
 					margin-left: 8rpx;
 					width: 24rpx;
 					height: 24rpx;
+				}
+			}
+			.isnm{
+				/deep/.u-checkbox__label{
+					color: #FFFFFF;
 				}
 			}
 
@@ -814,12 +851,12 @@
 			.right {
 				position: relative;
 
-				.zsRight:after {
+				.zsRight::after {
 					content: "";
 					position: absolute;
 					transform: rotateZ(-270deg);
-					left: -24rpx;
-					top: 0px;
+					left: -22rpx;
+					top: 0rpx;
 					width: 0;
 					height: 0;
 					border-top: 12rpx solid #fff;
@@ -845,6 +882,11 @@
 						.txt1-1 {
 							font-size: 28rpx;
 							font-weight: 500;
+							color: #000000;
+						}
+
+						.floor {
+							font-size: 24rpx;
 							color: #000000;
 						}
 

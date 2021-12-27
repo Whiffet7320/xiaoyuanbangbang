@@ -14,20 +14,20 @@
 			</view>
 			<view class="sitem">
 				<view class="tit"><text class="red">*</text>投稿者</view>
-				<view class="desc">（昵称）</view>
+				<view class="desc">（你的名称）</view>
 				<view class="input"><input type="text" v-model="from.nickname" /></view>
 			</view>
 			<view class="sitem">
 				<view class="tit"><text class="red">*</text>想说的话</view>
 				<view class="desc">（什么时候拍的，有什么感想，2000字以内）</view>
-				<view class="textarea"><textarea v-model="from.content" maxlength="2000" class="utextarea"></textarea></view>
+				<view class="textarea"><textarea v-model="from.content" maxlength="2000" class="utextarea" :auto-height="true"></textarea></view>
 			</view>
 			<view class="sitem">
 				<view class="tit"><text class="red">*</text>投稿图片</view>
 				<view class="desc">（什么时候拍的，有什么感想）</view>
 				<view class="file" @tap="chooseImage">
 					<view class="icon">+</view>
-					<view>选择上传文件（最多5个）、限制每个20MB以内、仅支持:jpg.jpeg.png.gif.bmp</view>
+					<view>选择上传文件（最多6个）、限制每个20MB以内、仅支持:jpg.jpeg.png.gif.bmp</view>
 				</view>
 				<view class="grid">
 					<view class="bg_img" v-for="(vo, key) in imglist" :key="key" @tap="viewImage(key)">
@@ -70,19 +70,19 @@
 			}
 		},
 		methods:{
-			viewImage(index,key) {
+			viewImage(index) {
 				uni.previewImage({
 					urls: this.imglist,
-					current: this.imglist[key]
+					current:index
 				});
 			},
-			delImg(index,key) {
-				this.imglist.splice(key, 1);
-				this.from.imgs.splice(key, 1);
+			delImg(index) {
+				this.imglist.splice(index, 1);
+				this.from.imgs.splice(index, 1);
 			},
 			chooseImage(){
 				uni.chooseImage({
-					count: 5, //默认9
+					count: 6, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: res => {
@@ -91,6 +91,10 @@
 							uni.getImageInfo({
 								src: res.tempFilePaths[i],
 								success: image => {
+									if(this.imglist.length>=6){
+										this.$u.toast("图片最多可以上传6张");
+										return false;
+									}
 									uni.showLoading({
 										mask:true,
 										title:"上传中..."
@@ -112,8 +116,8 @@
 											let data = JSON.parse(res.data);
 											if(data.code == 200){
 												uni.hideLoading();
-												this.imglist.push(image.path);
-												this.from.imgs.push(data.data);
+												this.imglist = this.imglist.concat(image.path);
+												this.from.imgs = this.from.imgs.concat(data.data);
 											}else{
 												uni.hideLoading();
 												uni.showToast({
@@ -133,7 +137,7 @@
 				});
 			},
 			onSubmit(){
-				if(this.from.nickname==""&&this.from.content==""){
+				if(this.from.nickname==""||this.from.content==""||this.from.imgs.length<1){
 					uni.showToast({
 						title:"请填写完整的信息",
 						icon:"none"
@@ -153,6 +157,9 @@
 						})
 						setTimeout(()=>{
 							uni.navigateBack();
+							this.from.imgs = [];
+							this.imglist = [];
+							this.$store.commit("setAdd",true);
 						},1500)
 					}else{
 						uni.showToast({
@@ -248,9 +255,7 @@
 				width: 100%;
 				border: 2rpx solid #e6e6e6;
 				padding:12rpx 24rpx;
-				height: 200rpx;
 				display: flex;
-				align-items: center;
 				.utextarea{
 					width: 100%;
 					height: 100%;

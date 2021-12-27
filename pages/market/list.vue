@@ -7,14 +7,15 @@
 			<page-search></page-search>
 		</view>
 		<view class="list">
-			<market-list :list="list" :isTime="true" @previewImage="previewImage"></market-list>
+			<market-list :list="list" @previewImage="previewImage"></market-list>
 			<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
 		</view>
-		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png"></u-back-top>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
 <script>
+	import {mapState} from "vuex";
 	import pageSearch from "@/components/page-search/page-search";
 	import marketList from "./components/market-list";
 	export default {
@@ -31,7 +32,7 @@
 						title: "最新"
 					},
 					{
-						type: "read_num",
+						type: "zan_num",
 						title: "热门"
 					}
 				],
@@ -51,6 +52,11 @@
 					nomore: '没有更多了'
 				}
 			}
+		},
+		computed:{
+			...mapState({
+				isAdd: (state) => state.isAdd
+			})
 		},
 		methods: {
 			previewImage(arr) {
@@ -130,16 +136,23 @@
 		onLoad(options) {
 			if (options.type) {
 				this.type = options.type;
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.setTitle(this.type);
 			}
 		},
 		onShow(){
 			if(!this.isOnShow){
 				return
 			}
-			this.list = [];
-			this.current_page = 1;
-			this.last_page = 1;
-			this.setTitle(this.type);
+			if(this.isAdd){
+				this.list = [];
+				this.current_page = 1;
+				this.last_page = 1;
+				this.loadData();
+				this.$store.commit("setAdd",false);
+			}
 		},
 		onReachBottom() {
 			//判断是否最后一页

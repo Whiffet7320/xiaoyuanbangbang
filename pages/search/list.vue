@@ -8,7 +8,9 @@
 		<view class="prolist">
 			<view class="item" v-for="(item,index) in list" :key="index" @click="goDetail(item)">
 				<image :src="item.myImg_paths[0]" mode="aspectFill" class="img"></image>
-				<view class="title u-line-2" v-if="from == 'spell' && cur == 1">{{item.start_location}}-{{item.end_location}}</view>
+				<view class="title u-line-2" v-if="from == 'spell' && cur == 1">
+					{{item.start_location}}-{{item.end_location}}
+				</view>
 				<view class="title u-line-2" v-else>{{item.product_name}}</view>
 				<!-- <view class="taglist" v-if="flag">
 					<view class="itag">五成新</view>
@@ -47,7 +49,7 @@
 				list: [],
 				from: '',
 				flag: false,
-				type:'0',
+				type: '0',
 			}
 		},
 		onLoad(options) {
@@ -81,7 +83,7 @@
 							if (ele.img_paths) {
 								ele.myImg_paths = ele.img_paths.split(',')
 								ele.myImg_paths.forEach((img, i) => {
-									this.$set(ele.myImg_paths, i, `${this.$url}/${img}`)
+									this.$set(ele.myImg_paths, i, `${img}`)
 								})
 							}
 						})
@@ -95,7 +97,7 @@
 							if (ele.img_paths) {
 								ele.myImg_paths = ele.img_paths.split(',')
 								ele.myImg_paths.forEach((img, i) => {
-									this.$set(ele.myImg_paths, i, `${this.$url}/${img}`)
+									this.$set(ele.myImg_paths, i, `${img}`)
 								})
 							}
 						})
@@ -114,7 +116,7 @@
 						if (ele.img_paths) {
 							ele.myImg_paths = ele.img_paths.split(',')
 							ele.myImg_paths.forEach((img, i) => {
-								this.$set(ele.myImg_paths, i, `${this.$url}/${img}`)
+								this.$set(ele.myImg_paths, i, `${img}`)
 							})
 						}
 					})
@@ -131,7 +133,7 @@
 						if (ele.img_paths) {
 							ele.myImg_paths = ele.img_paths.split(',')
 							ele.myImg_paths.forEach((img, i) => {
-								this.$set(ele.myImg_paths, i, `${this.$url}/${img}`)
+								this.$set(ele.myImg_paths, i, `${img}`)
 							})
 						}
 					})
@@ -144,9 +146,24 @@
 				this.getData()
 			},
 			goDetail(item) {
-				uni.navigateTo({
-					url: `/pages/spell/detail?item=${JSON.stringify(item)}`
-				})
+				// uni.navigateTo({
+				// 	url: `/pages/spell/detail?item=${JSON.stringify(item)}`
+				// })
+				if (this.from == 'market') {
+					uni.navigateTo({
+						url: "/pages/index/detail/detail?id=" + item.id + "&type=jishi" + "&stype=" + item.type
+					})
+				} else if (this.from == 'lost') {
+					uni.navigateTo({
+						url: "/pages/index/detail/detail?id=" + item.id + "&type=shougou" + "&stype=" + item.type
+					})
+				} else if (this.from == 'spell') {
+					var type = this.cur == 0 ? 'pindan' : 'pinche';
+					uni.navigateTo({
+						url:"/pages/index/detail/detail?id="+item.id+"&type="+type
+					})
+				}
+
 			}
 		}
 	}

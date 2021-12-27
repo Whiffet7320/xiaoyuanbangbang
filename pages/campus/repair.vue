@@ -1,6 +1,6 @@
 <template>
 	<view class="container spell">
-		<view class="tip">温馨提示：点击商品展示框进行<text class="red">修改或重新上传</text>，向左滑动进行<text class="red">下架</text>（如果您不想拼单可以进行下架，下架后其他用户将不会看到您的个人信息）；</view>
+		<view class="tip">温馨提示：点击展示框进行<text class="red">查看详情</text>，向左滑动进行<text class="red">下架</text>（如果您不想拼单可以进行下架，下架后其他用户将不会看到您的个人信息）；</view>
 		<view class="ulist">
 			<uni-swipe-action>
 				<uni-swipe-action-item v-for="(item,index) in list" :key="index">
@@ -32,19 +32,27 @@
 							<view class="conitem">
 								<image src="/static/images/icon_gifts.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【物品】：{{item.product_name}}</text>
+									<text class="bold">【物品】：</text>
+									<view class="sub u-line-2">{{item.product_name}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.description">
 								<image src="/static/images/icon_ends.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【描述】：{{item.description}}</text>
+									<text class="bold">【描述】：</text>
+									<view class="sub u-line-2">{{item.description}}</view>
 								</view>
 							</view>
 							<view class="conitem" v-if="item.remark">
 								<image src="/static/images/icon_bz.png" mode="aspectFit" style="width: 32rpx;height: 32rpx;margin-right: 13rpx;"></image>
 								<view class="text">
-									<text>【备注】：{{item.remark}}</text>
+									<text class="bold">【备注】：</text>
+									<view class="sub u-line-2">{{item.remark}}</view>
+								</view>
+							</view>
+							<view class="imglist" v-if="item.img_paths!==''">
+								<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click="previewImage(item.imgPath,indexz)">
+									<image :src="pitem" mode="aspectFill" class="img"></image>
 								</view>
 							</view>
 						</view>
@@ -58,6 +66,7 @@
 			</uni-swipe-action>
 		</view>
 		<u-loadmore :status="status" bg-color="#f7f8fa" color="#010101" font-size="20" margin-top="50" />
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
@@ -65,6 +74,7 @@
 	export default{
 		data(){
 			return{
+				scrollTop:0,
 				list:[],
 				// 加载
 				reload: false, //判断是否上拉
@@ -79,6 +89,17 @@
 			}
 		},
 		methods:{
+			previewImage(urls,index) {
+				uni.previewImage({
+					urls: urls,
+					current: index,
+					indicator: 'default',
+					loop: true,
+					fail(err) {
+						console.log('previewImage出错', urls, err)
+					},
+				})
+			},
 			bindClick(e,index){
 				let id = this.list[index].id;
 				this.$api.delbaoxiu(id).then((res)=>{
@@ -127,7 +148,10 @@
 				})
 			}
 		},
-		onShow(){
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
+		onLoad(){
 			this.list = [];
 			this.current_page = 1;
 			this.last_page = 1;

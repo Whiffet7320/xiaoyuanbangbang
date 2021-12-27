@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "咨询详情",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "page-ftcomment": "/components/page-foot/page-ftcomment"
+  }
+}

@@ -2,11 +2,13 @@
   "navigationBarTitleText": "校园集市",
   "navigationBarBackgroundColor": "#FE694F",
   "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "page-search": "/components/page-search/page-search",
     "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
     "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
     "page-foot": "/components/page-foot/page-foot",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
     "market-list": "/pages/market/components/market-list"
   }
 }

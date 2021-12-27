@@ -13,7 +13,8 @@
 					<text v-if="type=='jishi' && stype==1">#帮帮收购</text>
 					<text v-if="type=='jishi' && stype==2">#帮帮转卖</text>
 					<text v-if="type=='baoxiu'">#帮帮报修</text>
-					<text class="text">{{info.device==null?"":'来自'+info.device.charAt(0).toUpperCase() + info.device.slice(1)}}</text>
+					<text class="text">{{info.device|getDevice}}</text>
+					<text class="time">{{info.add_time}}</text>
 				</view>
 			</view>
 		</view>
@@ -140,7 +141,7 @@
 					<view class="text">{{info.remark}}</view>
 				</view>
 			</template>
-			<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+			<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 			<view class="tip call">
 				<text class="text" v-if="type=='pinche'">想拼车的同学请点我</text>
 				<text class="text" v-if="type=='pindan'">想拼单的同学请点我</text>
@@ -169,7 +170,7 @@
 			<view class="sitem" v-if="info.wx!==null && info.wx!==''">
 				<view class="left">
 					<u-icon name="weixin-fill" size="35" color="#848484"></u-icon>
-					<text class="texts">微信：</text>
+					<text class="texts">其他：</text>
 				</view>
 				<view class="text">{{info.wx}}</view>
 				<view class="btn" @click.stop="onCopy(info.wx)">复制</view>
@@ -221,7 +222,7 @@
 			</view>
 			<view class="empty" v-if="jlist.length==0">暂时没有评论</view>
 		</view>
-		<page-ftcomment :list="info" @change="onChange" @reply="onReply"></page-ftcomment>
+		<page-ftcomment :list="info" :total="total" @change="onChange" @reply="onReply"></page-ftcomment>
 		<u-popup v-model="popShow" mode="bottom" :closeable="false" :safe-area-inset-bottom="true" border-radius="0">
 			<view class="commentModal">
 				<view class="utext" :class="{'on':comments==''}">
@@ -232,6 +233,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
 
@@ -249,6 +251,7 @@
 		},
 		data(){
 			return{
+				scrollTop:0,
 				isOnShow:true,
 				sid:0,
 				id:0,
@@ -269,6 +272,19 @@
 					loadmore: '上拉加载更多',
 					loading: '正在加载...',
 					nomore: '没有更多了'
+				}
+			}
+		},
+		filters:{
+			getDevice(val){
+				if(val==null){
+					return "";
+				}else{
+					if(val=="ios"){
+						return "来自Iphone"
+					}else{
+						return '来自'+val.charAt(0).toUpperCase() + val.slice(1)
+					}
 				}
 			}
 		},
@@ -302,7 +318,7 @@
 				});
 			},
 			getcomtlist(){
-				this.$api.comment_list({id:this.id,type:this.type}).then((res)=>{
+				this.$api.comment_list({id:this.id,type:this.type,page:this.current_page,limit:10}).then((res)=>{
 					if(res.code==200){
 						uni.stopPullDownRefresh();
 						this.jlist = this.reload ? res.data.data : this.jlist.concat(res.data.data);
@@ -343,6 +359,7 @@
 						})
 					}
 				})
+				this.$store.commit("setAdd",true);
 			},
 			onChange(id){
 				if (this.info.is_zan == 0) {
@@ -358,6 +375,7 @@
 							title:res.message,
 							icon:"none"
 						})
+						this.$store.commit("setAdd",true);
 					}else{
 						uni.showToast({
 							title:res.message,
@@ -392,7 +410,8 @@
 								this.popShow = false;
 								this.reload = true;
 								this.current_page = 1;
-								this.getDetail();
+								this.getcomtlist();
+								this.$store.commit("setAdd",true);
 							}else{
 								uni.showToast({
 									title:res.message,
@@ -411,7 +430,8 @@
 								this.popShow = false;
 								this.reload = true;
 								this.current_page = 1;
-								this.getDetail();
+								this.getcomtlist();
+								this.$store.commit("setAdd",true);
 							}else{
 								uni.showToast({
 									title:res.message,
@@ -508,6 +528,9 @@
 				}
 			}
 		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
 		onLoad(options){
 			if(options.id){
 				this.id = options.id;
@@ -518,12 +541,30 @@
 			if(options.type){
 				this.type = options.type;
 			}
+			this.current_page = 1;
+			this.reload = true;
+			this.getDetail();
 		},
 		onShow(){
 			if(!this.isOnShow){
 				return;
 			}
-			this.getDetail();
+		},
+		onPullDownRefresh() {
+			this.current_page = 1;
+			this.reload = true;
+			this.getcomtlist();
+		},
+		onReachBottom() {
+			//判断是否最后一页
+			if (this.current_page >= this.last_page) {
+				this.status = 'nomore';
+			} else {
+				this.reload = false;
+				this.current_page = this.current_page + 1; //页码+1
+				this.status = 'loading';
+				this.getcomtlist();
+			}
 		}
 	}
 </script>
@@ -534,6 +575,7 @@
 	}
 </style>
 <style lang="scss" scoped>
+	@import "@/common/css/spell/commentWrap.scss";
 	.comdetail{
 		.uinfo{
 			margin-top: 20rpx;
@@ -563,6 +605,12 @@
 					.text{
 						margin-left: 10rpx;
 					}
+					.time{
+						margin-left: 10rpx;
+						color: #c4c4c4;
+						font-family: PingFang SC, PingFang SC-Medium;
+						font-weight: 400;
+					}
 				}
 			}
 		}
@@ -572,9 +620,6 @@
 			.fnitem{
 				padding-top: 8rpx;
 				font-size: 24rpx;
-				font-family: PingFang SC, PingFang SC-Medium;
-				font-weight: 500;
-				color: #000000;
 				display: flex;
 				.label{
 					font-family: PingFang SC, PingFang SC-Bold;
@@ -583,6 +628,9 @@
 				}
 				.text{
 					flex:1;
+					color: #666666;
+					font-family: PingFang SC, PingFang SC-Medium;
+					font-weight: 400;
 				}
 			}
 			.tip{
@@ -590,7 +638,7 @@
 				font-size: 20rpx;
 				font-family: PingFang SC, PingFang SC-Regular;
 				font-weight: 400;
-				color: #000000;
+				color: #666666;
 			}
 			.call{
 				display: flex;
@@ -662,155 +710,6 @@
 					text-align: center;
 					color: #ffffff;
 				}
-			}
-		}
-		.comment_wrap{
-			margin-top: 20rpx;
-			background-color: #FFFFFF;
-			padding:20rpx 26rpx;
-			.total{
-				display: inline-block;
-				background-color: #fed1c9;
-				padding: 0 20rpx;
-				border-radius:0 60rpx 60rpx 0;
-				height: 60rpx;
-				line-height: 60rpx;
-				font-size: 24rpx;
-				font-family: PingFang SC, PingFang SC-Medium;
-				font-weight: 500;
-				text-align: center;
-				color: #000000;
-			}
-			.commlist{
-				padding-top:12rpx;
-				padding-left: 22rpx;
-				.commitem{
-					padding:28rpx 0;
-					display: flex;
-					border-bottom: 2rpx solid #f6f6f6;
-					&:last-child{
-						border-bottom: 0;
-					}
-					.img{
-						width: 54rpx;
-						height: 54rpx;
-						background-color: #eee;
-						border-radius: 50%;
-					}
-					.info{
-						padding-left: 20rpx;
-						flex:1;
-						.hd{
-							display: flex;
-							align-items: center;
-							.name{
-								flex:1;
-								font-size: 28rpx;
-								font-family: PingFang SC, PingFang SC-Bold;
-								font-weight: 700;
-								color: #000000;
-							}
-						}
-						.desc{
-							margin-top: 26rpx;
-							font-size: 24rpx;
-							font-family: PingFang SC, PingFang SC-Medium;
-							font-weight: 500;
-							color: #000000;
-						}
-						.feedback{
-							margin-top: 10rpx;
-							font-size: 20rpx;
-							font-family: PingFang SC, PingFang SC-Medium;
-							font-weight: 500;
-							color: #999;
-						}
-						.toolicon{
-							display: flex;
-							align-items: flex-start;
-							.zan{
-								display: flex;
-								align-items: center;
-								color: #848484;
-								margin-left:10rpx;
-								.text{
-									font-size: 20rpx;
-									font-family: PingFang SC, PingFang SC-Regular;
-									font-weight: 400;
-									margin-left: 7rpx;
-								}
-								&.on{
-									color:#FE694F;
-								}
-							}
-						}
-						.replaylist{
-							margin-top: 20rpx;
-							.replay_item{
-								display: flex;
-								margin-bottom: 20rpx;
-								.info{
-									.hd{
-										justify-content: flex-start;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		.empty{
-			font-size: 24rpx;
-			font-family: PingFang SC, PingFang SC-Medium;
-			font-weight: 500;
-			color: #000000;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-			height: 300rpx;
-		}
-	}
-	.commentModal{
-		width: 100%;
-		padding: 20rpx;
-		.utext{
-			width: 100%;
-			padding: 20rpx;
-			height: 200rpx;
-			background: #f1f1f1;
-			border-radius: 10rpx;
-			.replytext{
-				width: 100%;
-				height: 100%;
-				font-size: 24rpx;
-				font-family: PingFang SC, PingFang SC-Regular;
-				font-weight: 400;
-				color: #000000;
-				text-align: justify;
-			}
-			&.on{
-				.replytext::after{
-					content:"禁止发布内容和分类不符、营销推广类等内容，平台已引入AI智能机器人对您发布的信息进行自动检测，同时平台将加强巡查力度，整治不合规信息。";
-					font-size: 24rpx;
-					color:#8f8f8f;
-				}
-			}
-		}
-		.comtbtn{
-			display: flex;
-			justify-content: flex-end;
-			margin-top: 20rpx;
-			.btns{
-				font-size: 24rpx;
-				color:#FFFFFF;
-				width: 160rpx;
-				height: 60rpx;
-				line-height: 60rpx;
-				background-color: #FE694F;
-				border-radius: 12rpx;
-				text-align: center;
 			}
 		}
 	}

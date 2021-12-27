@@ -2,10 +2,12 @@
   "navigationBarTitleText": "我的风景",
   "navigationBarTextStyle": "black",
   "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "u-icon": "/uview-ui/components/u-icon/u-icon",
     "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore",
     "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
     "page-nav": "/pages/campus/components/page-nav",
     "page-commentxy": "/pages/campus/components/page-commentxy",
     "page-ftcomment": "/components/page-foot/page-ftcomment"

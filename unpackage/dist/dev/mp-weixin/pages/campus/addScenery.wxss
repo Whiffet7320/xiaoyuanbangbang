@@ -79,9 +79,7 @@ page{
   width: 100%;
   border: 2rpx solid #e6e6e6;
   padding: 12rpx 24rpx;
-  height: 200rpx;
   display: flex;
-  align-items: center;
 }
 .scenery_from .sitem .textarea .utextarea.data-v-a30b7a0e {
   width: 100%;

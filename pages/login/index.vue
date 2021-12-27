@@ -42,6 +42,7 @@
 				this.iv = e.detail.iv;
 				this.phoneData = e.detail.encryptedData
 				this.btnShow = false;
+				this.$u.toast("请微信授权登录");
 			},
 			getUserProfile() {
 				let infoRes = "";
@@ -61,26 +62,25 @@
 									}
 									this.$api.loginWechat(data).then((res) => {
 										if (res.code == 200) {
-											let expressTime = this.$u.timeFormat(new Date()
-												.getTime(), 'yyyy-mm-dd');
+											let expressTime = this.$u.timeFormat(new Date().getTime(), 'yyyy-mm-dd');
 											this.$store.commit("setUserinfo", {
 												info: infoRes.userInfo,
 												time: expressTime
 											});
 											uni.setStorageSync("token", res.data.token);
-											uni.navigateBack({
-												delta: 1
-											})
-											// if (uni.getStorage('loginTime') == 'one') {
-											// 	uni.navigateBack({
-											// 		delta: 1
-											// 	})
-											// } else {
-											// 	uni.setStorageSync("loginTime", 'one');
-											// 	uni.switchTab({
-											// 		url: "/pages/tabBar/user"
-											// 	})
-											// }
+											var pages = getCurrentPages(); // 获取页面栈
+											var currPage = pages[pages.length - 1]; // 当前页面
+											var prevPage = pages[pages.length - 2]; // 上一个页面
+											prevPage.onShow({isShudongBack:true});
+											if(prevPage.route.indexOf('login') !=-1){
+												uni.navigateBack({
+													delta: 2
+												})
+											}else{
+												uni.navigateBack({
+													delta: 1
+												})
+											}
 										} else {
 											this.$u.toast(res.msg);
 										}
@@ -134,8 +134,8 @@
 
 			.btn {
 				width: 100%;
-				height: 64rpx;
-				line-height: 64rpx;
+				height: 70rpx;
+				line-height: 70rpx;
 				margin-bottom: 40rpx;
 				border-radius: 32rpx;
 				font-size: 28rpx;

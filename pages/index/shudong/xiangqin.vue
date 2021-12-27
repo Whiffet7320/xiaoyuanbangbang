@@ -1,16 +1,26 @@
 <template>
 	<view class="index">
 		<u-toast ref="uToast" />
-		<image class="bgImg" src="https://schoolhelp.5laoye.com/static/img/images/zu2410.png" mode=""></image>
+		<view class="nearby"  v-if="imgShow">
+			<u-modal v-model="show" @confirm="longPressConfirm" :content="content" show-cancel-button></u-modal>
+			<MyPreviewImage @closeIImg1='closeImg' ref="myPreviewImage" @longPress="() => {show = true}" @uploadIndex="uploadIndex"
+				:list="myImgList" :vertical="false"></MyPreviewImage>
+		</view>
+		<!-- <image class="bgImg" src="https://schoolhelp.5laoye.com/static/img/images/zu2410.png" mode=""></image> -->
+		<image class="bgImg" src="/static/images/zu12345.jpg" mode=""></image>
 		<image class="bgImg2" src="https://schoolhelp.5laoye.com/static/img/images/mcz245.png" mode=""></image>
-		<image src="/static/images/zu2405.png" class="musicImg" :style='{"transform": "rotate("+rotateDeg+"deg);"}'
-			@click="changeMusic" mode=""></image>
+		<image src="/static/images/zu2770.png" v-if="musicPaused" class="musicImgzt" @click="changeMusic" mode="">
+		</image>
+		<image src="/static/images/zu2405.png" v-else class="musicImg" @click="changeMusic" mode=""></image>
+		<image src="/static/images/zu2771.png" class="shuaxin" @click="shuaxin" mode=""></image>
 		<view class="nav1">
-			<view class="tit1">{{obj.sender_name?obj.sender_name:'匿名用户'}}</view>
+			<view class="tit1">{{obj.sender_name?obj.sender_name:''}}</view>
 			<view class="tit2">{{obj.content}}</view>
 			<view class="nav4-imgs">
-				<image @click.stop="toSeeImg(i,obj.myImg_paths)" class="nav4-img" v-for="(ele,i) in obj.myImg_paths"
-					:src="ele" mode=""></image>
+				<!-- @click.stop="toSeeImg(i,obj.myImg_paths)" -->
+				<image class="nav4-img" @click="mySeeImg(i,obj.myImg_paths)" v-for="(ele,i) in obj.myImg_paths" :key="i" :src="ele" mode=""></image>
+				<!-- 查看图片 -->
+				<!-- <MyPreviewImage :list="obj.myImg_paths" /> -->
 			</view>
 			<view class="txt3">
 				<view class="icon1" @click="dianzan(obj)">
@@ -19,7 +29,7 @@
 						<view class="i-txt">{{obj.zan_count}}</view>
 					</template>
 					<template v-else>
-						<u-icon name="thumb-up-fill" color="#165ff9" size="28"></u-icon>
+						<u-icon name="thumb-up-fill" color="#fe694f" size="28"></u-icon>
 						<view class="i-txt isDianzan">{{obj.zan_count}}</view>
 					</template>
 				</view>
@@ -48,23 +58,34 @@
 			<view class="nav2-txt">点击下面回复的内容可@评论者</view>
 		</view>
 		<view class="nav3">
-			<template v-for="(item,i) in list" >
-				<view :class="{'item':true,'yary':i%2==0}" @click="atPeople(item,i)">
+			<block v-for="(item,i) in list" :key="i">
+				<view :class="{'item':true,'yary':i%2==0,'del':item.status == 1}" @click="atPeople(item,i)">
 					<view class="tit1">
-						<view class="txt1">{{item.sender_nickname?item.sender_nickname:'匿名用户'}}</view>
+						<view class="txt1">#{{listTotal-i}} {{item.sender_nickname?item.sender_nickname:'A'}}<text
+								class="floor"
+								v-if="item.is_builder==0">({{Number(item.writer_id) + Number(id)}}号)</text><text
+								class="floor" v-if="item.is_builder==1">(楼主)</text><text class="floor"
+								v-if="item.writer_id==uid">(我)</text></view>
 						<view class="txt2">
 							<view class="txt2-1">{{item.showTime}}</view>
-							<view style="transform: rotate(90deg);" @click.stop="changeSheet(item,i)">
+							<view style="transform: rotate(90deg);" v-if="item.writer_id==uid"
+								@click.stop="changeSheets(item,i)">
 								<u-icon name="more-dot-fill" color="#000000" size="28"></u-icon>
 							</view>
-
+							<view style="transform: rotate(90deg);" v-else @click.stop="changeSheet(item,i)">
+								<u-icon name="more-dot-fill" color="#000000" size="28"></u-icon>
+							</view>
 						</view>
 					</view>
-					<view class="tit2">{{item.content}}</view>
+					<view class="tit2" v-if="item.status == 0">{{item.content}}</view>
+					<view class="tit2" style="color: #EF694F;" v-else>【该评论已被删除】</view>
 				</view>
-			</template>
+			</block>
 			<u-loadmore :status="status" />
-			<u-action-sheet :list="sheetList" @click="sheetClick" v-model="sheetShow"></u-action-sheet>
+			<u-action-sheet :list="sheetList" @click="sheetClick" v-model="sheetShow" class="actionlist">
+			</u-action-sheet>
+			<u-action-sheet :list="sheetList2" @click="sheetClicks" v-model="sheetsShow" class="actionlist">
+			</u-action-sheet>
 		</view>
 	</view>
 </template>
@@ -73,23 +94,43 @@
 	import {
 		mapState
 	} from "vuex";
+	import MyPreviewImage from '@/components/page-previewImage/page-previewImage.vue'
 	export default {
+		components: {
+			MyPreviewImage
+		},
 		data() {
 			return {
-				isOnShow:true,
-				id:'',
-				sheetIdArr:[],
+				fabuFlag:false,
+				imgShow:false,
+				myImgList:[],
+				show: false,
+				randomNum: null,
+				listTotal: 0,
+				isOnShow: true,
+				uid: 0,
+				id: '',
+				sheetIdArr: [],
 				sheetId: '',
 				isAt: false,
 				sheetIndex: null,
 				sheetItem: null,
 				sheetList: [{
-					fontSize: 28,
+					fontSize: 24,
 					subText: '感谢您的点赞'
 				}, {
 					text: '@Ta'
 				}],
+				sheetList2: [{
+					fontSize: 24,
+					subText: '感谢您的点赞'
+				}, {
+					text: '删除'
+				}, {
+					text: '@Ta'
+				}],
 				sheetShow: false,
+				sheetsShow: false,
 				innerAudioContext: null,
 				rotateDeg: 0,
 				timer: null,
@@ -108,11 +149,11 @@
 			}
 		},
 		computed: {
-			...mapState(["shudongPinlunPage", "shudongPinlunPageSize"]),
+			...mapState(["shudongPinlunPage", "shudongPinlunPageSize", 'musicPaused', 'firstMusicTime']),
 		},
 		watch: {
 			shudongPinlunPage: function(page) {
-				console.log('ddpage')
+				console.log('ddpage',page)
 				this.$store.commit("shudongPinlunPage", page);
 				if (this.shudongPinlunPage != 1) {
 					this.getData();
@@ -120,46 +161,60 @@
 			},
 		},
 		onLoad(options) {
-			if (options.obj) {
-				this.obj = JSON.parse(options.obj);
-				console.log(this.obj)
-			}
 			this.id = options.id;
+			this.randomNum = this.random(0, 100);
 		},
 		onUnload() {
-			this.innerAudioContext.pause()
+			// this.innerAudioContext.pause()
 		},
-		onShow() {
-			if(!this.isOnShow){
+		async onShow() {
+			// this.$refs.myPreviewImage.open(0)
+			this.$store.commit("isShudong", true);
+			if (!this.isOnShow) {
 				return;
+			}
+			if (this.firstMusicTime) {
+				const res = await this.$api.video_list()
+				console.log(res);
+				this.$innerAudioContext.src = res.data.path;
+				this.$innerAudioContext.play()
+				this.$store.commit('musicPaused', false)
+				this.$store.commit('firstMusicTime', false)
 			}
 			this.list = [];
 			this.$store.commit("shudongPinlunPage", 1);
+			this.getUserInfo();
 			this.getXqData();
 			this.getData();
-			// 
-			this.innerAudioContext = uni.createInnerAudioContext();
-			this.innerAudioContext.autoplay = true;
-			this.innerAudioContext.loop = true;
-			this.innerAudioContext.src =
-				'https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3';
-			this.innerAudioContext.onPlay(() => {
-				console.log('开始播放');
-				this.timer = setInterval(() => {
-					this.rotateDeg++
-				}, 50)
-			});
-			this.innerAudioContext.onPause(() => {
-				console.log('暂停播放');
-				clearInterval(this.timer)
-				console.log('dsadas')
-			});
 		},
 		onReachBottom() {
-			this.$store.commit("shudongPinlunPage", this.shudongPinlunPage + 1);
+			console.log('onReachBottom')
+			if(!this.fabuFlag){
+				this.$store.commit("shudongPinlunPage", this.shudongPinlunPage + 1);
+			}else{
+				this.fabuFlag = false;
+			}
+			
 		},
 		methods: {
-			async getXqData(){
+			closeImg(val){
+				this.imgShow = val;
+			},
+			mySeeImg(i,arr){
+				this.myImgList = arr;
+				this.imgShow = true;
+				setTimeout(()=>{
+					this.$refs.myPreviewImage.open(i)
+				},200)
+				
+			},
+			uploadIndex(index) {
+				console.log('当前图片', this.list[index]);
+			},
+			longPressConfirm() {
+				console.log('长按事件点击确定');
+			},
+			async getXqData() {
 				const res = await this.$api.shudongXiangqin(this.id)
 				console.log(res)
 				this.obj = res.data;
@@ -167,29 +222,94 @@
 					this.obj.myImg_paths = this.obj.img_paths.split(',')
 					this.obj.myImg_paths.forEach((img, i) => {
 						this.$set(this.obj.myImg_paths, i,
-							`${this.$url}/${img}`)
+							`${img}`)
 					})
 				}
 			},
+			getUserInfo() {
+				this.$api.userInfo().then((res) => {
+					if (res.code == 200) {
+						this.uid = res.data.uid;
+					}
+				})
+			},
 			async getData() {
+				// console.log(this.$innerAudioContext.paused)
+				// if (this.$innerAudioContext.paused) {
+				// 	this.musicPaused = true;
+				// } else {
+				// 	this.musicPaused = false;
+				// }
 				this.status = 'loading';
+				console.log(this.shudongPinlunPage,'getdata')
 				setTimeout(async () => {
 					const res = await this.$api.shudong_comment_list({
 						page: this.shudongPinlunPage,
 						limit: this.shudongPinlunPageSize,
-						id: this.obj.id,
+						id: this.id,
 					})
+					this.listTotal = res.data.total;
+					var pages = getCurrentPages(); // 获取页面栈
+					var currPage = pages[pages.length - 1]; // 当前页面
+					var prevPage = pages[pages.length - 2]; // 上一个页面
+					prevPage.onShow({shudongPinlunNum:this.listTotal,shudongPinlunId:this.id});
 					if (res.data.data.length == 0) {
 						this.status = 'nomore'
 					} else {
 						this.status = 'loadmore';
 						this.list = this.list.concat(res.data.data)
 						this.list.forEach(ele => {
-							ele.showTime = this.timeago(new Date(ele.add_time))
+							ele.showTime = this.timeago(Date.parse(new Date(ele.add_time.replace(
+								/-/g, '/'))))
 						})
 					}
 				}, 200)
 				console.log(this.list)
+			},
+			async shuaxin() {
+				this.list = [];
+				this.$store.commit("shudongPinlunPage", 1);
+				this.fabuFlag = true;
+				this.getUserInfo();
+				this.getXqData();
+				this.getData();
+			},
+			sheetClicks(i) {
+				if (i == 1) {
+					uni.showModal({
+						content: "确定是否删除？",
+						confirmColor: "#fe694f",
+						success: (res) => {
+							if (res.confirm) {
+								this.$api.del_shudong_comment(this.sheetId).then((res) => {
+									if (res.code == 200) {
+										uni.showToast({
+											title: res.message,
+											icon: "none"
+										})
+										this.list = [];
+										this.$store.commit("shudongPinlunPage", 1);
+										this.getUserInfo();
+										this.getXqData();
+										this.getData();
+									} else {
+										uni.showToast({
+											title: res.message,
+											icon: "none"
+										})
+									}
+								})
+							}
+						}
+					})
+				} else {
+					this.content += this.sheetItem.sender_nickname ? `@${this.sheetItem.sender_nickname} ` :
+						`@${this.sheetIndex+1}楼 `;
+					this.isAt = true;
+				}
+			},
+			random(min, max) {
+				return Math.floor(Math.random() * (max - min)) + min;
 			},
 			sheetClick(i) {
 				if (i == 1) {
@@ -199,14 +319,33 @@
 				}
 			},
 			atPeople(item, i) {
-				this.content += item.sender_nickname ? `@${item.sender_nickname} ` : `@${i+1}楼 `;
+				if (item.status == 1) {
+					return;
+				}
+				this.content += item.sender_nickname ? `@${item.sender_nickname} ` : `@${this.listTotal-i}楼 `;
 				this.isAt = true;
+				this.sheetId = item.id;
+				this.sheetIdArr.push(item.id);
+			},
+			changeSheets(item, i) {
+				if (item.status == 1) {
+					return;
+				}
+				this.sheetList2[0].subText = item.content;
+				this.sheetId = item.id;
+				this.sheetsShow = true;
+				this.sheetItem = item;
+				this.sheetIndex = i;
 				this.sheetId = item.id;
 				this.sheetIdArr.push(item.id);
 			},
 			changeSheet(item, i) {
 				console.log(item)
+				if (item.status == 1) {
+					return;
+				}
 				this.sheetList[0].subText = item.content;
+				this.sheetId = item.id;
 				this.sheetShow = true;
 				this.sheetItem = item;
 				this.sheetIndex = i;
@@ -214,10 +353,12 @@
 				this.sheetIdArr.push(item.id);
 			},
 			changeMusic() {
-				if (this.innerAudioContext.paused) {
-					this.innerAudioContext.play()
+				if (this.musicPaused) {
+					this.$innerAudioContext.play()
+					this.$store.commit('musicPaused', false)
 				} else {
-					this.innerAudioContext.pause()
+					this.$innerAudioContext.pause()
+					this.$store.commit('musicPaused', true)
 				}
 			},
 			toSeeImg(i, imgArr) {
@@ -252,11 +393,12 @@
 						duration: 1000,
 						callback: () => {
 							this.isAt = false;
-							this.sheetIdArr=[];
+							this.sheetIdArr = [];
 							this.content = '';
 							this.nicheng = '';
 							this.list = [];
 							this.$store.commit("shudongPinlunPage", 1);
+							this.fabuFlag = true;
 							this.getData();
 						}
 					})
@@ -378,13 +520,43 @@
 
 </style>
 <style lang="scss" scoped>
+	.nearby {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100vh;
+		background-color: #000000;
+		z-index: 99999;
+	}
+
 	.index {
 		position: relative;
 		width: 100%;
 		height: 100%;
 	}
 
+	@-webkit-keyframes rotating {
+		0% {
+			transform: rotate(0deg)
+		}
+
+		to {
+			transform: rotate(1turn)
+		}
+	}
+
+	@keyframes rotating {
+		0% {
+			transform: rotate(0deg)
+		}
+
+		to {
+			transform: rotate(1turn)
+		}
+	}
+
 	.musicImg {
+		animation: rotating 5.2s linear infinite;
 		position: fixed;
 		right: 40rpx;
 		bottom: 200rpx;
@@ -393,8 +565,35 @@
 		z-index: 99;
 	}
 
+	.musicImgzt {
+		position: fixed;
+		right: 40rpx;
+		bottom: 200rpx;
+		width: 60rpx;
+		height: 60rpx;
+		z-index: 99;
+		animation-play-state: running;
+	}
+
+	.shuaxin {
+		position: fixed;
+		right: 40rpx;
+		bottom: 120rpx;
+		width: 60rpx;
+		height: 60rpx;
+		z-index: 99;
+	}
+
 	/deep/ .u-load-more-wrap {
 		height: 100rpx !important;
+	}
+
+	.actionlist {
+		/deep/.u-action-sheet-item__subtext {
+			width: 100%;
+			padding: 0 24rpx;
+			text-align: center;
+		}
 	}
 
 
@@ -466,7 +665,7 @@
 				}
 
 				.i-txt.isDianzan {
-					color: #165ff9;
+					color: #fe694f;
 				}
 			}
 		}
@@ -624,6 +823,12 @@
 					color: #014001;
 				}
 
+				.floor {
+					font-size: 24rpx;
+					font-weight: 500;
+					color: #014001;
+				}
+
 				.txt2 {
 					transform: translateX(10rpx);
 					display: flex;
@@ -648,7 +853,7 @@
 		.item::after {
 			position: absolute;
 			top: 0;
-			right: -24rpx;
+			right: -21rpx;
 			content: '';
 			width: 0;
 			height: 0;
@@ -663,10 +868,14 @@
 			background: rgba(217, 217, 217, 0.8);
 		}
 
+		.item.del {
+			opacity: 0.6;
+		}
+
 		.item.yary::after {
 			position: absolute;
 			top: 0;
-			right: -24rpx;
+			right: -21rpx;
 			content: '';
 			width: 0;
 			height: 0;

@@ -9,7 +9,7 @@
 					<view class="desc">
 						<text v-if="item.type==1">#帮帮收购</text>
 						<text v-if="item.type==2">#帮帮转卖</text>
-						<text class="text">{{item.device==null?"":'来自'+item.device.charAt(0).toUpperCase() + item.device.slice(1)}}</text>
+						<text class="text">{{item.device|getDevice}}</text>
 					</view>
 				</view>
 			</view>
@@ -18,28 +18,28 @@
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_sg.png" mode="aspectFit" style="width: 34rpx;height: 32rpx;"></image>收物】：</view>
-							<view>{{item.product_name}}</view>
+							<view class="sub u-line-2">{{item.product_name}}</view>
 						</view>
 					</view>
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_sg.png" mode="aspectFit" style="width: 34rpx;height: 32rpx;"></image>收价】：</view>
-							<view>{{item.price}}</view>
+							<view class="sub u-line-2">{{item.price}}</view>
 						</view>
 					</view>
 					<view class="feed_item" v-if="item.description">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_sg.png" mode="aspectFit" style="width: 34rpx;height: 32rpx;"></image>描述】：</view>
-							<view class="sub u-line-2">{{item.description}}</view>
+							<view class="sub u-line-3">{{item.description}}</view>
 						</view>
 					</view>
 					<view class="feed_item" v-if="item.remark">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_sg.png" mode="aspectFit" style="width: 34rpx;height: 32rpx;"></image>备注】：</view>
-							<view class="sub u-line-2">{{item.remark}}</view>
+							<view class="sub u-line-3">{{item.remark}}</view>
 						</view>
 					</view>
-					<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+					<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 					<view class="tip call">
 						<text class="text">想出的请同学点我</text>
 						<view class="triangle-up"></view>
@@ -59,28 +59,28 @@
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_zm.png" mode="aspectFit" style="width: 34rpx;height: 31rpx;"></image>出售】：</view>
-							<view class="sub">{{item.product_name}}</view>
+							<view class="sub u-line-2">{{item.product_name}}</view>
 						</view>
 					</view>
 					<view class="feed_item">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_zm.png" mode="aspectFit" style="width: 34rpx;height: 31rpx;"></image>售价】：</view>
-							<view>{{item.price}}</view>
+							<view class="sub u-line-2">{{item.price}}</view>
 						</view>
 					</view>
 					<view class="feed_item" v-if="item.description">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_zm.png" mode="aspectFit" style="width: 34rpx;height: 31rpx;"></image>描述】：</view>
-							<view class="sub u-line-2">{{item.description}}</view>
+							<view class="sub u-line-3">{{item.description}}</view>
 						</view>
 					</view>
 					<view class="feed_item" v-if="item.remark">
 						<view class="text">
 							<view class="bold">【<image src="/static/images/icon_zm.png" mode="aspectFit" style="width: 34rpx;height: 31rpx;"></image>备注】：</view>
-							<view class="sub u-line-2">{{item.remark}}</view>
+							<view class="sub u-line-3">{{item.remark}}</view>
 						</view>
 					</view>
-					<view class="tip">【请告知在校园帮帮平台上看到的】</view>
+					<view class="tip">【请告知在洛科帮帮平台上看到的】</view>
 					<view class="tip call">
 						<text class="text">收购的同学请点我</text>
 						<view class="triangle-up"></view>
@@ -95,7 +95,7 @@
 					</view>
 				</view>
 			</template>
-			<view class="feed_ft" v-if="isTime">
+			<view class="feed_ft">
 				<view class="left">发布于{{item.add_time}}</view>
 				<view class="right">
 					<view class="icon_l">
@@ -130,6 +130,19 @@
 		},
 		data(){
 			return{}
+		},
+		filters:{
+			getDevice(val){
+				if(val==null){
+					return "";
+				}else{
+					if(val=="ios"){
+						return "来自Iphone"
+					}else{
+						return '来自'+val.charAt(0).toUpperCase() + val.slice(1)
+					}
+				}
+			}
 		},
 		methods:{
 			previewImage(a){
