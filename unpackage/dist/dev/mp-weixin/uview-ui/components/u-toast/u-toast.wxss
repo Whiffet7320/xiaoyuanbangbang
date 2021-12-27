@@ -12,10 +12,8 @@
   color: #fff;
   border-radius: 8rpx;
   background: #585858;
-
   display: flex;
   flex-direction: row;
-
   align-items: center;
   justify-content: center;
   font-size: 28rpx;
@@ -28,10 +26,8 @@
 }
 .u-icon.data-v-413e7fe0 {
   margin-right: 10rpx;
-
   display: flex;
   flex-direction: row;
-
   align-items: center;
   line-height: normal;
 }

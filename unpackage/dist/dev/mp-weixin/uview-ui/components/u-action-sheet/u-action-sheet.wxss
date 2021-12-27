@@ -12,10 +12,8 @@
   color: #909399;
 }
 .u-action-sheet-item.data-v-6f495b00 {
-
   display: flex;
   flex-direction: row;
-
   line-height: 1;
   justify-content: center;
   align-items: center;
