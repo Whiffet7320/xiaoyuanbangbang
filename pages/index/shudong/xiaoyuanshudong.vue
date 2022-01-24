@@ -50,11 +50,11 @@
 		<view class="nav3">
 			<view class="nav3-1"></view>
 			<view class="items">
+				<view @click="itemClick(5)" :class="{'item':true,'active':itemIndex==5}">新发</view>
 				<view @click="itemClick(1)" :class="{'item':true,'active':itemIndex==1}">我发</view>
 				<view @click="itemClick(2)" :class="{'item':true,'active':itemIndex==2}">我回</view>
 				<view @click="itemClick(3)" :class="{'item':true,'active':itemIndex==3}">我赞</view>
 				<view @click="itemClick(4)" :class="{'item':true,'active':itemIndex==4}">新回</view>
-				<view @click="itemClick(5)" :class="{'item':true,'active':itemIndex==5}">新发</view>
 				<view @click="itemClick(6)" :class="{'item':true,'active':itemIndex==6}">最热</view>
 				<view @click="itemClick(7)" :class="{'item':true,'active':itemIndex==7}">精选</view>
 			</view>
@@ -135,7 +135,7 @@
 				innerAudioContext: null,
 				rotateDeg: 0,
 				timer: null,
-				itemIndex: 1,
+				itemIndex: 5,
 				isDianzan: false,
 				imgArr: [''],
 				form: {

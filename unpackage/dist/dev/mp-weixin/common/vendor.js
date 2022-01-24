@@ -805,9 +805,15 @@ var customize = cached(function (str) {
 
 function initTriggerEvent(mpInstance) {
   var oldTriggerEvent = mpInstance.triggerEvent;
-  mpInstance.triggerEvent = function (event) {for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
+  var newTriggerEvent = function newTriggerEvent(event) {for (var _len3 = arguments.length, args = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
     return oldTriggerEvent.apply(mpInstance, [customize(event)].concat(args));
   };
+  try {
+    // 京东小程序 triggerEvent 为只读
+    mpInstance.triggerEvent = newTriggerEvent;
+  } catch (error) {
+    mpInstance._triggerEvent = newTriggerEvent;
+  }
 }
 
 function initHook(name, options, isComponent) {
@@ -941,7 +947,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1981,17 +1987,17 @@ function createPlugin(vm) {
   var appOptions = parseApp(vm);
   if (isFn(appOptions.onShow) && wx.onAppShow) {
     wx.onAppShow(function () {for (var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {args[_key7] = arguments[_key7];}
-      appOptions.onShow.apply(vm, args);
+      vm.__call_hook('onShow', args);
     });
   }
   if (isFn(appOptions.onHide) && wx.onAppHide) {
     wx.onAppHide(function () {for (var _len8 = arguments.length, args = new Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {args[_key8] = arguments[_key8];}
-      appOptions.onHide.apply(vm, args);
+      vm.__call_hook('onHide', args);
     });
   }
   if (isFn(appOptions.onLaunch)) {
     var args = wx.getLaunchOptionsSync && wx.getLaunchOptionsSync();
-    appOptions.onLaunch.call(vm, args);
+    vm.__call_hook('onLaunch', args);
   }
   return vm;
 }
@@ -10366,7 +10372,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -10387,14 +10393,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -10480,7 +10486,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_NAME":"school","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10666,7 +10672,7 @@ function internalMixin(Vue) {
 
   Vue.prototype.$emit = function(event) {
     if (this.$scope && event) {
-      this.$scope['triggerEvent'](event, {
+      (this.$scope['_triggerEvent'] || this.$scope['triggerEvent'])(event, {
         __args__: toArray(arguments, 1)
       });
     }
@@ -11712,7 +11718,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 5));var _axios = _interopRequireDefault(__webpack_require__(/*! axios */ 43));
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));
-var _url = _interopRequireDefault(__webpack_require__(/*! ./url.js */ 74));var _loginWechat$address$;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _url = _interopRequireDefault(__webpack_require__(/*! ./url.js */ 74));var _loginWechat$banner$a;function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var vue = new _vue.default();
 var myPost = _axios.default.create({
   baseURL: _url.default.baseUrl,
@@ -12330,7 +12336,7 @@ dzpMyGet.interceptors.response.use(function (response) {
       vue.$message.error(error.response.data.info);
     }
   }
-});var _default = (_loginWechat$address$ = {
+});var _default = (_loginWechat$banner$a = {
 
 
   loginWechat: function loginWechat(obj) {
@@ -12339,6 +12345,11 @@ dzpMyGet.interceptors.response.use(function (response) {
       data: _objectSpread({},
       obj) });
 
+
+  },
+  banner: function banner() {
+    return myGet({
+      url: _url.default.banner });
 
   },
   address: function address() {
@@ -12501,7 +12512,7 @@ dzpMyGet.interceptors.response.use(function (response) {
       obj) });
 
 
-  } }, _defineProperty(_loginWechat$address$, "address", function address(
+  } }, _defineProperty(_loginWechat$banner$a, "address", function address(
 obj) {
   return myGet({
     url: "".concat(_url.default.address),
@@ -12509,7 +12520,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "addAddress", function addAddress(
+}), _defineProperty(_loginWechat$banner$a, "addAddress", function addAddress(
 obj) {
   return myPost({
     url: "".concat(_url.default.address),
@@ -12517,7 +12528,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "upDateAddress", function upDateAddress(
+}), _defineProperty(_loginWechat$banner$a, "upDateAddress", function upDateAddress(
 obj, id) {
   return myPut({
     url: "".concat(_url.default.address, "/").concat(id),
@@ -12525,12 +12536,12 @@ obj, id) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "deleteAddress", function deleteAddress(
+}), _defineProperty(_loginWechat$banner$a, "deleteAddress", function deleteAddress(
 id) {
   return myDelete({
     url: "".concat(_url.default.address, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "comment_zan", function comment_zan(
+}), _defineProperty(_loginWechat$banner$a, "comment_zan", function comment_zan(
 obj) {
   return myPost({
     url: "".concat(_url.default.comment_zan),
@@ -12538,12 +12549,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "userInfo", function userInfo()
+}), _defineProperty(_loginWechat$banner$a, "userInfo", function userInfo()
 {
   return myGet({
     url: "".concat(_url.default.userInfo) });
 
-}), _defineProperty(_loginWechat$address$, "baoxiu", function baoxiu(
+}), _defineProperty(_loginWechat$banner$a, "baoxiu", function baoxiu(
 
 obj) {
   return myPost({
@@ -12552,12 +12563,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "delbaoxiu", function delbaoxiu(
+}), _defineProperty(_loginWechat$banner$a, "delbaoxiu", function delbaoxiu(
 id) {
   return myDelete({
     url: "".concat(_url.default.baoxiu, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getbaoxiu", function getbaoxiu(
+}), _defineProperty(_loginWechat$banner$a, "getbaoxiu", function getbaoxiu(
 obj) {
   return myGet({
     url: _url.default.baoxiu,
@@ -12565,12 +12576,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getbxDetail", function getbxDetail(
+}), _defineProperty(_loginWechat$banner$a, "getbxDetail", function getbxDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.baoxiu, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getmylist", function getmylist(
+}), _defineProperty(_loginWechat$banner$a, "getmylist", function getmylist(
 obj) {
   return myGet({
     url: _url.default.my_type_list,
@@ -12578,7 +12589,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "video_list", function video_list(
+}), _defineProperty(_loginWechat$banner$a, "video_list", function video_list(
 obj) {
   return myGet({
     url: _url.default.video_list,
@@ -12586,7 +12597,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "fengjing", function fengjing(
+}), _defineProperty(_loginWechat$banner$a, "fengjing", function fengjing(
 obj) {
   return myPost({
     url: _url.default.fengjing,
@@ -12594,7 +12605,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getfengjing", function getfengjing(
+}), _defineProperty(_loginWechat$banner$a, "getfengjing", function getfengjing(
 obj) {
   return myGet({
     url: _url.default.fengjing,
@@ -12602,17 +12613,17 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getfengjingDetail", function getfengjingDetail(
+}), _defineProperty(_loginWechat$banner$a, "getfengjingDetail", function getfengjingDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.fengjing, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "delfengjing", function delfengjing(
+}), _defineProperty(_loginWechat$banner$a, "delfengjing", function delfengjing(
 id) {
   return myDelete({
     url: "".concat(_url.default.fengjing, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "shougou", function shougou(
+}), _defineProperty(_loginWechat$banner$a, "shougou", function shougou(
 obj) {
   return myPost({
     url: _url.default.shougou,
@@ -12620,12 +12631,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "delshougou", function delshougou(
+}), _defineProperty(_loginWechat$banner$a, "delshougou", function delshougou(
 id) {
   return myDelete({
     url: "".concat(_url.default.shougou, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getshougou", function getshougou(
+}), _defineProperty(_loginWechat$banner$a, "getshougou", function getshougou(
 obj) {
   return myGet({
     url: _url.default.shougou,
@@ -12633,12 +12644,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getsgDetail", function getsgDetail(
+}), _defineProperty(_loginWechat$banner$a, "getsgDetail", function getsgDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.shougou, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "jishi", function jishi(
+}), _defineProperty(_loginWechat$banner$a, "jishi", function jishi(
 obj) {
   return myPost({
     url: _url.default.jishi,
@@ -12646,12 +12657,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "deljishi", function deljishi(
+}), _defineProperty(_loginWechat$banner$a, "deljishi", function deljishi(
 id) {
   return myDelete({
     url: "".concat(_url.default.jishi, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getjishi", function getjishi(
+}), _defineProperty(_loginWechat$banner$a, "getjishi", function getjishi(
 obj) {
   return myGet({
     url: _url.default.jishi,
@@ -12659,12 +12670,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getjshiDetail", function getjshiDetail(
+}), _defineProperty(_loginWechat$banner$a, "getjshiDetail", function getjshiDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.jishi, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "article", function article(
+}), _defineProperty(_loginWechat$banner$a, "article", function article(
 obj) {
   return myPost({
     url: _url.default.article,
@@ -12672,7 +12683,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getarticle", function getarticle(
+}), _defineProperty(_loginWechat$banner$a, "getarticle", function getarticle(
 obj) {
   return myGet({
     url: _url.default.article,
@@ -12680,17 +12691,17 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "articleDetail", function articleDetail(
+}), _defineProperty(_loginWechat$banner$a, "articleDetail", function articleDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.article, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "delarticle", function delarticle(
+}), _defineProperty(_loginWechat$banner$a, "delarticle", function delarticle(
 id) {
   return myDelete({
     url: "".concat(_url.default.article, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "pindan", function pindan(
+}), _defineProperty(_loginWechat$banner$a, "pindan", function pindan(
 obj) {
   return myPost({
     url: _url.default.pindan,
@@ -12698,12 +12709,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "delpindan", function delpindan(
+}), _defineProperty(_loginWechat$banner$a, "delpindan", function delpindan(
 id) {
   return myDelete({
     url: "".concat(_url.default.pindan, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getpindan", function getpindan(
+}), _defineProperty(_loginWechat$banner$a, "getpindan", function getpindan(
 obj) {
   return myGet({
     url: _url.default.pindan,
@@ -12711,12 +12722,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getpdanDetail", function getpdanDetail(
+}), _defineProperty(_loginWechat$banner$a, "getpdanDetail", function getpdanDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.pindan, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "pinche", function pinche(
+}), _defineProperty(_loginWechat$banner$a, "pinche", function pinche(
 obj) {
   return myPost({
     url: _url.default.pinche,
@@ -12724,12 +12735,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "delpinche", function delpinche(
+}), _defineProperty(_loginWechat$banner$a, "delpinche", function delpinche(
 id) {
   return myDelete({
     url: "".concat(_url.default.pinche, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "getpinche", function getpinche(
+}), _defineProperty(_loginWechat$banner$a, "getpinche", function getpinche(
 obj) {
   return myGet({
     url: _url.default.pinche,
@@ -12737,12 +12748,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "getpcheDetail", function getpcheDetail(
+}), _defineProperty(_loginWechat$banner$a, "getpcheDetail", function getpcheDetail(
 id) {
   return myGet({
     url: "".concat(_url.default.pinche, "/").concat(id) });
 
-}), _defineProperty(_loginWechat$address$, "buy_pindan", function buy_pindan(
+}), _defineProperty(_loginWechat$banner$a, "buy_pindan", function buy_pindan(
 obj) {
   return myPost({
     url: _url.default.buy_pindan,
@@ -12750,12 +12761,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "web_config", function web_config()
+}), _defineProperty(_loginWechat$banner$a, "web_config", function web_config()
 {
   return myGet({
     url: _url.default.web_config });
 
-}), _defineProperty(_loginWechat$address$, "pindan_toghter_list", function pindan_toghter_list(
+}), _defineProperty(_loginWechat$banner$a, "pindan_toghter_list", function pindan_toghter_list(
 obj) {
   return myGet({
     url: _url.default.pindan_toghter_list,
@@ -12763,7 +12774,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "get_phone", function get_phone(
+}), _defineProperty(_loginWechat$banner$a, "get_phone", function get_phone(
 obj) {
   return myPost({
     url: _url.default.get_phone,
@@ -12771,7 +12782,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "comment_reply", function comment_reply(
+}), _defineProperty(_loginWechat$banner$a, "comment_reply", function comment_reply(
 obj) {
   return myPost({
     url: _url.default.comment_reply,
@@ -12779,7 +12790,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "phone", function phone(
+}), _defineProperty(_loginWechat$banner$a, "phone", function phone(
 obj) {
   return myPost({
     url: _url.default.phone,
@@ -12787,7 +12798,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "unread_comment_list", function unread_comment_list(
+}), _defineProperty(_loginWechat$banner$a, "unread_comment_list", function unread_comment_list(
 obj) {
   return myGet({
     url: _url.default.unread_comment_list,
@@ -12795,7 +12806,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "update_user_info", function update_user_info(
+}), _defineProperty(_loginWechat$banner$a, "update_user_info", function update_user_info(
 obj) {
   return myPost({
     url: _url.default.update_user_info,
@@ -12803,7 +12814,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "send_sms", function send_sms(
+}), _defineProperty(_loginWechat$banner$a, "send_sms", function send_sms(
 obj) {
   return myPost({
     url: _url.default.send_sms,
@@ -12811,7 +12822,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "update_mobile", function update_mobile(
+}), _defineProperty(_loginWechat$banner$a, "update_mobile", function update_mobile(
 obj) {
   return myPost({
     url: _url.default.update_mobile,
@@ -12819,7 +12830,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "add_shudong_comment", function add_shudong_comment(
+}), _defineProperty(_loginWechat$banner$a, "add_shudong_comment", function add_shudong_comment(
 obj) {
   return myPost({
     url: _url.default.add_shudong_comment,
@@ -12827,7 +12838,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "shudong_comment_list", function shudong_comment_list(
+}), _defineProperty(_loginWechat$banner$a, "shudong_comment_list", function shudong_comment_list(
 obj) {
   return myGet({
     url: _url.default.shudong_comment_list,
@@ -12835,7 +12846,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "del_shudong_comment", function del_shudong_comment(
+}), _defineProperty(_loginWechat$banner$a, "del_shudong_comment", function del_shudong_comment(
 id) {
   return myPost({
     url: _url.default.del_shudong_comment,
@@ -12843,7 +12854,7 @@ id) {
       id: id } });
 
 
-}), _defineProperty(_loginWechat$address$, "my_send", function my_send(
+}), _defineProperty(_loginWechat$banner$a, "my_send", function my_send(
 obj) {
   return myGet({
     url: _url.default.my_send,
@@ -12851,7 +12862,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "my_reply", function my_reply(
+}), _defineProperty(_loginWechat$banner$a, "my_reply", function my_reply(
 obj) {
   return myGet({
     url: _url.default.my_reply,
@@ -12859,7 +12870,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "my_zan", function my_zan(
+}), _defineProperty(_loginWechat$banner$a, "my_zan", function my_zan(
 obj) {
   return myGet({
     url: _url.default.my_zan,
@@ -12867,7 +12878,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "new_comment", function new_comment(
+}), _defineProperty(_loginWechat$banner$a, "new_comment", function new_comment(
 obj) {
   return myGet({
     url: _url.default.new_comment,
@@ -12875,7 +12886,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "new_send", function new_send(
+}), _defineProperty(_loginWechat$banner$a, "new_send", function new_send(
 obj) {
   return myGet({
     url: _url.default.new_send,
@@ -12883,7 +12894,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "hot_shudong", function hot_shudong(
+}), _defineProperty(_loginWechat$banner$a, "hot_shudong", function hot_shudong(
 obj) {
   return myGet({
     url: _url.default.hot_shudong,
@@ -12891,7 +12902,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "best_shudong", function best_shudong(
+}), _defineProperty(_loginWechat$banner$a, "best_shudong", function best_shudong(
 obj) {
   return myGet({
     url: _url.default.best_shudong,
@@ -12899,7 +12910,7 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "zero_unread_comment", function zero_unread_comment(
+}), _defineProperty(_loginWechat$banner$a, "zero_unread_comment", function zero_unread_comment(
 obj) {
   return myPost({
     url: _url.default.zero_unread_comment,
@@ -12907,12 +12918,12 @@ obj) {
     obj) });
 
 
-}), _defineProperty(_loginWechat$address$, "wait_read_num", function wait_read_num()
+}), _defineProperty(_loginWechat$banner$a, "wait_read_num", function wait_read_num()
 {
   return myGet({
     url: "".concat(_url.default.wait_read_num) });
 
-}), _defineProperty(_loginWechat$address$, "new_comment_list", function new_comment_list(
+}), _defineProperty(_loginWechat$banner$a, "new_comment_list", function new_comment_list(
 obj) {
   return myGet({
     url: "".concat(_url.default.new_comment_list),
@@ -12920,7 +12931,7 @@ obj) {
     obj) });
 
 
-}), _loginWechat$address$);exports.default = _default;
+}), _loginWechat$banner$a);exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
@@ -17281,6 +17292,7 @@ module.exports = function isAxiosError(payload) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
   baseUrl: 'https://luoke.bjxinzeyuan.cn', //https://schoolhelp.5laoye.com  http://192.168.50.142:9004
+  banner: "/api/banner",
   loginWechat: '/api/mini_login',
   userInfo: '/api/user_info',
   gaobai: '/api/gaobai', //告白

@@ -8,8 +8,7 @@
 			count: 0,
 		},
 		watch: {
-			count: function() {
-				console.log(this.count)
+			count(){
 				if (this.count > 0) {
 					uni.setTabBarBadge({
 						index: 2,

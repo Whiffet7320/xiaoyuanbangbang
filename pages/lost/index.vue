@@ -7,12 +7,18 @@
 			<view class="swiperbox">
 				<u-swiper :list="banlist" height="296" mode="none"></u-swiper>
 			</view>
-			<view class="menulist">
+			<view class="navmenu">
+				<view class="imenu" @click="jump('/pages/lost/list?type=2')"><image src="/static/images/lost/m1.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/lost/list?type=1')"><image src="/static/images/lost/m2.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/lost/melost?type=1')"><image src="/static/images/lost/m4.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/lost/melost?type=2')"><image src="/static/images/lost/m3.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+			</view>
+			<!-- <view class="menulist">
 				<view class="menu_item" v-for="(item,index) in menulist" :key="index" @click="goMenu(item)">
 					<image :src="item.icon" class="img"></image>
 					<text>{{item.title}}</text>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="comment">
 			<view class="tabbox">
@@ -48,16 +54,16 @@
 				scrollTop:0,
 				banlist:["/static/images/lost/banner.png"],
 				menulist:[
-					{
-						icon:"/static/images/lost/menu1.png",
-						path:"/pages/lost/addlost",
-						title:"发布失物"
-					},
-					{
-						icon:"/static/images/lost/menu2.png",
-						path:"/pages/lost/addlostpro",
-						title:"发布拾物"
-					},
+					// {
+					// 	icon:"/static/images/lost/menu1.png",
+					// 	path:"/pages/lost/addlost",
+					// 	title:"发布失物"
+					// },
+					// {
+					// 	icon:"/static/images/lost/menu2.png",
+					// 	path:"/pages/lost/addlostpro",
+					// 	title:"发布拾物"
+					// },
 					{
 						icon:"/static/images/lost/menu3.png",
 						path:"/pages/lost/list?type=2",
@@ -118,6 +124,11 @@
 			})
 		},
 		methods:{
+			jump(path){
+				uni.navigateTo({
+					url:path
+				})
+			},
 			previewImage(arr) {
 				this.isOnShow = false;
 				uni.previewImage({
@@ -270,6 +281,15 @@
 		background-color: #eee;
 		height: 296rpx;
 		margin:28rpx 24rpx 0 24rpx;
+	}
+	.navmenu{
+		display: flex;
+		flex-wrap: wrap;
+		padding:26rpx 10rpx 10rpx 10rpx;
+		background-color: #FFFFFF;
+		.imenu{
+			width: 50%;
+		}
 	}
 	.search{
 		margin:0 24rpx 0;

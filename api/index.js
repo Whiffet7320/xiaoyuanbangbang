@@ -629,6 +629,11 @@ export default {
 			},
 		})
 	},
+	banner() {
+		return myGet({
+			url: urls.banner,
+		})
+	},
 	address() {
 		return myGet({
 			url: urls.address,

@@ -193,6 +193,15 @@ page{
   height: 296rpx;
   margin: 28rpx 24rpx 0 24rpx;
 }
+.navmenu.data-v-3e2cd040 {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 26rpx 10rpx 10rpx 10rpx;
+  background-color: #FFFFFF;
+}
+.navmenu .imenu.data-v-3e2cd040 {
+  width: 50%;
+}
 .search.data-v-3e2cd040 {
   margin: 0 24rpx 0;
 }

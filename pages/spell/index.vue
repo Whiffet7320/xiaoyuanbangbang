@@ -7,12 +7,18 @@
 			<view class="swiperbox">
 				<u-swiper :list="banlist" height="296" mode="none"></u-swiper>
 			</view>
-			<view class="menulist">
+			<view class="navmenu">
+				<view class="imenu" @click="jump('/pages/spell/list?type=1')"><image src="/static/images/pin/m1.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/spell/list?type=2')"><image src="/static/images/pin/m2.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/spell/mespell?type=1')"><image src="/static/images/pin/m3.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/spell/mespell?type=2')"><image src="/static/images/pin/m4.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+			</view>
+			<!-- <view class="menulist">
 				<view class="menu_item" v-for="(item,index) in menulist" :key="index" @click="goMenu(item)">
 					<image :src="item.icon" class="img"></image>
 					<text>{{item.title}}</text>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="comment">
 			<view class="tabbox">
@@ -48,16 +54,16 @@
 				scrollTop:0,
 				banlist:["/static/images/pin/banner.png"],
 				menulist:[
-					{
-						icon:"/static/images/pin/menu_1.png",
-						path:"/pages/spell/addSpell",
-						title:"发布拼车"
-					},
-					{
-						icon:"/static/images/pin/menu_2.png",
-						path:"/pages/spell/addSpellpro",
-						title:"发布拼单"
-					},
+					// {
+					// 	icon:"/static/images/pin/menu_1.png",
+					// 	path:"/pages/spell/addSpell",
+					// 	title:"发布拼车"
+					// },
+					// {
+					// 	icon:"/static/images/pin/menu_2.png",
+					// 	path:"/pages/spell/addSpellpro",
+					// 	title:"发布拼单"
+					// },
 					{
 						icon:"/static/images/pin/menu_3.png",
 						path:"/pages/spell/list?type=1",
@@ -117,6 +123,11 @@
 			})
 		},
 		methods:{
+			jump(path){
+				uni.navigateTo({
+					url:path
+				})
+			},
 			previewImage(arr) {
 				this.isOnShow = false;
 				uni.previewImage({
@@ -269,6 +280,15 @@
 		background-color: #eee;
 		height: 296rpx;
 		margin:28rpx 24rpx 0 24rpx;
+	}
+	.navmenu{
+		display: flex;
+		flex-wrap: wrap;
+		padding:26rpx 10rpx 10rpx 10rpx;
+		background-color: #FFFFFF;
+		.imenu{
+			width: 50%;
+		}
 	}
 	.search{
 		margin:0 24rpx 0;

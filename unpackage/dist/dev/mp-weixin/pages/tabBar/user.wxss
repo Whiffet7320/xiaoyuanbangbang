@@ -217,6 +217,7 @@ page {
 .user .OtherFunc .subject .FuncList .Pic {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .user .OtherFunc .subject .FuncList .Pic image {
   width: 38rpx;

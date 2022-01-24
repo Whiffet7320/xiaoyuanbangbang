@@ -28,7 +28,7 @@
   padding: 0 11rpx;
   position: absolute;
   left: 50%;
-  bottom: 180rpx;
+  bottom: calc((180rpx + env(safe-area-inset-bottom)));
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   z-index: 600;

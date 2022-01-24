@@ -1,5 +1,6 @@
 export default {
 	baseUrl: 'https://luoke.bjxinzeyuan.cn', //https://schoolhelp.5laoye.com  http://192.168.50.142:9004
+	banner:"/api/banner",
 	loginWechat: '/api/mini_login',
 	userInfo: '/api/user_info',
 	gaobai: '/api/gaobai', //告白

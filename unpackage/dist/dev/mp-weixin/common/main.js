@@ -145,7 +145,6 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
 
   watch: {
     count: function count() {
-      console.log(this.count);
       if (this.count > 0) {
         uni.setTabBarBadge({
           index: 2,

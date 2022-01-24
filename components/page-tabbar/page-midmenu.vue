@@ -102,7 +102,7 @@
 			padding:0 11rpx;
 			position: absolute;
 			left:50%;
-			bottom: 180rpx;
+			bottom: calc((180rpx + env(safe-area-inset-bottom));
 			transform: translateX(-50%);
 			z-index: 600;
 			.before{

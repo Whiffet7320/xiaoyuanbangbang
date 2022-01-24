@@ -1,7 +1,9 @@
 <template>
 	<view class="detail">
 		<view class="title">{{info.title}}</view>
-		<view class="desc" v-if="info.content!=null && info.content!=''">{{info.content.replace(/\r\n|\n|\r/g,"\n")}}</view>
+		<view class="desc" v-if="info.content!=null && info.content!=''">
+			<u-parse :html="info.content"></u-parse>
+		</view>
 		<view class="imglist" v-if="info.imgPath">
 			<view class="item" v-for="(pitem,indexa) in info.imgPath" :key="indexa" @click="previewImage(info.imgPath,indexa)">
 				<image :src="pitem" mode="aspectFill" class="img"></image>

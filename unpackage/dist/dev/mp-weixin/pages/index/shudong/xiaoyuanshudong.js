@@ -310,7 +310,7 @@ var _vuex = __webpack_require__(/*! vuex */ 12);var _components$data$comp;functi
       innerAudioContext: null,
       rotateDeg: 0,
       timer: null,
-      itemIndex: 1,
+      itemIndex: 5,
       isDianzan: false,
       imgArr: [''],
       form: {

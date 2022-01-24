@@ -86,14 +86,52 @@
 				其他功能
 			</view>
 			<view class="subject">
-				<view class="FuncList" v-for="(item,index) in OtherFuncList" :key="index" @click="OtherSelect(index)">
+				<view class="FuncList" @click="OtherSelect(0)">
+					<view class="Pic">
+						<image src="/static/user/shangjiaruzhu.png" mode="aspectFit"></image>
+					</view>
+					<view class="Name">商家入驻</view>
+				</view>
+				<view class="FuncList" @click="jump('/pages/user/Aboutuser')">
+					<view class="Pic">
+						<image src="/static/user/guanyuwomen.png" mode="aspectFit"></image>
+					</view>
+					<view class="Name">关于我们</view>
+				</view>
+				<view class="FuncList">
+					<button class="u-reset-button" open-type="contact">
+						<view class="Pic">
+							<image src="/static/user/lianxikefu.png" mode="aspectFit"></image>
+						</view>
+						<view class="Name">联系客服</view>
+					</button>
+				</view>
+				<view class="FuncList" @click="jump('/pages/user/UserAgreement')">
+					<view class="Pic">
+						<image src="/static/user/yonghuxieyi.png" mode="aspectFit"></image>
+					</view>
+					<view class="Name">用户协议</view>
+				</view>
+				<view class="FuncList" @click="jump('/pages/user/PrivacyAgreement')">
+					<view class="Pic">
+						<image src="/static/user/yinsizhengce.png" mode="aspectFit"></image>
+					</view>
+					<view class="Name">隐私政策</view>
+				</view>
+				<view class="FuncList" @click="OtherSelect(0)">
+					<view class="Pic">
+						<image src="/static/user/xiangguantiaokuan.png" mode="aspectFit"></image>
+					</view>
+					<view class="Name">相关条款</view>
+				</view>
+				<!-- <view class="FuncList" v-for="(item,index) in OtherFuncList" :key="index" @click="OtherSelect(index)">
 					<view class="Pic">
 						<image :src="item.pic" mode=""></image>
 					</view>
 					<view class="Name">
 						{{item.name}}
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 
@@ -178,6 +216,11 @@
 			this.getData();
 		},
 		methods: {
+			jump(path){
+				uni.navigateTo({
+					url:path
+				})
+			},
 			async getData() {
 				const res = await this.$api.userInfo()
 				console.log(res)
@@ -571,6 +614,7 @@
 					.Pic {
 						display: flex;
 						align-items: center;
+						justify-content: center;
 
 						image {
 							width: 38rpx;

@@ -36,7 +36,7 @@
 			<view class="list" v-if="list.length>0">
 				<view class="litem" v-for="(item,index) in list" :key="index" @click="goDetail(item)">
 					<view class="title">{{item.title}}</view>
-					<view class="desc u-line-3" v-if="item.content!=null && item.content!=''">{{item.content.replace(/\r\n|\n|\r/g,"\n")}}</view>
+					<!-- <view class="desc u-line-3" v-if="item.content!=null && item.content!=''">{{item.content.replace(/\r\n|\n|\r/g,"\n")}}</view> -->
 					<view class="imglist" v-if="item.img_paths!==''">
 						<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click.stop="previewImages(item.imgPath,indexz)">
 							<image :src="pitem" mode="aspectFill" class="img"></image>
@@ -85,7 +85,7 @@
 				isOnShow:true,
 				banlist:[
 					{
-						image: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20170725%2F88c819bb071345cda4074b081411fc55.jpeg',
+						image: '/static/images/zxbg.jpeg',
 						title: '2021学校开展秋季招生活动中...'
 					},
 				],

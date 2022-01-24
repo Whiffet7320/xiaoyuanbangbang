@@ -8,7 +8,7 @@
 		<view class="swiperbox">
 			<u-swiper :list="banlist" height="320" :title="true" mode="none" :title-style="{'font-size':'28rpx','background':'none'}"></u-swiper>
 		</view>
-		<view class="midnew">
+		<!-- <view class="midnew">
 			<view class="input">
 				<image src="/static/images/icon_edit.png" mode="aspectFit" class="icon"></image>
 				<input type="text" v-model="from.question" maxlength="20" placeholder="请输入文章标题(限20字以内)" class="ipt" placeholder-style="color:#D9D9D9;" />
@@ -30,13 +30,13 @@
 			</view>
 			<view class="light">注意：请简单描述你想要发布的问题，字数受限在1000字以内，需经过平台审核才可发布成功。</view>
 			<view class="btn" @click="onSubmit">发布新闻</view>
-		</view>
+		</view> -->
 		<view class="newrap">
 			<view class="tit">新闻公告</view>
 			<view class="list" v-if="list.length>0">
 				<view class="litem" v-for="(item,index) in list" :key="index" @click="goDetail(item)">
 					<view class="title">{{item.title}}</view>
-					<view class="desc u-line-3" v-if="item.content!=null && item.content!=''">{{item.content.replace(/\r\n|\n|\r/g,"\n")}}</view>
+					<!-- <view class="desc u-line-3" v-if="item.content!=null && item.content!=''">{{item.content.replace(/\r\n|\n|\r/g,"\n")}}</view> -->
 					<view class="imglist" v-if="item.img_paths!==''">
 						<view class="item" v-for="(pitem,indexz) in item.imgPath" :key="indexz" @click.stop="previewImages(item.imgPath,indexz)">
 							<image :src="pitem" mode="aspectFill" class="img"></image>
@@ -50,10 +50,10 @@
 			</view>
 		</view>
 		<u-loadmore :status="status" bg-color="#ffffff" color="#010101" font-size="20" />
-		<view class="mefix" @click="goService">
+		<!-- <view class="mefix" @click="goService">
 			<image src="/static/images/icon_kf.png" mode="aspectFit" class="icon"></image>
 			<text>我的新闻</text>
-		</view>
+		</view> -->
 		<u-back-top :scroll-top="scrollTop" icon="/static/images/icon_top.png" :icon-style="{width:'64rpx',height:'64rpx;'}" :custom-style="{background:'none'}"></u-back-top>
 	</view>
 </template>
@@ -69,7 +69,7 @@
 				isOnShow:true,
 				banlist:[
 					{
-						image: 'https://inews.gtimg.com/newsapp_bt/0/13383356882/1000',
+						image: '/static/images/1000.jpeg',
 						title: '学校积极开展各种“健康教育”和“心理活动”...'
 					}
 				],

@@ -7,12 +7,18 @@
 			<view class="swiperbox">
 				<u-swiper :list="banlist" height="296" mode="none"></u-swiper>
 			</view>
-			<view class="menulist">
+			<view class="navmenu">
+				<view class="imenu" @click="jump('/pages/market/list?type=2')"><image src="/static/images/market/m1.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/market/list?type=1')"><image src="/static/images/market/m3.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/market/memarket?type=2')"><image src="/static/images/market/m2.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+				<view class="imenu" @click="jump('/pages/market/memarket?type=1')"><image src="/static/images/market/m4.png" mode="aspectFit" style="width: 364rpx;height: 142rpx;"></image></view>
+			</view>
+			<!-- <view class="menulist">
 				<view class="menu_item" v-for="(item,index) in menulist" :key="index" @click="goMenu(item)">
 					<image :src="item.icon" class="img"></image>
 					<text>{{item.title}}</text>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<view class="comment">
 			<view class="tabbox">
@@ -47,16 +53,16 @@
 			return{
 				banlist:["https://schoolhelp.5laoye.com/static/img/images/market/banner.png"],
 				menulist:[
-					{
-						icon:"https://schoolhelp.5laoye.com/static/img/images/market/menu1.png",
-						path:"/pages/market/addMarket",
-						title:"发布转卖"
-					},
-					{
-						icon:"https://schoolhelp.5laoye.com/static/img/images/market/menu2.png",
-						path:"/pages/market/addMarketpro",
-						title:"发布收购"
-					},
+					// {
+					// 	icon:"https://schoolhelp.5laoye.com/static/img/images/market/menu1.png",
+					// 	path:"/pages/market/addMarket",
+					// 	title:"发布转卖"
+					// },
+					// {
+					// 	icon:"https://schoolhelp.5laoye.com/static/img/images/market/menu2.png",
+					// 	path:"/pages/market/addMarketpro",
+					// 	title:"发布收购"
+					// },
 					{
 						icon:"https://schoolhelp.5laoye.com/static/img/images/market/menu3.png",
 						path:"/pages/market/list?type=2",
@@ -116,6 +122,11 @@
 			})
 		},
 		methods:{
+			jump(path){
+				uni.navigateTo({
+					url:path
+				})
+			},
 			previewImage(arr) {
 				this.isOnShow = false;
 				uni.previewImage({
@@ -247,6 +258,15 @@
 		background-color: #eee;
 		height: 296rpx;
 		margin:28rpx 24rpx 0 24rpx;
+	}
+	.navmenu{
+		display: flex;
+		flex-wrap: wrap;
+		padding:26rpx 10rpx 10rpx 10rpx;
+		background-color: #FFFFFF;
+		.imenu{
+			width: 50%;
+		}
 	}
 	.search{
 		margin:0 24rpx 0;

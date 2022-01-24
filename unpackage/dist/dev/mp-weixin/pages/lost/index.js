@@ -202,6 +202,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var pageSearch = function pageSearch() {__webpack_require__.e(/*! require.ensure | components/page-search/page-search */ "components/page-search/page-search").then((function () {return resolve(__webpack_require__(/*! @/components/page-search/page-search */ 768));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var lostList = function lostList() {__webpack_require__.e(/*! require.ensure | pages/lost/components/lost-list */ "pages/lost/components/lost-list").then((function () {return resolve(__webpack_require__(/*! ./components/lost-list */ 822));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var pageFoot = function pageFoot() {__webpack_require__.e(/*! require.ensure | components/page-foot/page-foot */ "components/page-foot/page-foot").then((function () {return resolve(__webpack_require__(/*! @/components/page-foot/page-foot */ 782));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
@@ -217,16 +223,16 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
       scrollTop: 0,
       banlist: ["/static/images/lost/banner.png"],
       menulist: [
-      {
-        icon: "/static/images/lost/menu1.png",
-        path: "/pages/lost/addlost",
-        title: "发布失物" },
-
-      {
-        icon: "/static/images/lost/menu2.png",
-        path: "/pages/lost/addlostpro",
-        title: "发布拾物" },
-
+      // {
+      // 	icon:"/static/images/lost/menu1.png",
+      // 	path:"/pages/lost/addlost",
+      // 	title:"发布失物"
+      // },
+      // {
+      // 	icon:"/static/images/lost/menu2.png",
+      // 	path:"/pages/lost/addlostpro",
+      // 	title:"发布拾物"
+      // },
       {
         icon: "/static/images/lost/menu3.png",
         path: "/pages/lost/list?type=2",
@@ -287,6 +293,11 @@ var _vuex = __webpack_require__(/*! vuex */ 12);function ownKeys(object, enumera
 
 
   methods: {
+    jump: function jump(path) {
+      uni.navigateTo({
+        url: path });
+
+    },
     previewImage: function previewImage(arr) {
       this.isOnShow = false;
       uni.previewImage({

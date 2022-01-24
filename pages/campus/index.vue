@@ -5,12 +5,38 @@
 			<u-navbar v-if="scrollTop>100" :custom-back="onBack" title="校园一角" :back-icon-name="backIcon" back-icon-color="#ffffff" title-color="#ffffff" :background="background" :border-bottom="false"></u-navbar>
 			<u-navbar v-else :custom-back="onBack" title="校园一角" :back-icon-name="backIcon" back-icon-color="#ffffff" title-color="#ffffff" :background="{backgroundColor: 'transparent'}" :border-bottom="false"></u-navbar>
 		</view>
-		<view class="menulist">
+		<view class="navmenu">
+			<view class="mitem">
+				<view class="navpic1" @click="jump('/pages/campus/scenery')">
+					<image src="/static/images/school/m1.png" mode="aspectFit" style="width: 218rpx;height: 190rpx;"></image>
+				</view>
+				<view class="navpic" @click="jump('/pages/campus/meScenery')">
+					<image src="/static/images/school/m2.png" mode="aspectFit" style="width: 242rpx;height: 114rpx;"></image>
+				</view>
+			</view>
+			<view class="mitem">
+				<view class="navpic" @click="jump('/pages/campus/news')">
+					<image src="/static/images/school/m3.png" mode="aspectFit" style="width: 484rpx;height: 114rpx;"></image>
+				</view>
+				<view class="navpic" @click="jump('/pages/campus/advice')">
+					<image src="/static/images/school/m4.png" mode="aspectFit" style="width: 484rpx;height: 114rpx;"></image>
+				</view>
+				<view class="navpic">
+					<view @click="jump('/pages/campus/list')">
+						<image src="/static/images/school/m6.png" mode="aspectFit" style="width: 242rpx;height: 114rpx;"></image>
+					</view>
+					<view @click="jump('/pages/campus/repair')">
+						<image src="/static/images/school/m5.png" mode="aspectFit" style="width: 242rpx;height: 114rpx;"></image>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- <view class="menulist">
 			<view class="menu_item" v-for="(item,index) in menulist" :key="index" @click="goMenu(item)">
 				<image :src="item.icon" class="img"></image>
 				<text>{{item.title}}</text>
 			</view>
-		</view>
+		</view> -->
 		<view class="comment">
 			<view class="tabbox">
 				<view class="tab_item" :class="{'on':cur===index}" v-for="(item,index) in tablist" :key="index" @click="onTab(item,index)">{{item.title}}</view>
@@ -138,6 +164,11 @@
 					fail(err) {
 						console.log('previewImage出错', urls, err)
 					},
+				})
+			},
+			jump(path){
+				uni.navigateTo({
+					url:path
 				})
 			},
 			goMenu(item){
@@ -283,6 +314,22 @@
 		.img{
 			width: 100%;
 			height: 100%;
+		}
+	}
+	.navmenu{
+		padding: 32rpx 12rpx 8rpx 12rpx;
+		background-color: #FFFFFF;
+		display: flex;
+		.mitem{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			.navpic1{
+				margin:8rpx 12rpx 20rpx 12rpx;
+			}
+			.navpic{
+				display: flex;
+			}
 		}
 	}
 	.menulist{

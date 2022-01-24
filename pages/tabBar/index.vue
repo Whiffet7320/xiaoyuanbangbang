@@ -12,7 +12,7 @@
 		</view>
 		<!-- 轮播图 -->
 		<view class="nav2">
-			<u-swiper height='296' :list="bannerList3" indicator-pos='bottomRight'></u-swiper>
+			<u-swiper height='296' :list="bannerList" indicator-pos='bottomRight'></u-swiper>
 		</view>
 		<view class="nav3">
 			<image src="/static/images/zu1501.png" class="pic3-1" mode=""></image>
@@ -36,7 +36,7 @@
 					<image src="/static/images/zu2384.png" class="item-pic" mode=""></image>
 					<view class="item-txt">校园一角</view>
 				</view>
-				<view class="item"  @click="toQiuzhizhaopin">
+				<view class="item"  @click="toPaotui">
 					<image src="/static/images/zu2385.png" class="item-pic" mode=""></image>
 					<view class="item-txt">校园跑腿</view>
 				</view>
@@ -56,20 +56,16 @@
 					<image src="/static/images/zu2389.png" class="item-pic" mode=""></image>
 					<view class="item-txt">教务系统</view>
 				</view>
-				<!-- <view class="item" @click="toQiuzhizhaopin">
+				<view class="item" @click="toMark">
 					<image src="/static/images/zu2390.png" class="item-pic" mode=""></image>
 					<view class="item-txt">校园外卖</view>
-				</view> -->
+				</view>
 			</view>
 		</view>
 		<view class="indexcon">
 			<view class="tit">更多介绍</view>
 			<view class="about">
-				<!-- <image src="https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/881ba0f651230c2964822dc24c48f45d.png" mode="widthFix"></image> -->
-				<!-- <image src="https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/d050b28ffe6259ef26ced04a9a393503.png" mode="widthFix"></image> -->
 				<image src="https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/1fb7ea186b56ebf9b1d2a7c620ade8d7.png" mode="widthFix"></image>
-				<!-- <image src="https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/9d3e46184ecce9657950d7684a068340.png" mode="widthFix"></image> -->
-				<!-- <image src="https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/11ba7c75d040ae6d99044cf8e8e9d27a.png" mode="widthFix"></image> -->
 			</view>
 		</view>
 		<!-- 校园表白 -->
@@ -98,54 +94,10 @@
 						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png'
 					},
 					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/33bc86ea2810af9219254d58aa193757.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/60f6a91b5f783f399eae1a0a82dc0e57.png'
-					}
-				],
-				bannerList2: [
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/e366ec5d435554819532156a610a71b6.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/efce4dffaf616f59a5b85a7938268a95.png'
-					}
-				],
-				bannerList3: [
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png'
-					},
-					{
 						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/716b72b5fb98f3fad036920f485db71b.png'
 					},
 					{
 						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/3518b62967de838758cfdf11fd49f4e7.png'
-					}
-				],
-				bannerList4: [
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/bc877c8d8ffe92f0bb100e73a1cfe258.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/da7cab2900a76ac4505184c45eaff0c5.png'
-					}
-				],
-				bannerList5: [
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/5b011ccc40c8fbc0e72a3eeeb69a4e8e.png'
-					},
-					{
-						image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/db5b48cf292600477a455a1539bb94cb.png'
 					}
 				]
 			}
@@ -157,9 +109,25 @@
 			this.$innerAudioContext.stop()
 			if (uni.getStorageSync('token')) {
 				this.getMsg();
+				this.getBanner();
 			}
 		},
 		methods: {
+			getBanner(){
+				this.$api.banner().then((res) => {
+					if (res.code == 200) {
+						let list = res.data;
+						if(list.length){
+							let nlist = list.map((item) => {
+								return {
+									image:item.img_url,
+								}
+							 });
+							this.bannerList = nlist;
+						}
+					}
+				})
+			},
 			onSearch(){
 				uni.navigateTo({
 					url:"/pages/search/index?from=market"
@@ -236,6 +204,30 @@
 				// 	url:'/pages/index/kfing/kfing'
 				// })
 			},
+			toPaotui(){
+				uni.navigateToMiniProgram({
+					appId: 'wx0388a02edb64ea94',
+					path: 'pages/home/home',
+					success(res) {
+						console.log(res)
+					},
+					fail: (error) => {
+						console.log(error)
+					}
+				})
+			},
+			toMark(){
+				uni.navigateToMiniProgram({
+					appId: 'wx0388a02edb64ea94',
+					path: 'pages/food/food',
+					success(res) {
+						console.log(res)
+					},
+					fail: (error) => {
+						console.log(error)
+					}
+				})
+			}
 		}
 	}
 </script>

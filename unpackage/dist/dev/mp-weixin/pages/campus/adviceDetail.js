@@ -95,6 +95,9 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    uParse: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-parse/u-parse */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-parse/u-parse")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-parse/u-parse.vue */ 716))
+    },
     uPopup: function() {
       return __webpack_require__.e(/*! import() | uview-ui/components/u-popup/u-popup */ "uview-ui/components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-popup/u-popup.vue */ 648))
     },
@@ -123,21 +126,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var g0 =
-    _vm.info.content != null && _vm.info.content != ""
-      ? _vm.info.content.replace(/\r\n|\n|\r/g, "\n")
-      : null
   var l0 =
     _vm.jlist.length > 0
       ? _vm.__map(_vm.jlist, function(item, index) {
           var $orig = _vm.__get_orig(item)
 
-          var g1 = _vm.$tools.timeago(
+          var g0 = _vm.$tools.timeago(
             Date.parse(new Date(item.add_time.replace(/-/g, "/")))
           )
           return {
             $orig: $orig,
-            g1: g1
+            g0: g0
           }
         })
       : null
@@ -145,7 +144,6 @@ var render = function() {
     {},
     {
       $root: {
-        g0: g0,
         l0: l0
       }
     }
@@ -184,6 +182,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 5));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var pageFtcomment = function pageFtcomment() {__webpack_require__.e(/*! require.ensure | components/page-foot/page-ftcomment */ "components/page-foot/page-ftcomment").then((function () {return resolve(__webpack_require__(/*! @/components/page-foot/page-ftcomment */ 761));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 
 
 

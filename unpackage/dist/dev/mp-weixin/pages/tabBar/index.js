@@ -248,10 +248,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
@@ -264,54 +260,10 @@ var _default =
         image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png' },
 
       {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/33bc86ea2810af9219254d58aa193757.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/60f6a91b5f783f399eae1a0a82dc0e57.png' }],
-
-
-      bannerList2: [
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/e366ec5d435554819532156a610a71b6.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/efce4dffaf616f59a5b85a7938268a95.png' }],
-
-
-      bannerList3: [
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png' },
-
-      {
         image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/716b72b5fb98f3fad036920f485db71b.png' },
 
       {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/3518b62967de838758cfdf11fd49f4e7.png' }],
-
-
-      bannerList4: [
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/bc877c8d8ffe92f0bb100e73a1cfe258.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/da7cab2900a76ac4505184c45eaff0c5.png' }],
-
-
-      bannerList5: [
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/caa056abe0f73e6608c768f1db59ea49.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/5b011ccc40c8fbc0e72a3eeeb69a4e8e.png' },
-
-      {
-        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/db5b48cf292600477a455a1539bb94cb.png' }] };
+        image: 'https://bjxinzeyuan.oss-cn-zhangjiakou.aliyuncs.com/article/20211221/3518b62967de838758cfdf11fd49f4e7.png' }] };
 
 
 
@@ -323,24 +275,40 @@ var _default =
     this.$innerAudioContext.stop();
     if (uni.getStorageSync('token')) {
       this.getMsg();
+      this.getBanner();
     }
   },
   methods: {
+    getBanner: function getBanner() {var _this = this;
+      this.$api.banner().then(function (res) {
+        if (res.code == 200) {
+          var list = res.data;
+          if (list.length) {
+            var nlist = list.map(function (item) {
+              return {
+                image: item.img_url };
+
+            });
+            _this.bannerList = nlist;
+          }
+        }
+      });
+    },
     onSearch: function onSearch() {
       uni.navigateTo({
         url: "/pages/search/index?from=market" });
 
     },
-    getMsg: function getMsg() {var _this = this;
+    getMsg: function getMsg() {var _this2 = this;
       var token = uni.getStorageSync("token");
       if (token) {
         this.$api.wait_read_num().then(function (res) {
           if (res.code == 200) {
-            _this.count = res.data.count;
-            if (_this.count > 0) {
+            _this2.count = res.data.count;
+            if (_this2.count > 0) {
               uni.setTabBarBadge({
                 index: 2,
-                text: _this.count > 99 ? "99+" : _this.count.toString() });
+                text: _this2.count > 99 ? "99+" : _this2.count.toString() });
 
             } else {
               uni.removeTabBarBadge({ index: 2 });
@@ -401,6 +369,30 @@ var _default =
       // uni.navigateTo({
       // 	url:'/pages/index/kfing/kfing'
       // })
+    },
+    toPaotui: function toPaotui() {
+      uni.navigateToMiniProgram({
+        appId: 'wx0388a02edb64ea94',
+        path: 'pages/home/home',
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(error) {
+          console.log(error);
+        } });
+
+    },
+    toMark: function toMark() {
+      uni.navigateToMiniProgram({
+        appId: 'wx0388a02edb64ea94',
+        path: 'pages/food/food',
+        success: function success(res) {
+          console.log(res);
+        },
+        fail: function fail(error) {
+          console.log(error);
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

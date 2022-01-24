@@ -130,27 +130,11 @@ var render = function() {
     "font-size": "28rpx",
     background: "none"
   }
-  var l0 =
-    _vm.list.length > 0
-      ? _vm.__map(_vm.list, function(item, index) {
-          var $orig = _vm.__get_orig(item)
-
-          var g0 =
-            item.content != null && item.content != ""
-              ? item.content.replace(/\r\n|\n|\r/g, "\n")
-              : null
-          return {
-            $orig: $orig,
-            g0: g0
-          }
-        })
-      : null
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        a0: a0,
-        l0: l0
+        a0: a0
       }
     }
   )
@@ -258,7 +242,7 @@ var _url = _interopRequireDefault(__webpack_require__(/*! ../../api/url.js */ 74
       isOnShow: true,
       banlist: [
       {
-        image: 'https://inews.gtimg.com/newsapp_bt/0/13383356882/1000',
+        image: '/static/images/1000.jpeg',
         title: '学校积极开展各种“健康教育”和“心理活动”...' }],
 
 
